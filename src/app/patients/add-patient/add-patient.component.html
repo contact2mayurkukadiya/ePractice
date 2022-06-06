@@ -1,0 +1,8 @@
+<app-alert [message]="message" [type]="type" id="alert"></app-alert>
+<h3 class="mb-3 pl-5 mt-3 bold" id="heading">Add Patient</h3>
+
+<mat-tab-group color="warn" class="pl-5 pr-5">
+  <mat-tab label="Details">
+    <app-patient-control [(patientId)]="patientId" ></app-patient-control>
+  </mat-tab>
+</mat-tab-group>

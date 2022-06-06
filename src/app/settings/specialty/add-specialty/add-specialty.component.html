@@ -1,0 +1,82 @@
+<block-ui message="Loading...">
+</block-ui>
+
+<div class="pl-5 pr-5">
+    <h3 class="mb-3" id="heading">
+        {{ addItem ? 'Add specialty' : 'Update specialty'  }} 
+    </h3>
+    <app-alert [message]="message" [type]="type" id="alert">
+    </app-alert>
+    <div>
+        <form [formGroup]="specialtyForm">
+            <div class="form-group row">
+                <div class="col-xl-4">
+                    <div class="row">
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Specialty Name</mat-label>
+                                <input matInput placeholder="Specialty Name" type="text" formControlName="specialtyName" required>
+                                <mat-error *ngIf="specialtyForm.get('specialtyName').hasError('required') || specialtyForm.get('specialtyName').hasError('whitespace')">
+                                    Specialty Name is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <h5>
+                                Apply to location
+                            </h5>
+                            <kendo-switch formControlName="isAllowAllLocation"
+                                [onLabel]="'All'"
+                                [offLabel]="'Selected'"
+                                class="mt-3 mb-3 ml-5 wide-switch"
+                                (valueChange)="onApplyLocationChanged($event)"
+                            ></kendo-switch>
+                        </div>
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <kendo-formfield class="full-width" *ngIf="specialtyForm.get('isAllowAllLocation').value == false">
+                                <kendo-multiselect [data]="locationList" 
+                                    placeholder="Location Name *"
+                                    formControlName="locationName" 
+                                    [textField]="'locationName'"
+                                    [valueField]="'id'"
+                                    required
+                                    ></kendo-multiselect>
+                                <kendo-formerror>Location Name is required.</kendo-formerror>
+                            </kendo-formfield>
+                        </div>
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <h5>
+                                Enable Online Booking
+                            </h5>
+                            <kendo-switch formControlName="isEnableOnlineBooking"
+                                [onLabel]="'Yes'"
+                                [offLabel]="'No'"
+                                class="mt-3 mb-3 ml-5 small-switch"
+                            ></kendo-switch>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5">
+
+                </div>
+                <div class="col-xl-3">
+                    <div class="col-xl-12 text-right">
+                        <kendo-switch formControlName="isStatus"
+                            [onLabel]="'Active'"
+                            [offLabel]="'Inactive'"
+                            class="mt-3 mb-3"
+                        ></kendo-switch>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="text-right control-row">
+    <div class="pt-3">
+        <button mat-stroked-button color="accent" class="mr-3" (click)="cancel();">Cancel</button>
+        <button mat-raised-button color="accent" class="mr-5 wide" [disabled]="specialtyForm.invalid" (click)="submitSpecialty();">Save</button>
+    </div>
+</div>  

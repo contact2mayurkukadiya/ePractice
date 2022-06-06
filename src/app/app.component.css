@@ -1,0 +1,74 @@
+.kavanii-tb .mat-icon {
+    width: 24px !important;
+}
+
+:host .toggle-btn .mat-icon {
+    width: 24px !important;
+}
+
+.kavanii-sn {
+    display: flex;
+}
+
+.kavanii-container {
+    flex: 1 1 auto;
+}
+
+.toolbar-logo {
+    max-width: 100px;
+}
+
+/* :host .kavanii-drawer-non {
+    bottom: 60px !important;
+} */
+
+/* :host .kavanii-drawer {
+    top: 54px;
+} */
+
+@media (min-width: 768px) {
+    /* :host .kavanii-drawer {
+        top: 64px !important;
+    } */
+}
+
+
+
+.main-content {
+    overflow-x: hidden !important;
+}
+
+.stand-content {
+    margin: 0 !important;
+}
+
+:host .nav-container {
+    background-color: #394085;
+    min-width: 60px;
+}
+
+
+:host .contrast-content {
+    background-color: #394085;
+}
+
+:host .searchbox {
+    width: 400px;
+}
+
+:host .searchbox .mat-icon {
+    color: #00AEEF;
+}
+
+.person {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* .profilePanel {
+    position: absolute;
+    right: 60px;
+    top: 20px;
+} */

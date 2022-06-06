@@ -1,0 +1,21 @@
+label {
+    font-weight: bold;
+}
+
+/* .control-row {
+    position: static; 
+    bottom: 0px; 
+    background-color: #191e57; 
+    height: 60px; 
+    width: 100%;
+} */
+
+.row.display-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row.display-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}

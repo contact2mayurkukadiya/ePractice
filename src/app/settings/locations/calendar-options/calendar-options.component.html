@@ -1,0 +1,231 @@
+<div class="col-xl-12">
+    <h4>
+        SET UP CALENDAR
+    </h4>
+    <mat-divider class="mt-3"></mat-divider>
+</div>
+<mat-dialog-content>
+    <form [formGroup]="formGroup">
+        <div class="row pt-1 pl-5 pr-5">
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xl-7">
+                        <div class="row">
+                            <!-- Timezone -->
+                            <div class="col-xl-12 d-flex align-items-center mt-3">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Timezone</mat-label>
+                                    <mat-select  formControlName="timeZone">
+                                        <mat-option *ngFor="let t of timezone" [value]="t.timeZone">
+                                            {{ t.timeZone }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12">
+                                <p>
+                                    Calendar start and end times are the opening and closing hours of this location. It is to limit the view of the calendar to when you can only book for appointments.
+                                </p>
+                            </div>
+                            <!-- Location Start Time -->
+                            <div class="col-xl-6 d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>Start Time:</b>
+                                    </div>
+                                    <div class="col-sm-12 mt-3 mb-3">
+                                        <kendo-timepicker formControlName="startTime" [steps]="steps"></kendo-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Location End Time -->
+                            <div class="col-xl-6 d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <b>End Time:</b>
+                                    </div>
+                                    <div class="col-sm-12 mt-3 mb-3">
+                                        <kendo-timepicker formControlName="endTime" [steps]="steps"></kendo-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="col-xl-12 mt-3">
+                                <b>
+                                    Time slot
+                                </b>
+                                <p>
+                                    "Time slot" is the appointment size in minutes given to each appointments. This is to set a default time slot to make it easier to book for an appointment.
+                                </p>
+                                <mat-radio-group aria-label="Select an option" formControlName="timeSlot" color="warn">
+                                    <mat-radio-button value="5">5 mins</mat-radio-button>
+                                    <mat-radio-button value="10">10 mins</mat-radio-button>
+                                    <mat-radio-button value="15">15 mins</mat-radio-button>
+                                    <mat-radio-button value="20">20 mins</mat-radio-button>
+                                    <mat-radio-button value="30">30 mins</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+            
+                            <div class="col-xl-12 mt-3 mb-3">
+                                <b>
+                                    Time slot size
+                                </b>
+                                <p>
+                                    Time slot size is the gap between the time lines. This is to customise the time slot view you prefer.
+                                </p>
+                                <mat-radio-group aria-label="Select an option" formControlName="timeSlotSize" color="warn">
+                                    <mat-radio-button value="Small">Small</mat-radio-button>
+                                    <mat-radio-button value="Medium">Medium</mat-radio-button>
+                                    <mat-radio-button value="Default">Default</mat-radio-button>
+                                    <mat-radio-button value="Large">Large</mat-radio-button>
+                                    <mat-radio-button value="Big">Big</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 bg-white">
+                        <div class="col-xl-12 mt-3">
+                            <div class="p-3">
+                                <b>Calendar colour</b>
+                                <p>
+                                    Select your calendar colour using the colour picker. It will be the colour for each appointments for this business location.
+                                </p>
+                                <div>
+                                    <kendo-colorpicker formControlName="calendarColor" [format]="'hex'"></kendo-colorpicker>
+                                </div>
+                                <mat-divider class="mt-3 mb-3"></mat-divider>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="pl-3 pr-3">
+                                <b>Double booking</b>
+                                <p>
+                                    Allows you to book two appointments at the same time.
+                                </p>
+                                <div>
+                                    <!-- <mat-button-toggle-group #group="matButtonToggleGroup" formControlName="isDoubleBooking">
+                                        <mat-button-toggle value="active" color="warn">
+                                            Allowed
+                                        </mat-button-toggle>
+                                        <mat-button-toggle value="inactive" color="warn">
+                                            Not Allowed
+                                        </mat-button-toggle>
+                                    </mat-button-toggle-group> -->
+                                    <kendo-switch formControlName="isDoubleBooking"
+                                        [onLabel]="'Allowed'"
+                                        [offLabel]="'Not Allowed'"
+                                        class="mt-3 mb-3"
+                                    ></kendo-switch>
+                                </div>
+                                <mat-divider class="mt-3 mb-3"></mat-divider>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="pl-3 pr-3">
+                                <b>Patient online booking</b>
+                                <p>
+                                    Publish available timeslot for this location online to let the patients make online booking.
+                                </p>
+                                <div>
+                                    <kendo-switch formControlName="isPatientOnlineBooking"
+                                        [onLabel]="'Allowed'"
+                                        [offLabel]="'Not Allowed'"
+                                        class="mt-3 mb-3"
+                                    ></kendo-switch>
+                                    <!-- <mat-button-toggle-group #group="matButtonToggleGroup" formControlName="isPatientOnlineBooking">
+                                        <mat-button-toggle value="active" color="warn">
+                                            Allowed
+                                        </mat-button-toggle>
+                                        <mat-button-toggle value="inactive" color="warn">
+                                            Not Allowed
+                                        </mat-button-toggle>
+                                    </mat-button-toggle-group> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <mat-divider class="ml-3 mr-3"></mat-divider>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button color="accent" mat-dialog-close>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="accent" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+
+
+<!-- Time slot-->
+                <!-- <div class="col-xl-12 d-flex align-items-center mt-3">
+                    <mat-form-field [appearance]="apperance" class="full-width">
+                        <mat-label>Time slot</mat-label>
+                        <mat-select  formControlName="timeSlot">
+                            <mat-option value="5">
+                                5 mins
+                            </mat-option>
+                            <mat-option value="10">
+                                10 mins
+                            </mat-option>
+                            <mat-option value="15">
+                                15 mins
+                            </mat-option>
+                            <mat-option value="20">
+                                20 mins
+                            </mat-option>
+                            <mat-option value="30">
+                                30 mins
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+
+                <!-- Time slot Size -->
+                <!-- <div class="col-xl-12 d-flex align-items-center">
+                    <mat-form-field [appearance]="apperance" class="full-width">
+                        <mat-label>Time slot Size</mat-label>
+                        <mat-select formControlName="timeSlotSize">
+                            <mat-option value="Small">
+                                Small
+                            </mat-option>
+                            <mat-option value="Medium">
+                                Medium
+                            </mat-option>
+                            <mat-option value="Default">
+                                Default
+                            </mat-option>
+                            <mat-option value="Large">
+                                Large
+                            </mat-option>
+                            <mat-option value="Big">
+                                Big
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+
+                <!-- Calendar Color -->
+                <!-- <div class="col-xl-12 d-flex align-items-center">
+                    <div class="col-sm-6">
+                        <b class="mr-3">Calendar color:</b>
+                    </div>
+                    <kendo-colorpicker formControlName="calendarColor"></kendo-colorpicker>
+                </div> -->
+
+                <!-- Double Booking -->
+                <!-- <div class="col-xl-12 d-flex align-items-center mt-3">
+                    <div class="col-sm-6">
+                        <b>Double Booking</b>
+                    </div>
+                    <kendo-switch formControlName="isDoubleBooking"></kendo-switch>
+                </div> -->
+
+                <!-- Patient Online Bookings -->
+                <!-- <div class="col-xl-12 d-flex align-items-center mt-3">
+                    <div class="col-sm-6">
+                        <b>Patient Online Bookings</b>
+                    </div>
+                    <kendo-switch formControlName="isPatientOnlineBooking"></kendo-switch>
+                </div> -->

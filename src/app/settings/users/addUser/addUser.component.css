@@ -1,0 +1,176 @@
+/* h3 {
+    color: #0e123c;
+    border-bottom: 2px solid #ff934d;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+h4 {
+    color: #0e123c;
+    border-bottom: 2px solid #ff934d;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+} */
+
+/* h3 {
+    color: #0e123c;
+    border-bottom: 2px solid #ff934d;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+} */
+
+h3 {
+    color: #191e57;
+}
+
+:host {
+    position: relative;
+    /* bottom: 60px; */
+}
+
+.form-group {
+    /* background-color: white;  */
+    /* border: 1px solid #eee;  */
+    /* border-radius: 4px; */
+    /* padding: 20px; */
+}
+
+/* .form-group h4 {
+    background-color: #ff934d;
+    color: white;
+    padding: 10px 20px;
+} */
+
+:host ::ng-deep .mat-tab-group {
+    height: calc(100vh - 124px);
+}
+
+@media (max-width: 767px) {
+    :host ::ng-deep .mat-tab-body {
+        padding-top: 2rem;
+    }
+}
+
+:host ::ng-deep .mat-tab-body-content {
+    overflow-y: auto !important;
+    padding-top: 2rem;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+:host ::ng-deep .mat-tab-body-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* @media (min-width: 768px) {
+    :host ::ng-deep .mat-tab-body-content {
+        overflow-x: hidden !important;
+        height: calc(100vh - 124px);
+        background: white;
+        padding: 0 3rem;
+    }
+    
+    :host ::ng-deep .mat-tab-group {
+        flex-direction: row;
+        height: calc(100vh - 124px);
+    }
+    :host ::ng-deep .mat-tab-header {
+        border-bottom: none;
+    }
+    :host ::ng-deep .mat-tab-header-pagination {
+        display: none !important;
+    }
+    :host ::ng-deep .mat-tab-labels {
+        flex-direction: column;
+    }
+    :host ::ng-deep .mat-ink-bar {
+        height: 100%;
+        left: 98% !important;
+    }
+    :host ::ng-deep .mat-tab-body-wrapper {
+        flex: 1 1 auto;
+    }
+    
+    :host ::ng-deep .mat-tab-label {
+        justify-content: left;
+    }
+    
+    :host ::ng-deep .mat-tab-list {
+        padding-top: 2rem;
+    }
+    
+    :host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, 
+    :host ::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+        background-color: transparent !important;
+    }
+} */
+
+
+/* 
+.control-row {
+    position: static; 
+    bottom: 0px; 
+    background-color: #191e57; 
+    height: 60px; 
+    width: 100%;
+} */
+
+:host ::ng-deep .mat-tab-label-active {
+    color: #191e57;
+}
+
+.radio {
+    display: flex;
+    flex-direction: column;
+}
+
+:host ::ng-deep .mat-tab-label.mat-tab-disabled {
+    font-size: 1.1rem;
+    color: black;
+}
+/* 
+:host ::ng-deep .k-switch {
+    width: 90px;
+} */
+
+:host ::ng-deep .k-switch-on:hover .k-switch-container, .k-switch-on.k-state-hover .k-switch-container {
+    background-color: #a18bd6;
+}
+
+/* :host ::ng-deep .k-switch {
+    width: 90px;
+} */
+
+:host ::ng-deep .k-multiselect-wrap {
+    padding: 15px 0;
+}
+
+:host ::ng-deep .k-multiselect {
+    padding-bottom: 1.34375em;
+    font-size: 1em;
+}
+
+
+:host ::ng-deep .k-multiselect.ng-invalid.ng-touched .k-multiselect-wrap {
+    border-color: #a18bd6;
+    border-width: 2px;
+}
+
+:host ::ng-deep .k-multiselect .k-multiselect-wrap .k-button {
+    font-size: 1em;
+}
+
+.dark-blue-color {
+    color: #191e57;
+}
+
+.error-message {
+    color:  #a18bd6;
+    font-size: 75%;
+}
+
+.edit-icon {
+    position: absolute;
+    right: 30px;
+    font-size: 1rem;
+}

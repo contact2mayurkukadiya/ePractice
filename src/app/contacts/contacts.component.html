@@ -1,0 +1,158 @@
+<block-ui message="Loading..."> </block-ui>
+
+  <div class="pl-5 pr-5">
+    <h3 class="mb-3 mt-3" id="heading">
+      Contacts
+    </h3>
+    <mat-tab-group color="warn" [(selectedIndex)]="appState.selectedTab" (selectedTabChange)="tabChanged($event)">
+      <mat-tab label="Referral">
+        <div class="row mt-3">
+          <div class="col-xl-12 text-left">
+            <div class="d-flex align-items-center justify-content-end">
+              <div>
+                <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                  (change)="referralActiveChanged($event)">
+                  <mat-button-toggle value="active">Active</mat-button-toggle>
+                  <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <button mat-raised-button color="accent" class="wide" [routerLink]="['/contacts/referral/add']">
+                Add Referral
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="referralShow" class="mt-3">
+          <kendo-grid [kendoGridBinding]="referralContacts" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+            [columnMenu]="true" [groupable]="true" [reorderable]="true" [filterable]="true" [sortable]="true"
+            (pageChange)="pageChange($event)" [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }" [sort]="sort" (sortChange)="sortChange($event)">
+            <kendo-grid-column width="90" field="name">
+              <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                Referral Name
+              </ng-template>
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <h6>
+                  <a [routerLink]="['/contacts/referral/edit', dataItem.id]">
+                    <strong> {{ dataItem.name }}</strong>
+                  </a>
+                </h6>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="organisationName" title="Organization" width="50"></kendo-grid-column>
+            <kendo-grid-column field="specialtyName" title="Specialty" width="50"></kendo-grid-column>
+            <kendo-grid-column field="providerNo" title="Provider No" width="50"></kendo-grid-column>
+            <kendo-grid-column field="workPhone" title="Work Phone" width="50"></kendo-grid-column>
+            <kendo-grid-column field="emailId" title="Email" width="50"></kendo-grid-column>
+            <kendo-grid-column field="l_Name" title="Location" width="50"></kendo-grid-column>
+          </kendo-grid>
+        </div>
+        <app-grid-no-data [title]="referralTitle" [routeName]="referralRouteName" [routeLink]="referralRouteLink"
+          [description]="referralDescription" id="referralNoData">
+        </app-grid-no-data>
+      </mat-tab>
+      <mat-tab label="Third Party">
+        <div class="row mt-3">
+          <div class="col-xl-12 text-left">
+            <div class="d-flex align-items-center justify-content-end">
+              <div>
+                <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                  (change)="thirdPartyActiveChanged($event)">
+                  <mat-button-toggle value="active">Active</mat-button-toggle>
+                  <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <button mat-raised-button color="accent" class="wide" [routerLink]="['/contacts/thirdparty/add']">
+                Add Third Party
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="thirdPartyShow" class="mt-3">
+          <kendo-grid [kendoGridBinding]="thirdPartyContacts" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+            [columnMenu]="true" [groupable]="true" [reorderable]="true" [filterable]="true" [sortable]="true"
+            (pageChange)="pageChange($event)" [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }" [sort]="sort" (sortChange)="sortChange($event)">
+            <kendo-grid-column width="90" field="organisationName">
+              <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                Organisation
+              </ng-template>
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <h6>
+                  <a [routerLink]="['/contacts/thirdparty/edit', dataItem.id]">
+                    <strong> {{ dataItem.organisationName }}</strong>
+                  </a>
+                </h6>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="departmentName" title="Department" width="50"></kendo-grid-column>
+            <kendo-grid-column field="name" title="Contact Person" width="50"></kendo-grid-column>
+            <kendo-grid-column field="referenceNo" title="Reference no" width="50"></kendo-grid-column>
+            <kendo-grid-column field="workPhone" title="Work Phone" width="50"></kendo-grid-column>
+            <kendo-grid-column field="emailId" title="Email" width="50"></kendo-grid-column>
+            <kendo-grid-column field="l_Name" title="Location" width="50"></kendo-grid-column>
+          </kendo-grid>
+        </div>
+
+        <app-grid-no-data [title]="thirdPartyTitle" [routeName]="thirdPartyRouteName" [routeLink]="thirdPartyRouteLink"
+          [description]="thirdPartyDescription" id="thirdPartyNoData">
+        </app-grid-no-data>
+      </mat-tab>
+      <mat-tab label="General">
+        <div class="row mt-3">
+          <div class="col-xl-12 text-left">
+            <div class="d-flex align-items-center justify-content-end">
+              <div>
+                <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                  (change)="generalActiveChanged($event)">
+                  <mat-button-toggle value="active">Active</mat-button-toggle>
+                  <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <button mat-raised-button color="accent" class="wide" [routerLink]="['/contacts/general/add']">
+                Add General
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="generalShow" class="mt-3">
+          <kendo-grid [kendoGridBinding]="generalContacts" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+            [columnMenu]="true" [groupable]="true" [reorderable]="true" [filterable]="true" [sortable]="true"
+            (pageChange)="pageChange($event)" [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }" [sort]="sort" (sortChange)="sortChange($event)">
+            <kendo-grid-column field="c_Name" title="Category" width="50"></kendo-grid-column>
+            <kendo-grid-column width="90" field="organisationName">
+              <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                Organisation
+              </ng-template>
+              <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <h6>
+                  <a [routerLink]="['/contacts/general/edit', dataItem.id]">
+                    <strong> {{ dataItem.organisationName }}</strong>
+                  </a>
+                </h6>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="departmentName" title="Department" width="50"></kendo-grid-column>
+            <kendo-grid-column field="name" title="Contact Person" width="50"></kendo-grid-column>
+            <kendo-grid-column field="workPhone" title="Work Phone" width="50"></kendo-grid-column>
+            <kendo-grid-column field="emailId" title="Email" width="50"></kendo-grid-column>
+            <kendo-grid-column field="l_Name" title="Location" width="50"></kendo-grid-column>
+          </kendo-grid>
+        </div>
+
+        <app-grid-no-data [title]="generalTitle" [routeName]="generalRouteName" [routeLink]="generalRouteLink"
+          [description]="generalDescription" id="generalNoData">
+        </app-grid-no-data>
+      </mat-tab>
+    </mat-tab-group>
+  </div>

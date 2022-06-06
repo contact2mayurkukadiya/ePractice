@@ -1,0 +1,255 @@
+<div class="mb-3">
+    <div class="w-100">
+        <div class="col-xl-12 align-items-center" *ngIf="!isFullScreen">
+            <div class="aformheading">
+                <div class="normal_22px_14px_font normalhelfont Aformtitle lightcolor">
+                    {{data.title}}</div>
+                <div>
+                    <img src="../../../assets/Edit.png" class="additemmodulehw" (click)="editTitle()" kendoTooltip title="Edit" />
+                    <img src="../../../assets/down.png" class="additemmodulehw" kendoTooltip title="Down" (click)="doMoveDown()" />
+                    <img src="../../../assets/up.png" class="additemmodulehw" kendoTooltip title="Up" (click)="doMoveUp()" />
+                    <img src="../../../assets/Delete.png" class="additemmodulehw" (click)="deleteChart()" kendoTooltip title="Delete" />
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 align-items-center gray-border">
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <input type="file" #upload hidden (change)="changeBodyImage($event)" />
+                <button (click)="upload.click()" class="editor-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-100 w-100" viewBox="0 0 192 512">
+                        <path fill="currentColor"
+                            d="M96 0c35.346 0 64 28.654 64 64s-28.654 64-64 64-64-28.654-64-64S60.654 0 96 0m48 144h-11.36c-22.711 10.443-49.59 10.894-73.28 0H48c-26.51 0-48 21.49-48 48v136c0 13.255 10.745 24 24 24h16v136c0 13.255 10.745 24 24 24h64c13.255 0 24-10.745 24-24V352h16c13.255 0 24-10.745 24-24V192c0-26.51-21.49-48-48-48z" />
+                    </svg>
+                </button>
+                <div class="d-flex align-items-center">
+                    <button matTooltip="Undo" (click)="undo()" [disabled]="_config.disableUndo" class="editor-button mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M28.485 28.485L80.65 80.65C125.525 35.767 187.515 8 255.999 8 392.66 8 504.1 119.525 504 256.185 503.9 393.067 392.905 504 256 504c-63.926 0-122.202-24.187-166.178-63.908-5.113-4.618-5.353-12.561-.482-17.433l19.738-19.738c4.498-4.498 11.753-4.785 16.501-.552C160.213 433.246 205.895 452 256 452c108.321 0 196-87.662 196-196 0-108.321-87.662-196-196-196-54.163 0-103.157 21.923-138.614 57.386l54.128 54.129c7.56 7.56 2.206 20.485-8.485 20.485H20c-6.627 0-12-5.373-12-12V36.971c0-10.691 12.926-16.045 20.485-8.486z" />
+                        </svg>
+                    </button>
+                    <button matTooltip="Redo" (click)="redo()" [disabled]="_config.disableRedo" class="editor-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M483.515 28.485L431.35 80.65C386.475 35.767 324.485 8 256.001 8 119.34 8 7.9 119.525 8 256.185 8.1 393.067 119.095 504 256 504c63.926 0 122.202-24.187 166.178-63.908 5.113-4.618 5.353-12.561.482-17.433l-19.738-19.738c-4.498-4.498-11.753-4.785-16.501-.552C351.787 433.246 306.105 452 256 452c-108.321 0-196-87.662-196-196 0-108.321 87.662-196 196-196 54.163 0 103.157 21.923 138.614 57.386l-54.128 54.129c-7.56 7.56-2.206 20.485 8.485 20.485H492c6.627 0 12-5.373 12-12V36.971c0-10.691-12.926-16.045-20.485-8.486z" />
+                        </svg>
+                    </button>
+                    <button (click)="zoomIn()" class="editor-button mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M312 196v24c0 6.6-5.4 12-12 12h-68v68c0 6.6-5.4 12-12 12h-24c-6.6 0-12-5.4-12-12v-68h-68c-6.6 0-12-5.4-12-12v-24c0-6.6 5.4-12 12-12h68v-68c0-6.6 5.4-12 12-12h24c6.6 0 12 5.4 12 12v68h68c6.6 0 12 5.4 12 12zm196.5 289.9l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L347.5 387.1c-2.3-2.3-3.5-5.3-3.5-8.5v-13.2c-36.5 31.5-84 50.6-136 50.6C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 52-19.1 99.5-50.6 136h13.2c3.2 0 6.2 1.3 8.5 3.5l121.4 121.4c4.7 4.7 4.7 12.3 0 17zM368 208c0-88.4-71.6-160-160-160S48 119.6 48 208s71.6 160 160 160 160-71.6 160-160z" />
+                        </svg>
+                    </button>
+                    <button (click)="zoomOut()" class="editor-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M312 196v24c0 6.6-5.4 12-12 12H116c-6.6 0-12-5.4-12-12v-24c0-6.6 5.4-12 12-12h184c6.6 0 12 5.4 12 12zm196.5 289.9l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L347.5 387.1c-2.3-2.3-3.5-5.3-3.5-8.5v-13.2c-36.5 31.5-84 50.6-136 50.6C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 52-19.1 99.5-50.6 136h13.2c3.2 0 6.2 1.3 8.5 3.5l121.4 121.4c4.7 4.7 4.7 12.3 0 17zM368 208c0-88.4-71.6-160-160-160S48 119.6 48 208s71.6 160 160 160 160-71.6 160-160z" />
+                        </svg>
+                    </button>
+                    <button *ngIf="!isFullScreen" (click)="openPortalModal()" class="editor-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-100 h-100"><path fill="currentColor" d="M448 56v95.005c0 21.382-25.851 32.09-40.971 16.971l-27.704-27.704-107.242 107.243c-4.686 4.686-12.284 4.686-16.971 0l-22.627-22.627c-4.686-4.686-4.686-12.284 0-16.971l107.243-107.243-27.704-27.704C296.905 57.851 307.613 32 328.995 32H424c13.255 0 24 10.745 24 24zM175.917 264.485L68.674 371.728 40.97 344.024C25.851 328.905 0 339.613 0 360.995V456c0 13.255 10.745 24 24 24h95.005c21.382 0 32.09-25.851 16.971-40.971l-27.704-27.704 107.243-107.243c4.686-4.686 4.686-12.284 0-16.971l-22.627-22.627c-4.687-4.685-12.285-4.685-16.971.001z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="canvas-wrapper" [ngClass]="{'invisible': loading}">
+                <canvas [id]="randomCanvasId" [ngStyle]="{'background': 'url(' + imageUrl + ')'}"></canvas>
+            </div>
+            <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <button kendoTooltip title="Pointer" (click)="enableDrawingTool('pointer')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'pointer'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M448 240v96c0 3.084-.356 6.159-1.063 9.162l-32 136C410.686 499.23 394.562 512 376 512H168a40.004 40.004 0 01-32.35-16.473l-127.997-176c-12.993-17.866-9.043-42.883 8.822-55.876 17.867-12.994 42.884-9.043 55.877 8.823L104 315.992V40c0-22.091 17.908-40 40-40s40 17.909 40 40v200h8v-40c0-22.091 17.908-40 40-40s40 17.909 40 40v40h8v-24c0-22.091 17.908-40 40-40s40 17.909 40 40v24h8c0-22.091 17.908-40 40-40s40 17.909 40 40zm-256 80h-8v96h8v-96zm88 0h-8v96h8v-96zm88 0h-8v96h8v-96z" />
+                        </svg>
+                    </button>
+                    <button kendoTooltip title="Pencil" (click)="enableDrawingTool('pencil')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'pencil'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z" />
+                        </svg>
+                    </button>
+                    <button kendoTooltip title="Pen" (click)="enableDrawingTool('pen')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'pen'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M497.94 74.17l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.75 18.75-49.15 0-67.91zm-246.8-20.53c-15.62-15.62-40.94-15.62-56.56 0L75.8 172.43c-6.25 6.25-6.25 16.38 0 22.62l22.63 22.63c6.25 6.25 16.38 6.25 22.63 0l101.82-101.82 22.63 22.62L93.95 290.03A327.038 327.038 0 00.17 485.11l-.03.23c-1.7 15.28 11.21 28.2 26.49 26.51a327.02 327.02 0 00195.34-93.8l196.79-196.79-82.77-82.77-84.85-84.85z" />
+                        </svg>
+                    </button>
+                    <button kendoTooltip title="Marker" (click)="enableDrawingTool('marker')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'marker'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M365.99 33.1L194.11 289.51l78 65 218.81-221.52C564.15 52.52 427.95-55.3 365.99 33.1zM167.87 309.29c-40.45 2.41-77.23 17.53-98.03 72.35-2.35 6.21-8 9.98-14.59 9.98-11.11 0-45.46-27.67-55.25-34.35C0 439.62 37.93 512 128 512c75.86 0 128-43.77 128-120.19 0-3.39-.68-6.64-1.06-9.96l-87.07-72.56z" />
+                        </svg>
+                    </button>
+                    <button kendoTooltip title="Highlighter" (click)="enableDrawingTool('highlighter')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'highlighter'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M0 479.98L99.92 512l35.45-35.45-67.04-67.04L0 479.98zm124.61-240.01a36.592 36.592 0 00-10.79 38.1l13.05 42.83-50.93 50.94 96.23 96.23 50.86-50.86 42.74 13.08c13.73 4.2 28.65-.01 38.15-10.78l35.55-41.64-173.34-173.34-41.52 35.44zm403.31-160.7l-63.2-63.2c-20.49-20.49-53.38-21.52-75.12-2.35L190.55 183.68l169.77 169.78L530.27 154.4c19.18-21.74 18.15-54.63-2.35-75.13z" />
+                        </svg>
+                    </button>
+                    <button (click)="enableDrawingTool('line')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'line'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M640 247.5v17a16 16 0 01-16 16H16a16 16 0 01-16-16v-17a16 16 0 0116-16h608a16 16 0 0116 16z" />
+                        </svg>
+                    </button>
+                    <button (click)="enableDrawingTool('rect')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'rect'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" class="w-100 h-100"
+                            enable-background="new 0 0 506.1 506.1" height="512" viewBox="0 0 506.1 506.1" width="512">
+                            <path
+                                d="m489.609 506.1h-473.118c-9.108 0-16.491-7.384-16.491-16.491v-473.118c0-9.108 7.383-16.491 16.491-16.491h473.119c9.107 0 16.49 7.383 16.49 16.491v473.118c0 9.107-7.383 16.491-16.491 16.491zm-456.628-32.982h440.138v-440.137h-440.138z" />
+                        </svg>
+                    </button>
+                    <button (click)="enableDrawingTool('circle')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'circle'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            id="Capa_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 471.612 471.612"
+                            style="enable-background:new 0 0 471.612 471.612;" class="w-100 h-100" xml:space="preserve">
+                            <g>
+                                <path
+                                    d="M68.987,402.624c91.98,91.983,241.652,91.983,333.636,0c91.983-91.977,91.983-241.658,0-333.639s-241.655-91.98-333.636,0   S-22.993,310.642,68.987,402.624z M87.29,87.276c81.899-81.896,215.152-81.896,297.052,0c81.882,81.894,81.882,215.154,0,297.055   c-81.899,81.887-215.164,81.887-297.052,0C5.394,302.431,5.394,169.17,87.29,87.276z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button (click)="enableDrawingTool('text')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'text'}">
+                        <svg id="Layer_1" enable-background="new 0 0 510 510" viewBox="0 0 510 510" class="w-100 h-100"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path
+                                    d="m510 390v-270h-150v-45h45v-30h-120v30h45v45h-330v270h330v45h-45v30h120v-30h-45v-45zm-30-240v210h-120v-210zm-450 210v-210h300v210z" />
+                                <path d="m60 180v60h30v-30h30v90h-30v30h90v-30h-30v-90h30v30h30v-60z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button matTooltip="Eraser" (click)="enableEraserTool()" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'eraser'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M497.941 273.941c18.745-18.745 18.745-49.137 0-67.882l-160-160c-18.745-18.745-49.136-18.746-67.883 0l-256 256c-18.745 18.745-18.745 49.137 0 67.882l96 96A48.004 48.004 0 00144 480h356c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12H355.883l142.058-142.059zm-302.627-62.627l137.373 137.373L265.373 416H150.628l-80-80 124.686-124.686z" />
+                        </svg>
+                    </button>
+                    <button matTooltip="Clear All" (click)="isClearSketchDialog = true" class="editor-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-100 h-100">
+                            <path fill="currentColor"
+                                d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button class="color-item" (click)="enableLineColor(color)" [ngStyle]="{'background': color}" [ngClass]="{'selected-color': color == selectedLineColor}" *ngFor="let color of lineColors"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isFullScreen" class="aformheading" style="margin-top: -16px;">
+        <div class="normal_12px_font normalhelfont lightsgrey mt-3 ml-3">
+            {{data.helpText}}
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="!isFullScreen">
+    <div class="col-xl-12 align-items-center" style="margin-bottom: 23px;" *ngFor="let point of pointArray; let i = index">
+        <div class="aformheading">
+            <div class="normal_18px_font normalhelfont dblack">
+
+            </div>
+            <div>
+                <img src="../../../assets/Delete.png" class="additemmodulehw" (click)="deletedata(point, i)" kendoTooltip title="Edit" />
+            </div>
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{point.value}}</mat-label>
+            <textarea matInput placeholder="Type here..." matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=5></textarea>
+        </mat-form-field>
+    </div>
+</ng-container>
+
+<!-- Dialogs -->
+<kendo-dialog *ngIf="!isFullScreen && isTitleInEditing" (close)="closeTitleEditing('cancel')" [height]="auto" [width]="880">
+    <span class="bold_18px_font black uppercasetext">
+        EDIT CHART
+    </span>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="modalClosebtn exportclose">
+        <button mat-icon-button (click)="closeTitleEditing('cancel')" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="col-xl-12 mt-4">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Label <span *ngIf="isMendatory"> * </span></mat-label>
+            <input matInput [(ngModel)]="data.title" placeholder="Label" class="normal_16px_font normalhelfont emodaltitle" />
+        </mat-form-field>
+    </div>
+    <div class="col-xl-12  mt-1">
+        <mat-form-field appearance="outline" class="full-width" id="templatename-field">
+            <mat-select [(ngModel)]="data.selectedChartSize">
+                <mat-option *ngFor="let size of data.chartSize" [value]="size">
+                    {{size}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-xl-12  mt-1">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Help Text <span *ngIf="isMendatory"> * </span></mat-label>
+            <input matInput [(ngModel)]="data.helpText" placeholder="Label" class="normal_16px_font normalhelfont emodaltitle" />
+        </mat-form-field>
+    </div>
+    <div class="d-flex align-items-center">
+        <input type="checkbox" id="mendatory" kendoCheckBox class="checkboxitem" [(ngModel)]="isMendatory" />
+        <label for="mendatory" class="lightsgrey checktext">Make this as an mandatory item.</label>
+    </div>
+    <mat-divider class="ml-3 mr-4 mt-3"></mat-divider>
+    <div class="bottom-bar-wrapper">
+        <div class="text-left control-row deletebutton" style="padding-left: 30px;">
+            <div class="pt-3">
+                <button mat-raised-button class="deletebutton-wrapper custom-delete-btn cancelbutton" (click)="deleteChart">
+                    Delete
+                </button>
+            </div>
+        </div>
+        <div class="text-right control-row">
+            <div class="pt-3">
+                <button mat-stroked-button color="accent" class="mr-3 cancelbutton" (click)="closeTitleEditing('cancel')">Cancel</button>
+                <button mat-raised-button color="accent" (click)="saveTitleChanges();">Save</button>
+            </div>
+        </div>
+    </div>
+</kendo-dialog>
+
+<kendo-dialog *ngIf="isClearSketchDialog" (close)="closeClearSketchDialog('cancel')" [height]="auto" [width]="700">
+    <span class="bold_18px_font black uppercasetext">
+        DO YOU WISH TO CLEAR THIS SKETCH?
+    </span>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="modalClosebtn exportclose">
+        <button mat-icon-button (click)="closeClearSketchDialog('cancel')" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <p class="normal_14px_22px_font mt-5 mb-5 pl-3">Cleared sketch can not be restored</p>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="bottom-bar-wrapper">
+        <div class="text-right control-row">
+            <div class="pt-3">
+                <button mat-stroked-button color="accent" class="mr-3 cancelbutton" (click)="closeClearSketchDialog('cancel')">No</button>
+                <button mat-raised-button color="accent" (click)="closeClearSketchDialog('');">Yes</button>
+            </div>
+        </div>
+    </div>
+</kendo-dialog>
+
+
+<kendo-dialog *ngIf="!isFullScreen && portalModal" (close)="closeportalModal()" [height]="auto" [width]="1300">
+    <span class="bold_18px_font black uppercasetext">
+        BODY CHART
+    </span>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="modalClosebtn exportclose">
+        <button mat-icon-button (click)="closeportalModal()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="w-100">
+        <app-body-chart [(ngData)]="ngData" [isFullScreen]="'true'">
+        </app-body-chart>
+    </div>
+</kendo-dialog>

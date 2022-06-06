@@ -1,0 +1,33 @@
+:host ::ng-deep .k-switch {
+    width: 90px;
+}
+
+:host ::ng-deep .k-multiselect-wrap {
+    padding: 15px 0;
+}
+
+:host ::ng-deep .k-multiselect {
+    /* padding-bottom: 1.34375em; */
+    font-size: 1em;
+}
+
+:host ::ng-deep .k-multiselect .k-multiselect-wrap {
+    border-radius: 5px;
+}
+
+:host ::ng-deep .k-multiselect.ng-invalid.ng-touched .k-multiselect-wrap {
+    border-color: #a18bd6;
+    border-width: 2px;    
+}
+
+:host ::ng-deep .k-multiselect.ng-invalid.ng-touched .k-input::placeholder {
+    color: #a18bd6;
+}
+
+:host ::ng-deep .k-multiselect .k-multiselect-wrap .k-button {
+    font-size: 1em;
+}
+
+:host .control-row {
+    position: absolute;
+}

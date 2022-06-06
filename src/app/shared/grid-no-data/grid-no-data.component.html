@@ -1,0 +1,19 @@
+<div *ngIf="title" class="col-xl-12 centered">
+  <div class="grid-child">
+    <br />
+    <br />
+    <br />
+    <p><img src="../../../assets/Empty State.png" /></p>
+    <p>
+      <strong class="QUI_BOLD_20_28"> {{ title }}</strong>
+    </p>
+    <p class="HEL_REG_16_22">
+      {{ description }}
+    </p>
+    <p *ngIf="routeLink !== ''">
+      <strong>
+        <a [routerLink]="routeLink"> {{ routeName }}</a>
+      </strong>
+    </p>
+  </div>
+</div>

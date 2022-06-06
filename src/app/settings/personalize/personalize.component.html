@@ -1,0 +1,110 @@
+<div class="pl-5 pr-5">
+  <h3 class="mb-3 mt-3" id="heading">Personalize</h3>
+  <app-alert [message]="message" [type]="type" id="alert"> </app-alert>
+  <div class="form-group row">
+    <div class="col-xl-9">
+      <mat-expansion-panel
+        *ngIf="patientVisible"
+        expanded="true"
+        class="panel-height"
+      >
+        <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+          Patient ID
+        </div>
+        <div class="row">
+          <div class="col-xl-8 d-block">
+            <p>
+              Prefix and Suffix is static, only the starting number increments
+            </p>
+            <p>
+              Once you’ve updated, prefix, suffix, and starting number, Kavanii
+              will generate the patient id based on the last saved prefix,
+              suffix, and starting number for all future transactions.
+            </p>
+            <p>
+              The patient Id of past transactions will remain intact. It's not
+              mandatory to have a suffix, so you can leave the field blank if
+              you don’t want one.
+            </p>
+          </div>
+        </div>
+        <app-personalize-personalize
+          [personalizeType]="1"
+        ></app-personalize-personalize>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="invoiceVisible"
+        expanded="true"
+        class="panel-height"
+      >
+        <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+          Invoice ID
+        </div>
+        <div class="row">
+          <div class="col-xl-8 d-block">
+            <p>
+              Prefix and Suffix is static, only the starting number increments
+            </p>
+            <p>
+              Once you’ve updated, prefix, suffix, and starting number, Kavanii
+              will generate the invoice id based on the last saved prefix,
+              suffix, and starting number for all future transactions. The
+              patient Id of past transactions will remain intact.
+            </p>
+            <p>
+              It's not mandatory to have a suffix, so you can leave the field
+              blank if you don’t want one.
+            </p>
+          </div>
+        </div>
+        <app-personalize-personalize
+          [personalizeType]="2"
+        ></app-personalize-personalize>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="paymentVisible"
+        expanded="true"
+        class="panel-height"
+      >
+        <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+          Payment ID
+        </div>
+        <div class="row">
+          <div class="col-xl-8 d-block">
+            <p>
+              Prefix and Suffix is static, only the starting number increments
+            </p>
+            <p>
+              Once you’ve updated, prefix, suffix, and starting number, Kavanii
+              will generate the payment id based on the last saved prefix,
+              suffix, and starting number for all future transactions. The
+              patient Id of past transactions will remain intact.
+            </p>
+            <p>
+              It's not mandatory to have a prefix or suffix, so you can leave
+              the field blank if you don’t want one.
+            </p>
+          </div>
+        </div>
+        <app-personalize-personalize
+          [personalizeType]="3"
+        ></app-personalize-personalize>
+      </mat-expansion-panel>
+    </div>
+
+    <div class="col-xl-3">
+      <div class="vertical-menu" *ngFor="let tab of personalizeTabs">
+        <div class="row">
+          <div class="col-xl-12">
+            <a
+              href="javascript:void(0)"
+              (click)="clickPersonalizeTabs(tab)"
+              [ngClass]="tab.active === true ? 'active' : 'inactive'"
+              >{{ tab.title }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

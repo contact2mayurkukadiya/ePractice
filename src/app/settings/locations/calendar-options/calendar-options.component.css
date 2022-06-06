@@ -1,0 +1,11 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+::ng-deep .mat-select-content {
+    width: 500px;
+}
+
+:host ::ng-deep .k-switch {
+    width: 115px;
+}

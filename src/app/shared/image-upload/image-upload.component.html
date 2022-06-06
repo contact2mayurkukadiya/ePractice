@@ -1,0 +1,38 @@
+<div class="row">
+  <div [ngClass]="{ 'col-xl-12': format == 'Image', 'col-xl-10': format == 'Signature' }">
+    <span *ngIf="format == 'Signature'">Signature</span>
+    <div *ngIf="!selectedFile" class="img-preview-container">
+      <img src="../../../assets/placeholder-image.png" alt="img" class="img-fluid" *ngIf="format == 'Image'"/>
+      <div style="width: 100%; background-color: #eee; height: 90px;" *ngIf="format == 'Signature'">
+      </div>
+    </div>
+    
+    <div *ngIf="selectedFile" class="img-preview-container">
+      <img [src]="selectedFile.src" class="img-fluid" />
+    
+      <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+        <div class="img-spinning-circle"></div>
+      </div>
+    </div>
+  </div>
+  <div [ngClass]="{ 'col-xl-12': format == 'Image', 'col-xl-2': format == 'Signature' }" class="d-flex align-items-center">
+    <input #imageInput
+             type="file"
+             accept="image/*"
+             (change)="processFile(imageInput)" style="display: none;">
+  
+    <button *ngIf="!selectedFile" type="button" mat-stroked-button color="accent" class="mt-3 mb-3" (click)="imageInput.click();">
+      {{ buttonText }}
+    </button>
+    <button *ngIf="selectedFile" type="button" mat-stroked-button color="accent" [ngClass]="{ 'mt-3 mb-3': format == 'Image', 'mt-1': format == 'Signature' }" (click)="clearSelection();">
+      Remove
+    </button>
+  </div>
+</div>
+
+
+  <!-- <label class="image-upload-container btn btn-bwm mt-3">
+    <span>Upload Logo</span>
+    
+  </label> -->
+

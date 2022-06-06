@@ -1,0 +1,575 @@
+<block-ui message="Loading...">
+</block-ui>
+
+<!-- <div class="pl-5">
+    <a [routerLink]="['/tools']" class="d-flex align-items-center"><mat-icon class="mr-1 default-icon">keyboard_arrow_left</mat-icon><span>Tools</span></a>
+</div> -->
+
+<h3 class="mb-3 pl-5 mt-3 bold" id="heading">
+    {{ addItem ? 'Add Staff' : 'Update Staff' }}
+</h3>
+
+<mat-tab-group class="pl-5 pr-5" color="warn">
+    <mat-tab label="Details">
+        <app-alert [message]="message" [type]="type" id="alert"></app-alert>
+
+        <form [formGroup]="userForm">
+            <div class="form-group row">
+                <div class="col-xl-3">
+                    <div class="row">
+                        <div class="col-xl-12 d-flex align-items-center ">
+                            <app-image-upload [buttonText]="'Upload Photo'" #photo></app-image-upload>
+                        </div>
+                        <!-- Location -->
+                        <!-- <div class="col-xl-12 d-flex align-items-center">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Location</mat-label>
+                                <input matInput placeholder="Location" required formControlName="location">
+                                <mat-error *ngIf="userForm.get('location').hasError('required')">
+                                    Location is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div> -->
+                        
+                        <!-- Position  -->
+                        <div class="col-xl-12 d-flex justify-content-end">
+                            <span class="hazel-text">Required</span>
+                        </div>
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Position</mat-label>
+                                <input matInput placeholder="Position" type="text" formControlName="position" required>
+                                <mat-error *ngIf="userForm.get('position').hasError('required')">
+                                    Position is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Phone  -->
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Phone</mat-label>
+                                <input matInput placeholder="Phone" type="tel" formControlName="phone">
+                                <mat-error *ngIf="userForm.get('phone').hasError('pattern')">
+                                    Please enter a valid phone number.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Mobile  -->
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Mobile</mat-label>
+                                <input matInput placeholder="Mobile" type="tel" formControlName="mobile" required>
+                                <mat-error *ngIf="userForm.get('mobile').hasError('required')">
+                                    Mobile is required.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('mobile').hasError('pattern')">
+                                    Please enter a valid mobile number.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Email  -->
+                        <div class="col-xl-12 d-flex justify-content-end">
+                            <span class="hazel-text">Required</span>
+                        </div>
+                        <div class="col-xl-12 d-flex align-items-center">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email id" required formControlName="emailId">
+                                <mat-error *ngIf="userForm.get('emailId').hasError('required')">
+                                    Email is required.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('emailId').hasError('pattern')">
+                                    Please enter a valid email address.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6" [ngClass]="{ 'mt-3' : appState.isTablet }">
+                    <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Role and Location
+                            </mat-panel-title>
+                            <mat-panel-description>
+                            Required
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <div *ngFor="let roleLocation of roleLocations; index as $index">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <mat-divider class="mt-3 mb-3" *ngIf="$index > 0"></mat-divider>
+                                    <div class="d-flex justify-content-end" >
+                                        
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <div class="d-flex mt-3 mb-3 ml-5" *ngIf="$index > 0">
+                                            <mat-icon class="default-icon blue-icon">remove_circle</mat-icon>
+                                            <a href="#" (click)="removeRoleLocation($event, $index);">Remove Location</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <h5 class="bold mt-4 mb-4 black" *ngIf="$index == 0">{{  roleLocation.location ? roleLocation.location.locationName : '' }}</h5>
+                                    <mat-form-field [appearance]="apperance" class="full-width" *ngIf="roleLocation && $index > 0">
+                                        <mat-label>Location</mat-label>
+                                        <mat-icon class="blue-icon" matSuffix>search</mat-icon>
+                                        <mat-select [(ngModel)]="roleLocation.location" [ngModelOptions]="{standalone: true}" required>
+                                            <mat-option *ngFor="let location of roleLocation.options" [value]="location">
+                                            {{  location.locationName }}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="!roleLocation.location">
+                                            Location is required.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-8">
+                                    <kendo-multiselect
+                                        [data]="roles" 
+                                        placeholder="Role"
+                                        [textField]="'roleName'"
+                                        [valueField]="'id'"
+                                        [(ngModel)]="roleLocation.role" [ngModelOptions]="{standalone: true}" (valueChange)="roleChanged($event, roleLocation)" >
+                                    </kendo-multiselect>
+                                </div>
+                                <!-- <div class="col-xl-2">
+                                    <div class="text-right">
+                                        <button class="ml-3 mt-2" type="button" mat-stroked-button color="accent" (click)="addRoleLocation();" *ngIf="locationList && ($index < locationList.length - 1) && $index == roleLocations.length -1">
+                                            <mat-icon class="default-icon">add</mat-icon>
+                                        </button>
+                                    </div>
+                                </div> -->
+                                <div class="col-xl-12" *ngIf="roleLocation.role && roleLocation.hasPractitionerRole">
+                                    <h5 class="bold black">Practitioner details</h5>
+                                    <div class="row">
+                                        <div class="col-xl-4">
+                                            <kendo-multiselect [data]="specialties" 
+                                                            placeholder="Specialty"
+                                                            [textField]="'specialtyName'"
+                                                            [valueField]="'id'"
+                                                            [(ngModel)]="roleLocation.specialties" [ngModelOptions]="{standalone: true}" required
+                                                            class="pb-0"
+                                                            >
+                                            </kendo-multiselect>
+                                            <span *ngIf="!roleLocation.specialties || roleLocation.specialties.length == 0" class="error-message">
+                                                Specialty is required.
+                                            </span>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <mat-form-field [appearance]="apperance" class="full-width">
+                                                <mat-label>Provider Number</mat-label>
+                                                <input matInput placeholder="Provider Number" type="text" [(ngModel)]="roleLocation.providerNumber" [ngModelOptions]="{standalone: true}" required>
+                                                <mat-error>Provider number is required.</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <mat-form-field [appearance]="apperance" class="full-width">
+                                                <mat-label>Other ID's</mat-label>
+                                                <input matInput placeholder="Other ID's" type="text" [(ngModel)]="roleLocation.otherID" [ngModelOptions]="{standalone: true}">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <h5 class="bold black">Calendar Access</h5>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <kendo-multiselect placeholder="Practitioner" 
+                                                [textField]="'firstName'"
+                                                [valueField]="'id'"
+                                                [data]="practitioners"
+                                                [(ngModel)]="roleLocation.practitioners"
+                                                [ngModelOptions]="{standalone: true}"></kendo-multiselect>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="d-flex justify-content-end" *ngIf="locationList && ($index < locationList.length - 1) && $index == roleLocations.length -1">
+                                        <!-- <mat-icon class="default-icon dark-blue-color">add</mat-icon> -->
+                                        <!-- <a href="#" (click)="addRoleLocation($event);" class="dark-blue-color">Assign another Location</a> -->
+                                        <button mat-stroked-button color="accent" (click)="addRoleLocation($event);">Assign another Location</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Personal Infomration
+                            </mat-panel-title>
+                            <mat-panel-description>
+                            Required
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="row pl-3 pr-3">
+                            <div class="col-xl-6">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Title</mat-label>
+                                    <mat-select  formControlName="title">
+                                        <mat-option value="Mr">
+                                            Mr
+                                        </mat-option>
+                                        <mat-option value="Miss">
+                                            Miss
+                                        </mat-option>
+                                        <mat-option value="Mrs">
+                                            Mrs
+                                        </mat-option>
+                                        <mat-option value="Dr">
+                                            Dr
+                                        </mat-option>
+                                        <mat-option value="Prof">
+                                            Prof
+                                        </mat-option>
+                                        <mat-option value="Sir">
+                                            Sir
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6">
+                                <mat-form-field [appearance]="apperance" class="full-width" >
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select formControlName="gender">
+                                        <mat-option value="Male">
+                                            Male
+                                        </mat-option>
+                                        <mat-option value="Female">
+                                            Female
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- First name  -->
+                            <div class="col-xl-6">
+                                <div class="row">
+                                    <div class="col-xl-12 d-flex justify-content-end">
+                                        <span class="hazel-text">Required</span>
+                                    </div>
+                                    <div class="col-xl-12 d-flex align-items-center">
+                                        <mat-form-field [appearance]="apperance" class="full-width">
+                                            <mat-label>First name</mat-label>
+                                            <input matInput placeholder="Frist name" type="text" formControlName="firstName" required>
+                                            <mat-error *ngIf="userForm.get('firstName').hasError('required')">
+                                                Frist name is required.
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Last name  -->
+                            <div class="col-xl-6">
+                                <div class="row">
+                                    <div class="col-xl-12 d-flex justify-content-end">
+                                        <span class="hazel-text">Required</span>
+                                    </div>
+                                    <div class="col-xl-12 d-flex align-items-center">
+                                        <mat-form-field [appearance]="apperance" class="full-width">
+                                            <mat-label>Last name</mat-label>
+                                            <input matInput placeholder="Last name" type="text" formControlName="lastName" required>
+                                            <mat-error *ngIf="userForm.get('lastName').hasError('required')">
+                                                Last name is required.
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>  
+                            <!-- Middle name  -->
+                            <div class="col-xl-6">
+                                <div class="row">
+                                    <div class="col-xl-12 d-flex justify-content-end">
+                                        <span class="hazel-text">&nbsp;</span>
+                                    </div>
+                                    <div class="col-xl-12 d-flex align-items-center">
+                                        <mat-form-field [appearance]="apperance" class="full-width">
+                                            <mat-label>Middle name</mat-label>
+                                            <input matInput placeholder="Frist name" type="text" formControlName="middleName">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Preferred name  -->
+                            <div class="col-xl-6">
+                                <div class="row">
+                                    <div class="col-xl-12 d-flex justify-content-end">
+                                        <span class="hazel-text">Required</span>
+                                    </div>
+                                    <div class="col-xl-12 d-flex align-items-center">
+                                        <mat-form-field [appearance]="apperance" class="full-width">
+                                            <mat-label>Preferred name</mat-label>
+                                            <input matInput placeholder="Last name" type="text" formControlName="nickName" required>
+                                            <mat-error *ngIf="userForm.get('nickName').hasError('required')">
+                                                Preferred name is required.
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Date of birth  -->
+                            <div class="col-xl-6">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Date of birth</mat-label>
+                                    <input matInput [matDatepicker]="picker" formControlName="dob">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-hint>DD/MM/YYYY</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <!-- Qualifications  -->
+                            <div class="col-xl-6 d-flex align-items-center">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Qualifications</mat-label>
+                                    <input matInput placeholder="Qualifications" type="text" formControlName="qualifications">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Address
+                            </mat-panel-title>
+                            <mat-panel-description>
+                            Required
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="row">                
+                            <div class="col-xl-12">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Address</mat-label>
+                                    <input matInput placeholder="Address" formControlName="address">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>City</mat-label>
+                                    <mat-select formControlName="city">
+                                        <mat-option value="Sydney">
+                                            Sydney
+                                        </mat-option>
+                                        <mat-option value="Melbourne">
+                                            Melbourne
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-xl-6">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>State</mat-label>
+                                    <mat-select formControlName="state">
+                                        <mat-option value="ACT">
+                                            ACT
+                                        </mat-option>
+                                        <mat-option value="NSW">
+                                            NSW
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            
+                            <div class="col-xl-6">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Post code</mat-label>
+                                    <input matInput placeholder="Post code" formControlName="postCode">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Country</mat-label>
+                                    <mat-select (selectionChange)="countryChanged($event);" formControlName="country">
+                                        <mat-option *ngFor="let c of countries | orderBy: 'country_Name'" [value]="c.country_Name">
+                                            {{ c.country_Name }}
+                                        </mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Other info
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        
+                        <div class="row">
+                            <!-- Email Signature  -->
+                            <div class="col-xl-12">
+                                <app-image-upload [buttonText]="'Upload'" [format]="'Signature'" #signature></app-image-upload>
+                            </div>
+                            <div class="col-xl-12 d-flex align-items-center mt-3">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Email Signature</mat-label>
+                                    <textarea matInput placeholder="Email Signature" formControlName="emailSignature" rows="3"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Biography  -->
+                            <div class="col-xl-12 d-flex align-items-center">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Biography</mat-label>
+                                    <textarea matInput placeholder="Biography" formControlName="biography" rows="3"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Notes  -->
+                            <div class="col-xl-12 d-flex align-items-center">
+                                <mat-form-field [appearance]="apperance" class="full-width">
+                                    <mat-label>Notes</mat-label>
+                                    <textarea matInput placeholder="Notes" formControlName="notes" rows="3"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                    </mat-expansion-panel>
+
+                </div>
+                <div class="col-xl-3" [ngClass]="{ 'mt-3' : appState.isTablet }">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6">
+                            <h6 class="bold black">Status:</h6>
+                            <kendo-switch class="wider-switch" formControlName="isStatus"
+                                [onLabel]="'Active'"
+                                [offLabel]="'Inactive'"
+                            ></kendo-switch>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                            <h6 class="bold black">Access:</h6>
+                            <kendo-switch class="wider-switch" formControlName="isAccess"
+                                [onLabel]="'Allowed'"
+                                [offLabel]="'Not Allowed'"
+                            ></kendo-switch>
+                        </div>
+                    </div>
+                    <mat-divider class="mt-3 mb-3"></mat-divider>
+                    <div>
+                        <h5 class="mt-3 mb-3 bold d-flex align-items-center d-inline-block black">
+                            <div class="d-flex align-items-center">
+                                <mat-icon class="default-icon">
+                                    calendar_today
+                                </mat-icon>
+                                Appointment
+                            </div>
+                        </h5>
+                        <div class="pl-4">
+                            <p>
+                                You must set up the schedule to add appointment.
+                            </p>
+                            <div *ngFor="let roleLocation of roleLocations; index as $index">
+                                <a href="#" class="d-flex align-items-center">Set {{ roleLocation.location.locationName }} schedules <mat-icon class="header-icon blue-icon">
+                                    navigate_next
+                                </mat-icon></a>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <mat-divider class="mt-3 mb-3"></mat-divider>
+                    <div *ngIf="hasPractitionerRole">
+                        <h5 class="mt-3 mb-3 bold d-flex align-items-center d-inline-block black" *ngIf="clickedPractitionerOptions">
+                            Practitioner Information
+                            <div class="d-inline edit-icon">
+                                <a href="" (click)="openPractitionerDialog($event);" class="align-self-center" style="text-decoration: none !important;">
+                                    <mat-icon class="d-inline" class="default-icon">edit</mat-icon>
+                                    <span>
+                                        Edit
+                                    </span>
+                                </a>
+                            </div>
+                        </h5>
+                        <div *ngIf="!clickedPractitionerOptions">
+                            <h4 class="bold black">Practitioner Information</h4>
+                            <p>
+                                You must first enter Practitioner additional information and then setup Schedule to add appointments
+                            </p>
+                            <button type="button" mat-stroked-button color="accent" class="wide" (click)="openPractitionerDialog($event);">Practitioner Information</button>
+                        </div>
+                        
+                        
+                        <div *ngIf="clickedPractitionerOptions" class="mt-3">
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Notes</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    {{ userForm.get('treatmentNotesPrivacy').value }}
+                                </div>
+                            </div>
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Practitioner Appointment Colour</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    <span class="d-inline-block color mr-3" [ngStyle]="{ 'background-color' : userForm.get('practitionerCalendarColor').value  }">
+                                    </span>
+                                </div>
+                            </div>
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Practitioner Calendar Column</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    {{ userForm.get('isPractitionerCalendar').value == true ? 'Allowed' : 'Not allowed'  }}
+                                </div>
+                            </div>
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Double booking</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    {{ userForm.get('isDoubleBooking').value == true ? 'Allowed' : 'Not allowed'  }}
+                                </div>
+                            </div>
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Patient online booking</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    {{ userForm.get('isPatientOnlineBooking').value == true ? 'Allowed' : 'Not allowed'  }}
+                                </div>
+                            </div>
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Cancelled Appointment Notification</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    {{ userForm.get('isCancelledAppointment').value == true ? 'Allowed' : 'Not allowed'  }}
+                                </div>
+                            </div>
+                            <div  class="row d-flex align-items-center">
+                                <div class="col-xl-6 mt-3">
+                                    <h6 class="bold black">Online Booking Confirmation</h6>
+                                </div>
+                                <div class="col-xl-6">
+                                    {{ userForm.get('isOnlineBooking').value == true ? 'Allowed' : 'Not allowed'  }}
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </form>     
+    </mat-tab>
+</mat-tab-group>
+<div class="text-right control-row">
+    <div class="pt-3">
+        <button mat-stroked-button color="accent" class="mr-3" (click)="cancel();">Cancel</button>
+        <button mat-raised-button color="accent" class="mr-3" (click)="submitStaff();" [disabled]="userForm.invalid || submitting">Save</button>
+    </div>
+</div>  

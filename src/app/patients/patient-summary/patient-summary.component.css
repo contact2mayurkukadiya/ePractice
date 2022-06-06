@@ -1,0 +1,54 @@
+.round-corner-box {
+  border-radius: 25px;
+  padding: 10px;
+  width: 200px;
+  height: 140px;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  font-family: Ringside Regular A, Ringside Regular B, Rubik, Lato,
+    Lucida Grande, Lucida Sans Unicode, Tahoma, Sans-Serif;
+  font-style: normal;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.active {
+  background-color: #a18bd6;
+}
+
+.inactive {
+  background-color: #fafafa;
+}
+
+a {
+  text-decoration: none;
+}
+
+.summary-title-selected {
+  color: white;
+  font-size: 15px;
+}
+
+.summary-title-deselected {
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+}
+
+
+.summary-number-selected {
+  color: white;
+}
+
+.summary-number-deselected {
+  color: gray;
+}
+
+.dollar {
+  padding: 0px;
+  margin: 0px;
+}
+
+.centered {
+  text-align: center;
+}

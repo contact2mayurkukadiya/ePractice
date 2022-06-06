@@ -1,0 +1,16 @@
+.wait-card {
+    background-color: #FDEBB6;
+    border-left: 5px solid #FFCC32;
+    border-bottom: 1px solid white;
+    position: relative;
+}
+
+.wait-border {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.corner-icons {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

@@ -1,0 +1,24 @@
+.test {
+    color: #8b2e2e;
+}
+
+span.color {
+    height: 25px;
+    width: 25px;
+    border: #ddd 1px solid;
+}
+
+.edit-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 1rem;
+}
+
+:host ::ng-deep .k-switch {
+    width: 90px;
+}
+
+/* :host ::ng-deep .k-switch-on .k-switch-container,
+:host ::ng-deep .k-switch-on:hover .k-switch-container, .k-switch-on.k-state-hover .k-switch-container {
+    background-color: #a18bd6;
+} */

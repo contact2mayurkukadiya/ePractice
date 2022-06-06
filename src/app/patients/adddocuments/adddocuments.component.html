@@ -1,0 +1,120 @@
+<block-ui message="Loading..."> </block-ui>
+<div class="modal-wrapper">
+    <div id="event-form-dialog" class="dialog-content-wrapper">
+        <mat-toolbar>
+            <span class="title dialog-title QUI_BOLD_24_32">UPLOADING DOCUMENT</span>
+        </mat-toolbar>
+        <form [formGroup]="UploadDocumentForm" class="event-form w-100-p form-wrapper" fxLayout="column" fxFlex>
+            <div class="mat-progress-bar-wrapper" *ngIf="editprogress">
+                <div class="progressbar-title" *ngIf="progressbar == 100"></div>
+                <div class="progressbar-title" *ngIf="progressbar != 100"> Uploading Status</div>
+                <kendo-progressbar [value]="progressbar" [label]="label"></kendo-progressbar>
+            </div>
+            <div *ngIf="progressbar == 100 || !editprogress">
+                <div class="form-heading-wrapper" *ngIf="editprogress">
+                    <span class="pl-5 mt-4 HEL_BOLD_16_22" id="heading">
+                        Please enter document details.
+                    </span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xl-12">
+                        <div class="row mt-12 pb-2 pl-3 pr-3">
+                            <!-- Document Name  -->
+                            <div class="col-xl-12 text-right text-required">
+                                <span>Required</span>
+                            </div>
+                            <div class="col-xl-12 d-flex align-items-left"
+                                style="padding-left: 0px;padding-right: 0px;">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Document Name</mat-label>
+                                    <input matInput placeholder="Document Name" formControlName="documentName"
+                                        required />
+                                    <mat-error *ngIf="UploadDocumentForm.get('documentName').hasError('required')">
+                                        Docuemnt Name is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <!-- Updated Date  -->
+                            <div class="col-xl-12 align-items-right" style="padding-left: 0px;padding-right: 0px;">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Updated Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" formControlName="uploadedDate" required>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-hint>DD/MM/YYYY</mat-hint>
+                                    <mat-error *ngIf="UploadDocumentForm.get('uploadedDate').hasError('required')">
+                                        Please select Date.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+                            <!--Document Type  -->
+                            <div class="col-xl-12 text-right text-required">
+                                <span>Required</span>
+                            </div>
+                            <div class="col-xl-12 align-items-right"
+                                style="padding-left: 0px;padding-right: 0px;width: 100%;">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Document Type</mat-label>
+                                    <mat-select formControlName="documentTypesId" placeholder="Document Type"
+                                        (openedChange)="myInput.focus()" required>
+                                        <input class="myInput" #myInput matInput focused="'true'" type="text"
+                                            (keyup)="search($event.target.value)" autocomplete="off"
+                                            placeholder="search">
+                                        <mat-divider></mat-divider>
+                                        <mat-option *ngFor="let a of filterTypeData" [value]="a.id">
+                                            {{a.folderName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Case Name  -->
+                            <div class="col-xl-12 text-right text-required">
+                                <span>Required</span>
+                            </div>
+                            <div class="col-xl-12 align-items-right" style="padding-left: 0px;padding-right: 0px;">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Case Name</mat-label>
+                                    <mat-select formControlName="caseName" required>
+                                        <mat-option value="General">
+                                            General
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="UploadDocumentForm.get('caseName').hasError('required')">
+                                        Case Name is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <!-- Document Description  -->
+                            <div class="col-xl-12 d-flex align-items-center"
+                                style="padding-left: 0px;padding-right: 0px;">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <textarea matInput placeholder="Document Description" formControlName="note"
+                                        rows="3"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="text-right control-row" *ngIf="progressbar == 100 || !editprogress">
+            <mat-divider class=""></mat-divider>
+            <div class="pt-3">
+                <button mat-stroked-button color="accent" class="mr-3" (click)="close();"
+                    style="padding: 0 30px">Cancel</button>
+                <button mat-raised-button color="accent" class="mr-3" (click)="uploadDocument();"
+                    style="padding: 0 30px" *ngIf="editprogress" [disabled]="UploadDocumentForm.invalid">Upload</button>
+                <button mat-raised-button color="accent" class="mr-3" (click)="uploadDocument();"
+                    style="padding: 0 30px" *ngIf="!editprogress" [disabled]="UploadDocumentForm.invalid">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="close-btn-wrapper">
+        <button mat-icon-button (click)="close()" aria-label="Close dialog">
+            <mat-icon class="close-btn">close</mat-icon>
+        </button>
+    </div>
+</div>

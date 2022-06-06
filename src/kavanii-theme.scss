@@ -1,0 +1,106 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$mat-primary: ( 50: #e3e4eb, 100: #babccd, 200: #8c8fab, 300: #5e6289, 400: #3c4070, 500: #191e57, 600: #161a4f, 700: #121646, 800: #0e123c, 900: #080a2c, A100: #676dff, A200: #343cff, A400: #010aff, A700: #0009e6, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #ffffff, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #ffffff, A200: #ffffff, A400: #ffffff, A700: #ffffff, ));
+$mat-secondary: ( 50: #e7e8f0, 100: #c4c6da, 200: #9ca0c2, 300: #7479aa, 400: #575d97, 500: #394085, 600: #333a7d, 700: #2c3272, 800: #242a68, 900: #171c55, A100: #9199ff, A200: #5e6aff, A400: #2b3aff, A700: #1222ff, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #ffffff, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #ffffff, A400: #ffffff, A700: #ffffff, ));
+// $mat-secondary: (
+//     50 : #f4f1fa,
+//     100 : #e3dcf3,
+//     200 : #d0c5eb,
+//     300 : #bdaee2,
+//     400 : #af9cdc,
+//     500 : #a18bd6,
+//     600 : #9983d1,
+//     700 : #8f78cc,
+//     800 : #856ec6,
+//     900 : #745bbc,
+//     A100 : #ffffff,
+//     A200 : #f5f1ff,
+//     A400 : #cfbeff,
+//     A700 : #bba5ff,
+//     contrast: (
+//         50 : #000000,
+//         100 : #000000,
+//         200 : #000000,
+//         300 : #000000,
+//         400 : #000000,
+//         500 : #000000,
+//         600 : #000000,
+//         700 : #000000,
+//         800 : #ffffff,
+//         900 : #ffffff,
+//         A100 : #000000,
+//         A200 : #000000,
+//         A400 : #000000,
+//         A700 : #000000,
+//     )
+// );
+$mat-warn: ( 50: #f4f1fa, 100: #e3dcf3, 200: #d0c5eb, 300: #bdaee2, 400: #af9cdc, 500: #a18bd6, 600: #9983d1, 700: #8f78cc, 800: #856ec6, 900: #745bbc, A100: #ffffff, A200: #f5f1ff, A400: #cfbeff, A700: #bba5ff, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #000000, 500: #000000, 600: #000000, 700: #000000, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+// $mat-warn: (
+//     50 : #f8e7e5,
+//     100 : #efc2be,
+//     200 : #e49a93,
+//     300 : #d97168,
+//     400 : #d05247,
+//     500 : #c83427,
+//     600 : #c22f23,
+//     700 : #bb271d,
+//     800 : #b42117,
+//     900 : #a7150e,
+//     A100 : #ffd7d5,
+//     A200 : #ffa5a2,
+//     A400 : #ff746f,
+//     A700 : #ff5b56,
+//     contrast: (
+//         50 : #000000,
+//         100 : #000000,
+//         200 : #000000,
+//         300 : #000000,
+//         400 : #ffffff,
+//         500 : #ffffff,
+//         600 : #ffffff,
+//         700 : #ffffff,
+//         800 : #ffffff,
+//         900 : #ffffff,
+//         A100 : #000000,
+//         A200 : #000000,
+//         A400 : #000000,
+//         A700 : #000000,
+//     )
+// );
+$kavanii-app-primary: mat-palette($mat-primary);
+$kavanii-app-accent: mat-palette($mat-secondary);
+$kavanii-app-warn: mat-palette($mat-warn);
+$kavanii-app-theme: mat-light-theme($kavanii-app-primary, $kavanii-app-accent, $kavanii-app-warn);
+@include angular-material-theme($kavanii-app-theme);
+@mixin mix-app-theme($app-theme) {
+    $primary: map-get($kavanii-app-theme, primary);
+    $accent: map-get($kavanii-app-theme, accent);
+    .mat-button-toggle {
+        background-color: mat-color($primary);
+        color: mat-color($primary, default-contrast);
+    }
+    .mat-button-toggle-checked {
+        background-color: mat-color($accent);
+        color: mat-color($accent, default-contrast);
+    }
+}
+
+$accent: #394085;
+@import "~@progress/kendo-theme-default/dist/all.scss";
+// custom-field 
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #ABAAB0;
+}
+
+input.mat-input-element {
+    color: #ABAAB0;
+}
+
+.k-multiselect .k-multiselect-wrap,
+.k-dropdowntree .k-multiselect-wrap {
+    border-color: #ABAAB0 !important;
+}
+
+.mat-form-field-label {
+    color: #1C1B1B !important;
+}

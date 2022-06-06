@@ -1,0 +1,84 @@
+<div class="sidenav_container" [@onSideNavChange]="appState.sideNavToggle ? 'open' : 'close'"
+  [ngClass]="{ 'open-menu': appState.sideNavToggle  }">
+  <div fxLayout="column" fxLayoutGap="10px" style="height: 100%;">
+    <div class="user_menu">
+      <mat-nav-list class="nav-list">
+        <a mat-list-item class="nav-list-item" (click)="onSidenavToggle()" class="toggleButton">
+          <span *ngIf="appState.sideNavToggle">Menu</span>
+          <mat-icon *ngIf="appState.sideNavToggle" [ngClass]="{ 'open-icon': appState.sideNavToggle }">menu</mat-icon>
+          <mat-icon *ngIf="!appState.sideNavToggle">menu_open</mat-icon>
+        </a>
+
+        <a *ngFor="let tm of appState.topMenus" mat-list-item class="nav-list-item" [routerLink]="tm.link"
+          [matTooltip]="tm.hover" routerLinkActive="selected" [hidden]="!tm.show">
+          <mat-icon class="default-icon">{{ tm.icon }}</mat-icon>
+          <span [@animateText]="appState.sideNavToggle ? 'show' : 'hide'">
+            {{ tm.name }}
+          </span>
+        </a>
+      </mat-nav-list>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div>
+      <mat-nav-list class="nav-list">
+        <div>
+          <a mat-list-item class="nav-list-item mt-1 mb-1" *ngIf="!appState.sideNavToggle"
+            [matTooltip]="appState.selectedUserLocation ? appState.selectedUserLocation.locationName : ''"
+            (click)="locationSelect.open();">
+            <mat-icon class="default-icon">location_on</mat-icon>
+            <span [@animateText]="appState.sideNavToggle ? 'show' : 'hide'">{{ appState.selectedUserLocation ?
+              appState.selectedUserLocation.locationName : '' }}</span>
+          </a>
+          <mat-form-field class="pl-4 pr-3 locationSelect" [@animateText]="appState.sideNavToggle ? 'show' : 'hide'">
+            <mat-icon matPrefix class="default-icon" (click)="locationSelect.open();">location_on</mat-icon>
+            <mat-select #locationSelect [(ngModel)]="appState.selectedUserLocationId"
+              [@animateText]="appState.sideNavToggle ? 'show' : 'hide'" (selectionChange)="onLocationChanged($event);">
+              <mat-option *ngFor="let location of appState.locationList" [value]="location.id">{{location.locationName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngFor="let m of appState.menus" [ngClass]="{ 'pl-3': appState.sideNavToggle }" [hidden]="!m.show">
+          <div *ngIf="m.child && m.child.length > 0">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                      <span [@animateText]="appState.sideNavToggle ? 'show' : 'hide'">
+                        {{m?.name}}
+                      </span>
+                      <mat-icon>{{m?.icon}}</mat-icon>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <span *ngFor="let child of m.child">
+                  <mat-list-item>
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                      <mat-icon>{{child.icon}}</mat-icon>
+                      <span [@animateText]="appState.sideNavToggle ? 'show' : 'hide'">
+                        {{child?.name}}
+                      </span>
+                    </div>
+                  </mat-list-item>
+                </span>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div *ngIf="!m.child" style="margin-left: -16px;">
+            <a mat-list-item class="nav-list-item mt-1 mb-1" routerLink="{{ m.link }}" matTooltip="{{ m.hover }}"
+              routerLinkActive="selected">
+              <span [@animateText]="appState.sideNavToggle ? 'show' : 'hide'">{{ m?.name }} </span>
+              <mat-icon class="default-icon" [ngClass]="{ 'right-icon': appState.sideNavToggle }">{{m?.icon}}</mat-icon>
+            </a>
+          </div>
+        </div>
+      </mat-nav-list>
+    </div>
+
+    <div class="logo text-center mt-5" [hidden]="!appState.sideNavToggle">
+      <img src="../../assets/kavanii-logo-white.png" alt="logo" class="img-fluid" style="max-width: 150px;" />
+    </div>
+  </div>
+</div>

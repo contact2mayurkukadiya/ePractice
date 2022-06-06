@@ -1,0 +1,122 @@
+<block-ui message="Loading..."> </block-ui>
+
+<h3 class="mb-3 pl-5 mt-3 bold" id="heading">Application Data</h3>
+
+<div class="pl-5 pr-5">
+  <app-alert [message]="message" [type]="type" id="alert"> </app-alert>
+  <div class="form-group row">
+    <div class="col-xl-9">
+      <mat-expansion-panel expanded="true" class="panel-height">
+        <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+          Title
+        </div>
+        <div class="row">
+          <div class="col-xl-12 d-block">
+            <p>
+              A title may signify either veneration, an official position, or a
+              professional or academic qualification of a staff, Contacts and
+              Patient in Kavanii.
+            </p>
+          </div>
+
+          <div class="col-xl-12 d-flex justify-content-end">
+            <mat-button-toggle-group appearance="legacy" *ngIf="nodata" class="mr-3" value="active"
+              (change)="titleActiveChanged($event)">
+              <mat-button-toggle value="active" class="pt-2">Active</mat-button-toggle>
+              <mat-button-toggle value="inactive" class="pt-2"> Inacitve</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <button mat-raised-button color="accent" class="wide" [disabled]="categoryId === 0" (click)="openPopUp(0)">
+              Add Title
+            </button>
+          </div>
+
+          <div *ngIf="nodata" class="col-xl-12 d-flex mt-3">
+            <kendo-grid [data]="masterData" [pageSize]="20" [skip]="skip" [pageable]="true" [sortable]="true"
+              (pageChange)="pageChange($event)" [sortable]="{
+                allowUnsort: allowUnsort,
+                mode: multiple ? 'multiple' : 'single'
+              }" [sort]="sort">
+              <kendo-grid-column width="60">
+                <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                  Name
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  <h6>
+                    <strong>
+                      <a href="javascript:void(0)" (click)="openPopUp(dataItem.id)">
+                        {{ dataItem.categoryName }}
+                      </a></strong>
+                  </h6>
+                </ng-template>
+              </kendo-grid-column>
+            </kendo-grid>
+          </div>
+
+          <div *ngIf="!nodata" class="row application-data-centered">
+            <div class="col-xl-12">
+              <div class="grid-child">
+                <p><img src="../../../assets/Add Referral.png" /></p>
+                <p>
+                  <strong> You haven't added a Title</strong>
+                </p>
+                <p>
+                  {{ applicationDataDescription }}
+                </p>
+                <p>
+                  <strong *ngIf="categoryId !== 0">
+                    <a href="javascript:void(0)" (click)="openPopUp(0)"> Add Title</a>
+                  </strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+
+    <div class="col-xl-3">
+      <div class="row">
+        <div class="col-xl-12 vertical-header">Title</div>
+        <div class="col-xl-12 vertical-menu" *ngFor="let d of primaryData">
+          <a href="javascript:void(0)" (click)="clickTitleTabs(d)"
+            [ngClass]="d.active === true ? 'active' : 'inactive'">{{ d.categoryName }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<kendo-dialog *ngIf="opened" [width]="600" (close)="close()">
+  <kendo-dialog-titlebar>
+    <div style="font-size: 18px; line-height: 1.3em">ADD TITLE</div>
+  </kendo-dialog-titlebar>
+
+  <div class="col-xl-12 d-flex align-items-center">
+    <h5 class="mr-2">Status</h5>
+    <kendo-switch [onLabel]="'Active'" [offLabel]="'Inactive'" [(ngModel)]="status"
+      [ngModelOptions]="{ standalone: true }" class="wider-switch">
+    </kendo-switch>
+  </div>
+  <div class="col-xl-12 d-flex justify-content-end">
+    <span class="hazel-text">Required</span>
+  </div>
+  <div class="col-xl-12 d-block align-items-center">
+    <mat-form-field [appearance]="apperance" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput required placeholder="Title" [(ngModel)]="title" [ngModelOptions]="{ standalone: true }" />
+    </mat-form-field>
+  </div>
+
+  <kendo-dialog-actions [layout]="actionsLayout">
+    <div class="col-xl-12 d-flex justify-content-end">
+      <button mat-stroked-button color="accent" (click)="onDialogClose()">
+        Cancel
+      </button>
+      <button mat-raised-button color="accent" class="ml-3" (click)="onSaveData()">
+        Save
+      </button>
+    </div>
+  </kendo-dialog-actions>
+</kendo-dialog>

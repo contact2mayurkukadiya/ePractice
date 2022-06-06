@@ -1,0 +1,25 @@
+<div class="col-xl-12 d-flex align-items-center">
+  <div
+    [ngClass]="
+      p.active ? 'round-corner-box active' : 'round-corner-box inactive'
+    "
+    *ngFor="let p of patientSummary"
+  >
+    <a href="javascript:void(0)" (click)="onSummaryCLick(p.title)">
+      <div
+        [ngClass]="
+          p.active ? 'summary-number-selected' : 'summary-number-deselected'
+        "
+      >
+        {{ p.number }}
+      </div>
+      <div
+        [ngClass]="
+          p.active ? 'summary-title-selected' : 'summary-title-deselected'
+        "
+      >
+        {{ p.title }}
+      </div></a
+    >
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<!-- <p *ngIf="message" class="alert d-flex align-items-center mb-4" [ngClass]="{ 'alert-danger': type == messageType.error, 'alert-success': type == messageType.success }">
+    <mat-icon [ngClass]="{ 'error': type == messageType.error }" *ngIf="type == messageType.error">
+        info
+    </mat-icon>
+    <mat-icon [ngClass]="{ 'success': type == messageType.success }" *ngIf="type == messageType.success">
+        check_circle
+    </mat-icon>
+    <span>
+        {{ message }}
+    </span>
+    
+</p> -->
+
+<div class="d-flex align-items-center messagewidth" *ngIf="message"
+    [ngClass]="{ 'alert-danger': type == messageType.error, 'alert-success': type == messageType.success }">
+    <div [ngClass]="{ 'label-icon-error': type == messageType.error, 'label-icon': type == messageType.success }"
+        class="label-icon">
+        <p class="alert d-flex align-items-center mb-0 p-0">
+            <mat-icon class="info" [ngClass]="{ 'error': type == messageType.error }" *ngIf="type == messageType.error">
+                info
+            </mat-icon>
+            <mat-icon class="success" [ngClass]="{ 'success': type == messageType.success }"
+                *ngIf="type == messageType.success">
+                check_circle
+            </mat-icon>
+            <span>
+                {{ message }}
+            </span>
+        </p>
+        <div class="close-icon">
+            <span class="k-icon k-i-close"></span>
+        </div>
+    </div>
+    <!-- <div>
+        <button mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div> -->
+</div>

@@ -1,0 +1,97 @@
+<div class="row justify-content-md-center register-margin">
+    <div class="col-xl-12">
+        <app-alert [message]="message" [type]="messageType"></app-alert>
+    </div>
+    <div class="col-xl-7 pr-5">
+        <img src="../../assets/kavanii_logo2.PNG" alt="logo" class="logo">
+
+        <h4 class="mt-3 bold">
+            Where managing practitioners is easy
+        </h4>
+
+        <p class="bold mt-3">
+            The simplest, easy to use yet most comprehensive software to help practitioner manager their practices.
+        </p>
+        <img src="../../assets/placeholder.jpg" alt="sub" class="sub" />
+    </div>
+    <div class="col-xl-5">
+        <form class="register-form" [formGroup]="registerForm">
+            <div class="mb-3 text-center">
+                <span class="ml-2">Already have an account?</span> <a class="ml-1 bold" [routerLink]="'/login'">Log In</a>
+            </div>
+            <div class="mb-3">
+                <h5 class="bold">Get started by registering your business</h5>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="full-width">
+                    <!-- <mat-icon matPrefix>person</mat-icon> -->
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First Name" name="firstname" formControlName="firstname">
+                    <mat-error *ngIf="registerForm.get('firstname').hasError('required')">
+                        First name is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <!-- <mat-icon matPrefix>person</mat-icon> -->
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name" name="lastName" formControlName="lastname">
+                    <mat-error *ngIf="registerForm.get('lastname').hasError('required')">
+                        Last name is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <!-- <mat-icon matPrefix>email</mat-icon> -->
+                    <mat-label>Email ID</mat-label>
+                    <input matInput placeholder="Email ID" name="username" formControlName="username">
+                    <mat-error *ngIf="registerForm.get('username').hasError('required')">
+                        Email ID is required.
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('username').hasError('pattern')">
+                        Please enter a valid email.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <!-- <mat-icon matPrefix>domain</mat-icon> -->
+                    <mat-label>Business Name</mat-label>
+                    <input matInput placeholder="Business Name" name="businessName" formControlName="businessname">
+                    <mat-error *ngIf="registerForm.get('businessname').hasError('required')">
+                        Business Name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-3">
+                <p class="mt-2">
+                    <mat-checkbox class="d-inline big" formControlName="isTermOfService">
+                        I accept Kavanii <a href="#" class="bold">Terms of Service</a> and <a href="#" class="bold">Privacy Notice</a>.
+                    </mat-checkbox>
+                </p>
+            </div>
+
+            <div class="mt-3">
+                <ngx-recaptcha2 #captchaElem
+                    [siteKey]="recaptchaKey"
+                    [size]="'Normal'"
+                    [theme]="'Light'"
+                    [type]="'Image'"
+                    [hl]="'en'"
+                    formControlName="recaptcha">
+                </ngx-recaptcha2>
+                
+                <div *ngIf="registerForm.get('recaptcha').touched && registerForm.get('recaptcha').hasError('required')">
+                    <mat-error>
+                        Recaptcha is required.
+                    </mat-error>
+                </div>
+            </div>
+            
+            <div class="mt-3 text-center">
+                <button mat-raised-button color="accent" (click)="register($event);" [disabled]="!enableRegister || !registerForm.valid">{{ createButtonText }}</button>
+            </div>
+        </form>
+    </div>
+    
+</div>

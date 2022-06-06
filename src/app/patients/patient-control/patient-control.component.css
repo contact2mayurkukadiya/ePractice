@@ -1,0 +1,295 @@
+h3 {
+  color: #191e57;
+}
+
+:host {
+  position: relative;
+  /* bottom: 60px; */
+}
+
+:host ::ng-deep .mat-tab-body-content {
+  overflow-y: auto !important;
+  padding-top: 2rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+:host ::ng-deep .mat-tab-body-content::-webkit-scrollbar {
+  display: none;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  color: #191e57;
+}
+
+.radio {
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .mat-tab-label.mat-tab-disabled {
+  font-size: 1.1rem;
+  color: black;
+}
+
+:host ::ng-deep .k-switch-on:hover .k-switch-container,
+.k-switch-on.k-state-hover .k-switch-container {
+  background-color: #a18bd6;
+}
+
+:host ::ng-deep .k-multiselect-wrap {
+  padding: 15px 0;
+}
+
+:host ::ng-deep .k-multiselect {
+  padding-bottom: 1.34375em;
+  font-size: 1em;
+}
+
+:host ::ng-deep .k-multiselect.ng-invalid.ng-touched .k-multiselect-wrap {
+  border-color: #a18bd6;
+  border-width: 2px;
+}
+
+:host ::ng-deep .k-multiselect .k-multiselect-wrap .k-button {
+  font-size: 1em;
+}
+
+.dark-blue-color {
+  color: #191e57;
+}
+
+.error-message {
+  color: #a18bd6;
+  font-size: 75%;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 30px;
+  font-size: 1rem;
+}
+
+.vertical-menu a {
+  display: block; /* Make the links appear below each other */
+  color: gray;
+  padding: 10px 10px 10px 0px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+  border-bottom: 4px solid #fafafa;
+}
+
+.vertical-menu a:hover {
+  border-bottom: 4px solid #a18bd6;
+}
+
+.vertical-menu a.active {
+  border-bottom: 4px solid #a18bd6;
+}
+
+.vertical-menu a.inactive {
+  border-bottom: 1px solid #fafafa;
+}
+
+.mat-panel-header {
+  font-weight: bolder;
+  padding: 30px 0 30px 0;
+}
+
+.row {
+  display: flex; /* equal height of the children */
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  border: #394085;
+  border-style: solid;
+  border-left-width: 2px;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
+  background-color: #f6f6f6;
+  overflow-x: hidden;
+  transition: 0.3s;
+}
+
+.overlay-content {
+  top: 25%;
+  width: 100%;
+  text-align: center;
+}
+
+.overlay-header {
+  position: relative;
+  background-color: #394085;
+  width: 100%;
+  height: 50px;
+  text-align: left;
+}
+
+.overlay-title {
+  position: relative;
+  text-align: center;
+  padding: 8px;
+  margin-left: 25px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #f8f8f8;
+}
+
+.overlay a {
+  text-decoration: none;
+  color: #0c0c0c;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover,
+.overlay a:focus {
+  color: #0c0c0c;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  right: 50px;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.overlay .expandbtn {
+  position: absolute;
+  right: 110px;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {
+    font-size: 20px;
+  }
+  .overlay .closebtn {
+    font-size: 40px;
+  }
+}
+
+.material-icons.md-36 {
+  font-size: 36px;
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 4px;
+  color: rgb(255, 255, 255);
+}
+
+.centered {
+  text-align: center;
+  top: 30%;
+  margin: -25px 0 0 0;
+}
+
+.overlay-shadow {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(84, 66, 109, 0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.plus-button {
+  font-weight: 1em;
+  height: 60px;
+  background-color: #f6f6f6;
+}
+
+.plus-color {
+  background-color: #f6f6f6;
+}
+
+#commconsent table,
+#commconsent th,
+#commconsent td {
+  border-bottom: 1px solid gray;
+  border-collapse: collapse;
+}
+#commconsent th,
+#commconsent td {
+  padding: 15px;
+}
+
+.cc-align-left {
+  text-align: left;
+}
+
+#commconsent th {
+  background-color: #394085;
+  color: white;
+}
+
+.small-font-size {
+  font-size: 13px;
+  color: gray;
+}
+
+.panel-height {
+  min-height: 1150px;
+}
+
+.border-with-text {
+  border: 1px solid blue;
+  width: 100%;
+  height: 120px;
+  color: blue;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+.health-fund-centered {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 200px;
+  text-align: center;
+  width: 500px;
+}
+
+.grid-child {
+  text-align: center;
+  margin: -25px 0 0 0;
+}
+
+.tabledata th {
+  background-color: #394085;
+  color: white;
+}
+
+th,
+td {
+  border: none;
+}
+
+table {
+  border: 1px solid black;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+th,
+td {
+  color: rgb(25, 15, 167);
+}
+
+.patientid-color {
+  margin-bottom: 10px;
+  color: #394085;
+}
+
+.delete-button-left {
+  float: left;
+}

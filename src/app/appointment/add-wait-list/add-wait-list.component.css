@@ -1,0 +1,39 @@
+
+.circle {
+    background-color: #F0F0F0;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+}
+
+.circle.selected {
+    background-color: #394085;
+    color: white;
+}
+
+.icon-margin {
+    margin-left: 34px;
+}
+
+.view-bg {
+    background-color: #a18bd6;
+}
+
+.view-bg a {
+    color: white;
+}
+
+:host ::ng-deep .view-bg .mat-icon {
+    color: white;
+}
+
+.ddl-border {
+    border-bottom: 1px gray solid;
+}
+
+.ddl-item {
+    /* background-color: #a18bd6; */
+    width: 100%;
+}

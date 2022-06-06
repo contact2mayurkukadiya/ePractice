@@ -1,0 +1,145 @@
+:host {
+    /* padding: 20px;
+    display: block; */
+    /* width: 200px; */
+    display: block;
+    padding: 0;
+    min-width: 40px;
+    height: calc(100vh - 200px);
+}
+
+:host ul li {
+    padding: 10px 20px;
+    margin: 0 -20px;
+}
+
+:host .user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.mat-icon {
+    vertical-align: middle;
+}
+
+.navigation li .mat-icon {
+    margin-right: 0;
+}
+
+.navigation li a,
+.navigation li .mat-icon {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.navigation li .mat-icon {
+    height: 0.9rem;
+}
+
+.nav-list .nav-list-item.selected,
+.navigation li.selected {
+    background-color: #a18bd6;   
+    border-left: 5px solid #a18bd6;
+    /* color: #a18bd6 !important; */
+}
+
+.navigation li.selected a,
+.navigation li.selected .mat-icon {
+    color: #a18bd6;
+}
+
+
+.navigation a.selected {
+    background-color: #191e57;
+}
+
+.main-menu {
+    color: #ff934d !important;
+    cursor: pointer;
+}
+
+.main-menu .mat-icon {
+    font-size: 0.7rem;
+    height: 0.7rem;
+}
+
+.person {
+    color: #ff934d;
+    /* margin-left: 0.5rem; */
+}
+
+.sidenav_container {
+    min-width: 60px; 
+    height: calc(100vh - 200px);
+}
+
+.person {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.open-menu .person {
+    width: 32px;
+    height: 32px;
+}
+
+.nav-list .nav-list-item {
+    color: white;
+}
+
+.toggleButton, 
+.toggleButton:hover {
+    color: white;
+}
+
+:host .toggleButton .mat-list-item-content {
+    background-color: #ff934d;
+    border-radius: 50%;
+}
+
+/* .toggleButton .mat-icon,
+.nav-list .nav-list-item .mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+} */
+
+/* .open-menu .toggleButton .mat-icon,
+.open-menu .nav-list .nav-list-item .mat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+} */
+
+.open-icon {
+    position: absolute;
+    right: 0;
+}
+
+.mat-expansion-panel {
+    background-color: #394085;
+    box-shadow: none !important;
+}
+
+:host .mat-expansion-indicator::after,
+.mat-expansion-panel * {
+    /* color: white; */
+}
+
+.right-icon {
+    position: absolute;
+    right: 10px;
+}
+
+:host ::ng-deep .locationSelect,
+:host ::ng-deep .locationSelect .mat-select-value,
+:host ::ng-deep .locationSelect .mat-select-arrow {
+    color: white !important;
+}
+
+:host ::ng-deep .locationSelect .mat-form-field-underline {
+    display: none;
+}

@@ -1,0 +1,140 @@
+<div class="col-xl-12">
+    <h4>
+        SET UP Practitioner
+    </h4>
+    <mat-divider class="mt-3"></mat-divider>
+</div>
+<mat-dialog-content>
+    <form [formGroup]="formGroup">
+        <div class="row pt-1 pl-3 pr-3">
+            <div class="col-xl-12 mt-3">
+                <div class="row">
+
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-xl-6 mt-3">
+                                <b>
+                                    Treatment Notes Privacy
+                                </b>
+                                <div class="mt-3">
+                                    <mat-form-field [appearance]="apperance" class="full-width">
+                                        <mat-label>Notes</mat-label>
+                                        <mat-select formControlName="treatmentNotesPrivacy"> 
+                                            <mat-option value="Private Notes">
+                                                Private Notes
+                                            </mat-option>
+                                            <mat-option value="Shared Notes">
+                                                Shared Notes
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 pl-5">
+                                <b>Practitioner Appointment Colour</b>
+                                <p>
+                                    Select your appointment colour. This will be the colour for each appointments in scheduled status created for this practitioners
+                                </p>
+                                <div>
+                                    <kendo-colorpicker formControlName="practitionerCalendarColor" [format]="'hex'"></kendo-colorpicker>
+                                </div>
+                                
+                            </div>
+                        </div>    
+                        <mat-divider class="mt-1 mb-3"></mat-divider>                    
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="pl-3">
+                                    <b>Practitioner Calendar Column</b>
+                                    <p>
+                                        Allows you to see this Practitioner's Calendar Column in Appointment diary
+                                    </p>
+                                    <div>
+                                        <kendo-switch class="wider-switch mt-3 mb-3" formControlName="isPractitionerCalendar"
+                                            [onLabel]="'Allowed'"
+                                            [offLabel]="'Not Allowed'"
+                                        ></kendo-switch>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="pl-3 pr-3">
+                                    <b>Double booking</b>
+                                    <p>
+                                        Allows you to book two appointments at the same time.
+                                    </p>
+                                    <div>
+                                        <kendo-switch class="wider-switch mt-3 mb-3" formControlName="isDoubleBooking"
+                                            [onLabel]="'Allowed'"
+                                            [offLabel]="'Not Allowed'"
+                                        ></kendo-switch>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>                        
+                        <mat-divider class="mt-1 mb-3"></mat-divider>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="pl-3 pr-3">
+                                    <b>Patient online booking</b>
+                                    <p>
+                                        Publish available timeslot for this location online to let the patients make online booking.
+                                    </p>
+                                    <div>
+                                        <kendo-switch class="wider-switch mt-3 mb-3" formControlName="isPatientOnlineBooking"
+                                            [onLabel]="'Allowed'"
+                                            [offLabel]="'Not Allowed'"
+                                        ></kendo-switch>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="pl-3 pr-3">
+                                    <b>Cancelled Appointment Notification</b>
+                                    <p>
+                                        Allows application to send automatic email notificationto Practitioner when there is a cancellation
+                                    </p>
+                                    <div>
+                                        <kendo-switch class="wider-switch mt-3 mb-3" formControlName="isCancelledAppointment"
+                                            [onLabel]="'Allowed'"
+                                            [offLabel]="'Not Allowed'"
+                                        ></kendo-switch>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-divider class="mt-1 mb-3"></mat-divider>
+                    </div>                    
+                    <div class="col-xl-6">
+                        <div class="pl-3 pr-3">
+                            <b>Online Booking Confirmation</b>
+                            <p>
+                                Allow application to send automatic email confirmation when a patient makes online booking for this practitioner
+                            </p>
+                            <div>
+                                <kendo-switch class="wider-switch mt-3 mb-3" formControlName="isOnlineBooking"
+                                    [onLabel]="'Allowed'"
+                                    [offLabel]="'Not Allowed'"
+                                ></kendo-switch>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <mat-divider class="ml-3 mr-3"></mat-divider>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button color="accent" mat-dialog-close>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="accent" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

@@ -1,0 +1,34 @@
+.border {
+    border: 1px solid #eee;
+}
+
+:host ::ng-deep .noPadding .mat-button-toggle-label-content {
+    padding: 0 !;
+}
+
+.full-header {
+    width: 150px;
+}
+
+.quarter-header {
+    width: 100px;
+}
+
+.table td:last-child .mat-icon {
+    cursor: pointer;
+}
+
+@media (min-width: 1367px) {
+    .table th,
+    .table td {
+        min-width: 215px;
+    }
+    
+    .table th:last-child,
+    .table td:last-child {
+        width: 50px;
+        min-width: 0;
+    }
+}
+
+

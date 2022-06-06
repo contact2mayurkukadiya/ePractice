@@ -1,0 +1,257 @@
+<block-ui message="Loading..."> </block-ui>
+
+<h3 class="mb-3 pl-5 mt-3" id="heading">
+  {{ addItem ? "Add Class" : "Edit Class" }}
+</h3>
+
+<app-alert [message]="message" [type]="type" id="alert"> </app-alert>
+
+<form class="pl-5 pr-5" [formGroup]="classForm" autocomplete="off">
+  <div class="form-group row">
+    <div class="col-xl-3">
+      <div class="row">
+        <div class="col-xl-12 d-flex align-items-center">
+          <app-image-upload></app-image-upload>
+        </div>
+
+        <div class="col-xl-12 d-flex align-items-center">
+          <h5>
+            Select Class Colour
+          </h5>
+          <kendo-colorpicker [format]="'hex'" class="mt-3 mb-3 ml-5" [value]="selectedColour"
+            (valueChange)="onColourChange($event)"></kendo-colorpicker>
+        </div>
+
+        <div class="col-xl-12">
+          <span>Location*</span>
+        </div>
+        <!-- Location  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <kendo-multiselect [data]="locationList" placeholder="Location Name" formControlName="locationName"
+            [filterable]="true" [textField]="'locationName'" [valueField]="'id'" [disabled]="locationEnable"
+            style="height: 104px;" (valueChange)="onLocationChange($event)">
+          </kendo-multiselect>
+        </div>
+
+        <div class="col-xl-12">
+          <span>Specialty*</span>
+        </div>
+        <!-- specialty  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <kendo-multiselect [data]="groupedSpecialtyData" placeholder="Specialty Name" formControlName="specialtyName"
+            [filterable]="true" [textField]="'specialtyName'" [valueField]="'idAndLocationId'" style="height: 104px;"
+            [disabled]="specialtyEnable" (valueChange)="onSpecialtyChange($event)">
+          </kendo-multiselect>
+        </div>
+
+        <div class="col-xl-12">
+          <span>Practitioner*</span>
+        </div>
+        <!-- Practitioner  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <kendo-multiselect [data]="groupedPractitionerData" placeholder="Practitioner Name"
+            formControlName="practitionerName" [filterable]="true" [textField]="'firstName'" style="height: 104px;"
+            [valueField]="'idAndSpecialtyIdAndLocationId'" [disabled]="practitionerEnable">
+          </kendo-multiselect>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 bg-white">
+      <div class="row mt-3 pb-2 pl-3 pr-3">
+        <div class="col-xl-12 text-right">
+          <span>Required</span>
+        </div>
+        <!-- Product Code  -->
+        <div class="col-xl-12 d-flex align-items-left">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Class Code</mat-label>
+            <input matInput placeholder="Class Code" required formControlName="classCode" />
+          </mat-form-field>
+        </div>
+
+        <!-- Medicare Code  -->
+        <div class="col-xl-12 align-items-right">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Medicare Code</mat-label>
+            <input matInput placeholder="Medicare Code" maxlength="5" formControlName="medicareCode" />
+          </mat-form-field>
+        </div>
+
+        <!-- DVA Code  -->
+        <div class="col-xl-12 align-items-right">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>DVA Code</mat-label>
+            <input matInput placeholder="DVA Code" maxlength="4" formControlName="dvaCode" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-12 text-right">
+          <span>Required</span>
+        </div>
+        <!-- Class Name  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Class Name</mat-label>
+            <input matInput placeholder="Class Name" required formControlName="className" />
+            <mat-error *ngIf="classForm.get('className').hasError('required')">
+              Class Name is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Description  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <textarea matInput placeholder="Description" formControlName="description" rows="3"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-12 text-right">
+          <span>Required</span>
+        </div>
+
+        <!-- Category  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <kendo-dropdownlist [data]="catData" [valuePrimitive]="true" [formControl]="classForm.get('categoryId')"
+            [textField]="'categoryName'" [valueField]="'id'" [filterable]="true" class="mat-form-field-infix cat-height"
+            (filterChange)="handleFilter($event)" (valueChange)="handleCategoryChange($event)">
+            <ng-template kendoDropDownListNoDataTemplate>
+              <div>
+                No data found.
+                <ng-container *ngIf="filter">Do you want to add new item - '{{ filter }}' ?</ng-container>
+                <br />
+                <button *ngIf="filter" class="k-button" (click)="addNew()">
+                  Add new item
+                </button>
+              </div>
+            </ng-template>
+          </kendo-dropdownlist>
+        </div>
+
+        <!-- Related Product(s)  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <kendo-multiselect [data]="products" placeholder="Related Product(s)" formControlName="productName"  style="height: 104px;"
+            [filterable]="true" [textField]="'productName'" [valueField]="'id'">
+          </kendo-multiselect>
+        </div>
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-hint>Select the product which are usually sold along with
+            class.</mat-hint>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3">
+      <div class="row">
+        <div class="col-xl-6">
+          <h6 class="bold">Status</h6>
+          <kendo-switch class="wider-switch" formControlName="status" [onLabel]="'Active'" [offLabel]="'Inactive'">
+          </kendo-switch>
+        </div>
+        <div class="col-xl-6">
+          <h6 class="bold">Online Booking</h6>
+          <kendo-switch class="wider-switch" formControlName="onlineBooking" [onLabel]="'Enabled'"
+            [offLabel]="'Disable'"></kendo-switch>
+        </div>
+      </div>
+
+      <br />
+      <mat-divider></mat-divider>
+      <div class="col-xl-12">
+        <h4 class="mt-3 mb-3 bold d-flex align-items-center d-inline-block">
+          <mat-icon>stay_primary_portrait</mat-icon>
+          Session and Pricing
+        </h4>
+        Required
+      </div>
+
+      <!-- Duration  -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance">
+          <mat-label>Duration</mat-label>
+          <input matInput placeholder="Duration" formControlName="duration" type="number" min="0" />
+        </mat-form-field>
+        <div class="align-center">
+          Minutes
+        </div>
+      </div>
+
+      <!-- Maximum Number -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance">
+          <input matInput placeholder="Maximum Number" formControlName="maximumParticipants" type="number" min="0" />
+        </mat-form-field>
+        <div class="align-center">
+          Participants
+        </div>
+      </div>
+
+      <!-- Standard Price  -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance" class="full-width">
+          <mat-label>Standard Price (AUD)</mat-label>
+          <input matInput formControlName="standardPrice" type="number" min="0" />
+        </mat-form-field>
+      </div>      
+
+      <!-- Tax Type  -->
+      <div class="col-xl-12">
+        <span>Tax Type*</span>
+      </div>
+      <div class="col-xl-12 d-flex align-items-center kendo-dropdown-bottom">
+        <kendo-dropdownlist [data]="taxTypes" [valuePrimitive]="true" [textField]="'taxType'" [valueField]="'id'"
+          formControlName="taxTypeId" [formControl]="classForm.get('taxTypeId')"
+          (valueChange)="handleTaxTypeChange($event)" class="mat-form-field-infix cat-height">
+        </kendo-dropdownlist>
+      </div>
+
+      <!-- Tax Option  -->
+      <div *ngIf="taxOptionHide" class="col-xl-12 d-flex align-items-center radio-margin">
+        Tax Option
+      </div>
+      <div *ngIf="taxOptionHide" class="col-xl-12 d-flex align-items-center">
+        <mat-radio-group formControlName="taxOptionId">
+          <mat-radio-button class="radio-margin" *ngFor="let to of taxOptions" [value]="to.id"
+            [checked]="taxOptionSelect === to.id">{{ to.categoryName }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div *ngIf="concessionsEnable">
+        <div class="col-xl-12">
+          <br />
+          <mat-divider></mat-divider>
+          <br />
+        </div>
+
+        <div class="col-xl-12 d-flex align-items-center">
+          Concession price
+        </div>
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-hint>Leaving the concession price blank means the standard price will be
+            used.</mat-hint>
+        </div>
+        <div class="concession-scroll">
+          <div *ngFor="let cl of concessionList" class="col-xl-12 d-flex align-items-center">
+            <mat-form-field [appearance]="apperance" class="full-width">
+              <mat-label>{{ cl.concessionType }}({{ cl.locationName }})</mat-label>
+              <input matInput id="{{ cl.locationId }}{{ cl.concessionType }}" type="number"
+                value="{{ cl.concessionAmount }}" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<div class="text-right control-row">
+  <mat-divider class="ml-5 mr-5"></mat-divider>
+  <div class="pt-3">
+    <button mat-stroked-button color="accent" class="mr-3" (click)="cancel()">
+      Cancel
+    </button>
+    <button mat-raised-button color="accent" class="mr-5 wide" (click)="createClass()" [disabled]="classForm.invalid">
+      <span *ngIf="!submitting">Save</span>
+      <span *ngIf="submitting">Saving...</span>
+    </button>
+  </div>
+</div>

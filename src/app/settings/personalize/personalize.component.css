@@ -1,0 +1,37 @@
+
+.vertical-menu a {
+    display: block; /* Make the links appear below each other */
+    color: gray;
+    padding: 10px 10px 10px 0px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    border-bottom: 4px solid #fafafa;
+  }
+  
+  .vertical-menu a:hover {
+    border-bottom: 4px solid #a18bd6;
+  }
+  
+  .vertical-menu a.active {
+    border-bottom: 4px solid #a18bd6;
+  }
+  
+  .vertical-menu a.inactive {
+    border-bottom: 1px solid #fafafa;
+  }
+  
+  .mat-panel-header {
+    font-weight: bolder;
+    font-size: x-large;
+    padding: 30px 0 30px 0;
+  }
+ 
+.panel-height {
+    min-height: 650px;
+    text-align: left;
+  }
+
+  
+.mat-panel-header {
+    font-weight: bolder;
+    padding: 30px 0 30px 0;
+  }

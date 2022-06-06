@@ -1,0 +1,20 @@
+<div class="wait-card text-left p-2" *ngFor="let w of waitLists" (click)="onWaitlistClick($event, w);">    
+    <div class="corner-icons">
+        <div class="d-flex">
+            <mat-icon class="dark-blue-icon default-icon" *ngIf="w.isHighPriority">star_rate</mat-icon>
+            <mat-icon class="yellow-icon default-icon" *ngIf="w.notes">chat_bubble</mat-icon>
+        </div>
+    </div>
+    
+    <div>
+        <b>
+            {{ w.patientName }}
+        </b>
+    </div>
+    <div>
+        <b>{{ w.availableFrom | kendoDate : 't' }} - {{ w.availableUntil | kendoDate : 't' }}</b>
+    </div>                            
+    <span>
+        {{ w.notes }}
+    </span>
+</div>

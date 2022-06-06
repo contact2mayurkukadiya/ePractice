@@ -1,0 +1,105 @@
+<block-ui message="Loading..."> </block-ui>
+<div class="col-xl-12">
+    <div>
+        <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            <div style="position: absolute; right: 0px;top: 13px;">
+                <button mat-raised-button color="accent" class="wide HEL_BOLD_14_16" (click)="onClick()">
+                    Upload Document
+                </button>
+            </div>
+            <app-alert [message]="errorMessage" [type]="messageType" id="alert">
+            </app-alert>
+        </div>
+
+        <input type="file" #fileInput id="fileUpload" name="fileUpload" style="display:none;"
+            (click)="fileInput.value = null" />
+        <div class="mt-3" *ngIf="!docShow">
+            <kendo-grid [kendoGridBinding]="gridData" [pageSize]="10" [skip]="skip" [pageable]="true" [sortable]="true"
+                [filterable]="true" [groupable]="true" [columnMenu]="true" [reorderable]="true" [sortable]="{
+                    allowUnsort: allowUnsort,
+                    mode: multiple ? 'multiple' : 'single'
+                  }" [sort]="sort" (sortChange)="sortChange($event)" [group]="groups">
+                <kendo-grid-column field="uploadedDate" title="Date" width="80">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.uploadedDate | date: 'dd-MM-yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="documentName" title="Doc Name" width="80">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <span *ngIf="dataItem.status == 1">
+                            <i class="material-icons">lock_outline</i>
+                            {{ dataItem.documentName }}
+                        </span>
+                        <span *ngIf="dataItem.status == 0">
+                            {{ dataItem.documentName }}
+                        </span>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column title="Doc Type" field="fileTypes" [width]="80"></kendo-grid-column>
+                <kendo-grid-column title="Case Name" field="caseName" [width]="80"></kendo-grid-column>
+                <kendo-grid-column title="Doc Description" field="note" [width]="80"></kendo-grid-column>
+                <kendo-grid-column title="Size" field="size" [width]="80"></kendo-grid-column>
+                <kendo-grid-column title="Action" width="80">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <kendo-dropdownbutton [data]="data">
+                            <div (click)="onSplitButtonClick(dataItem)"> <span class="k-icon k-i-cog"></span><span
+                                    class="k-icon k-i-arrow-60-down"></span></div>
+                            <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+                                <span class="docicon k-icon k-i-{{ dataItem.icon }}" (click)="Opentab($event)"
+                                    data-id="5"></span>
+                                <span class="docname underlinetext">{{ dataItem.text }}</span>
+                                <mat-divider></mat-divider>
+                            </ng-template>
+                        </kendo-dropdownbutton>
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+        <div *ngIf="docShow" class="row application-data-centered">
+            <div class="col-xl-12">
+                <div class="grid-child">
+                    <p><img src="../../../assets/Empty State.png" /></p>
+                    <p>
+                        <strong class="QUI_BOLD_20_28"> {{docTitle}}</strong>
+                    </p>
+                    <p>
+                        {{docDescription}}
+                    </p>
+                    <p>
+                        <strong *ngIf="categoryId !== 0">
+                            <a href="javascript:void(0)" (click)="onClick()"> {{docRouteName}}</a>
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="gauge"></div>
+<kendo-dialog *ngIf="opened" (close)="close('cancel')" [height]="298" [width]="680">
+    <div class="modalHeight">
+        <div class="col-xl-12">
+            <span class="QUI_BOLD_24_32 deletetext">
+                Are you sure you want to delete?
+            </span>
+            <mat-divider class="mt-3 patientmodaldivider"></mat-divider>
+            <div class="modalClosebtn">
+                <button mat-icon-button (click)="close()" aria-label="Close dialog">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="deleteDescription">
+            <p class="HEL_REG_16_22 patientdeletemodal">Deleted document can not be restored.</p>
+        </div>
+        <mat-divider class="ml-3 mr-4"></mat-divider>
+        <mat-dialog-content>
+            <div class="pt-3">
+                <button mat-raised-button color="accent" class="mr-3" (click)="deleteconfirm('yes');"
+                    style="padding: 0 30px">Yes</button>
+                <button mat-stroked-button color="accent" class="mr-3" (click)="close();"
+                    style="padding: 0 30px">No</button>
+            </div>
+        </mat-dialog-content>
+    </div>
+</kendo-dialog>

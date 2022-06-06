@@ -1,0 +1,83 @@
+.aformheading {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.additemmodulehw {
+    height: 18px;
+    width: 18px;
+    margin-left: 9px;
+}
+
+.checktext {
+    margin-left: 20px;
+    margin-bottom: 0px;
+}
+
+.chart-editor-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.gray-border {
+    border: 2px solid #00000020;
+    border-radius: 5px;
+    margin: 15px;
+    width: calc(100% - 30px);
+    padding: 10px;
+}
+
+.canvas-wrapper {
+    max-width: 100%;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: auto;
+}
+
+.canvas-wrapper.invisible {
+    opacity: 0;
+}
+
+.canvas-wrapper canvas {
+    background-color: #ffffff;
+    border: 1px solid #00000020;
+    transition: 0.3s;
+    background-size: cover !important;
+}
+
+.editor-button {
+    border: 1px solid #00000020;
+    border-radius: 5px;
+    color: #575757;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin: 0px 5px;
+}
+
+.editor-button.selected-color {
+    border: 2px solid #5a5a5a;
+}
+
+.color-item {
+    margin: 0px 5px;
+    width: 20px;
+    height: 20px;
+    border: 0px solid transparent;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.color-item.selected-color {
+    padding: 2px;
+    border: 2px solid #5a5a5a;
+}

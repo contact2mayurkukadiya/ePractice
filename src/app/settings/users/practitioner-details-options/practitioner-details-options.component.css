@@ -1,0 +1,22 @@
+:host ::ng-deep .k-switch-on:hover .k-switch-container, .k-switch-on.k-state-hover .k-switch-container {
+    background-color: #a18bd6;
+}
+
+:host ::ng-deep .k-multiselect-wrap {
+    padding: 15px 0;
+}
+
+:host ::ng-deep .k-multiselect {
+    padding-bottom: 1.34375em;
+    font-size: 1em;
+}
+
+
+:host ::ng-deep .k-multiselect.ng-invalid.ng-touched .k-multiselect-wrap {
+    border-color: #a18bd6;
+    border-width: 2px;
+}
+
+:host ::ng-deep .k-multiselect .k-multiselect-wrap .k-button {
+    font-size: 1em;
+}

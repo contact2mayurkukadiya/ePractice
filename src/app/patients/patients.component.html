@@ -1,0 +1,167 @@
+<block-ui message="Loading..."> </block-ui>
+<div *ngIf="!isError">
+  <div *ngIf="isRoot" class="pl-5 pr-5">
+    <h3 class="mb-3 mt-3" id="heading">Patients</h3>
+    <mat-tab-group color="warn">
+      <mat-tab label="Details">
+        <div class="row mt-3">
+          <div class="col-xl-6">
+            <p
+              *ngIf="displaySuccessMessage"
+              class="alert d-flex align-items-center mb-4"
+              class="alert-success"
+            >
+              <mat-icon class="success"> check_circle </mat-icon>
+              <span>
+                {{ displaySuccessMessage }}
+              </span>
+            </p>
+          </div>
+          <div class="col-xl-6">
+            <div class="d-flex align-items-center">
+              <div class="ml-auto">
+                <mat-button-toggle-group
+                  appearance="legacy"
+                  name="status"
+                  aria-label="status"
+                  class="ml-3"
+                  value="active"
+                  (change)="patientActiveChanged($event)"
+                >
+                  <mat-button-toggle value="active">Active</mat-button-toggle>
+                  <mat-button-toggle value="inactive"
+                    >Inacitve</mat-button-toggle
+                  >
+                </mat-button-toggle-group>
+              </div>
+              <div class="ml-3">
+                <button
+                  mat-stroked-button
+                  color="accent"
+                  [routerLink]="['/patients/merge']"
+                  class="wide"
+                >
+                  Merge
+                </button>
+              </div>
+              <div class="ml-3">
+                <button
+                  mat-raised-button
+                  color="accent"
+                  [routerLink]="['/patients/add']"
+                  class="wide"
+                >
+                  Add Patient
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="patientShow" class="mt-3">
+          <kendo-grid
+            [data]="gridView"
+            [pageSize]="pageSize"
+            [skip]="skip"
+            [pageable]="true"
+            [columnMenu]="true"
+            [reorderable]="true"
+            [filterable]="true"
+            [filter]="state.filter"
+            (dataStateChange)="dataStateChange($event)"
+            [sortable]="true"
+            [groupable]="true"
+            [group]="groups"
+            [reorderable]="reorder"
+            [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }"
+            [sort]="sort"
+            (sortChange)="sortChange($event)"
+            (groupChange)="groupChange($event)"
+          >
+            <kendo-grid-column
+              field="patientId"
+              title="Patient ID"
+              width="50"
+            ></kendo-grid-column>
+            <kendo-grid-column width="60" field="patientId">
+              <ng-template
+                kendoGridHeaderTemplate
+                let-column
+                let-columnIndex="columnIndex"
+              >
+                Name
+              </ng-template>
+              <ng-template
+                kendoGridCellTemplate
+                let-dataItem
+                let-rowIndex="rowIndex"
+              >
+                <h6>
+                  <strong>
+                    <a [routerLink]="['/patients/edit', dataItem.id]">
+                      {{ dataItem.firstName }} {{ dataItem.lastName }}
+                    </a></strong
+                  >
+                </h6>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+              field="gender"
+              title="Gender"
+              width="50"
+            ></kendo-grid-column>
+            <kendo-grid-column width="50" field="dob">
+              <ng-template
+                kendoGridHeaderTemplate
+                let-column
+                let-columnIndex="columnIndex"
+              >
+                DOB
+              </ng-template>
+              <ng-template
+                kendoGridCellTemplate
+                let-dataItem
+                let-rowIndex="rowIndex"
+              >
+                {{ dataItem.dob | date }}
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+              field="mobile"
+              title="Mobile"
+              width="50"
+            ></kendo-grid-column>
+            <kendo-grid-column
+              field="selectedPatientClassificationName"
+              title="Patient Classification"
+              width="50"
+            ></kendo-grid-column>
+            <kendo-grid-column
+              field="allLocationName"
+              title="Location"
+              width="50"
+            ></kendo-grid-column>
+            <kendo-grid-column
+              field="selectedPractitionerName"
+              title="Primary Provider"
+              width="50"
+            ></kendo-grid-column>
+          </kendo-grid>
+        </div>
+        <app-grid-no-data
+          [title]="patientTitle"
+          [routeLink]="patientRouteLink"
+          [routeName]="patientRouteName"
+          [description]="patientDescription"
+          id="patientNoData"
+        >
+        </app-grid-no-data>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <router-outlet *ngIf="!isRoot"></router-outlet>
+</div>

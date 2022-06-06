@@ -1,0 +1,14 @@
+:host ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+
+.ddl {
+    width: 400px;
+}
+
+
+span.color {
+    height: 25px;
+    width: 25px;
+    border: #ddd 1px solid;
+}

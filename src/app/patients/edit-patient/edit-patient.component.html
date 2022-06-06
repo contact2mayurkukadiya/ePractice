@@ -1,0 +1,13 @@
+<block-ui message="Loading..."> </block-ui>
+
+
+<div class="pl-5 pr-5">
+    <h3 class="mb-3 pl-5 mt-3" id="heading">Edit Patient</h3>
+    <mat-tab-group mat-stretch-tabs color="warn" [(selectedIndex)]="appState.selectedTab"
+        (selectedTabChange)="tabChanged($event)">
+        <mat-tab *ngFor="let tab of patientTabs" [label]="tab.title">
+            <app-patient-tab-content [(patientTab)]="tab" [(patientId)]="patientId" [(active)]="tab.active">
+            </app-patient-tab-content>
+        </mat-tab>
+    </mat-tab-group>
+</div>

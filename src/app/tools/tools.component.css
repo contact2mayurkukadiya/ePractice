@@ -1,0 +1,66 @@
+/* :host ::ng-deep .vertical .mat-tab-body-content {
+    overflow-x: hidden !important;
+    height: calc(100vh - 124px);
+    background: white;
+    padding: 0 3rem;
+}
+ */
+
+ @media (min-width: 1440px) {
+    :host ::ng-deep .vertical .mat-tab-group {
+        flex-direction: row;
+        direction: rtl;
+    }
+    :host ::ng-deep .vertical .mat-tab-header {
+        border-bottom: none;
+    }
+    :host ::ng-deep .vertical .mat-tab-header-pagination {
+        display: none !important;
+    }
+    :host ::ng-deep .vertical .mat-tab-labels {
+        flex-direction: column;
+    }
+    :host ::ng-deep .vertical .mat-tab-label {
+        justify-content: flex-end;
+    }
+    
+    :host ::ng-deep .vertical .mat-ink-bar {
+        height: 100%;
+        left: 98% !important;
+    }
+    :host ::ng-deep .vertical .mat-tab-body-wrapper {
+        flex: 1 1 auto;
+    }
+    
+    :host ::ng-deep .vertical .mat-tab-label {
+        border-bottom: 1px solid #eee;
+    }
+    
+    :host ::ng-deep .vertical .mat-tab-label:last-child {
+        border-bottom: none;
+    }
+    
+    /* :host ::ng-deep .vertical .mat-tab-label-active {
+        border-left: 2px black solid;
+    } */
+    
+    /* :host ::ng-deep .vertical .mat-tab-label {
+        justify-content: left;
+    }
+    
+    :host ::ng-deep .vertical .mat-tab-list {
+        padding-top: 2rem;
+    } */
+    
+    :host ::ng-deep .vertical .mat-tab-group.mat-primary .mat-ink-bar, 
+    :host ::ng-deep .vertical .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+        background-color: transparent !important;
+    }
+ }
+
+ @media (min-width: 1024px){
+    :host ::ng-deep .vertical .mat-tab-group {
+        /* flex-direction: row; */
+        direction: rtl;
+    }
+ } 

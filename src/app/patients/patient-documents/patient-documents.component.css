@@ -1,0 +1,171 @@
+::ng-deep .k-dialog-titlebar {
+    border-color: inherit;
+    color: #394085;
+}
+
+::ng-deep .k-window-titlebar {
+    background-color: #f6f6f60f;
+}
+
+h3 {
+    color: #191e57;
+}
+
+.mat-panel-header {
+    font-weight: bolder;
+    padding: 30px 0 30px 0;
+}
+
+.row {
+    display: flex;
+    /* equal height of the children */
+}
+
+.plus-button {
+    font-weight: 1em;
+    height: 60px;
+    background-color: #f6f6f6;
+}
+
+.plus-color {
+    background-color: #f6f6f6;
+}
+
+#commconsent table,
+#commconsent th,
+#commconsent td {
+    border-bottom: 1px solid gray;
+    border-collapse: collapse;
+}
+
+#commconsent th,
+#commconsent td {
+    padding: 15px;
+}
+
+.cc-align-left {
+    text-align: left;
+}
+
+#commconsent th {
+    background-color: #394085;
+    color: white;
+}
+
+.small-font-size {
+    font-size: 13px;
+    color: gray;
+}
+
+.border-with-text {
+    border: 1px solid blue;
+    width: 100%;
+    height: 120px;
+    color: blue;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+.health-fund-centered {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 200px;
+    text-align: center;
+    width: 500px;
+}
+
+.grid-child {
+    text-align: center;
+    margin: -25px 0 0 0;
+}
+
+.tabledata th {
+    background-color: #394085;
+    color: white;
+}
+
+th,
+td {
+    border: none;
+}
+
+table {
+    border: 1px solid black;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+th,
+td {
+    color: rgb(25, 15, 167);
+}
+
+.patientid-color {
+    margin-bottom: 10px;
+    color: #394085;
+}
+
+.delete-button-left {
+    float: left;
+}
+
+ ::ng-deep .block-ui button:hover {
+    background-color: #B195DB;
+}
+
+.underlinetext {
+    border-bottom: 1px solid #ABAAB0;
+    left: -16px;
+    width: 94px;
+}
+
+.docicon,
+.docname {
+    color: black;
+}
+
+.docicon {
+    font-weight: bold;
+}
+
+.patientdeletemodal {
+    margin: 32px 0px 0px 17px;
+}
+
+.deletetext {
+    color: #191E57 !important;
+}
+
+.deleteDescription {
+    height: 39%;
+}
+
+.modalClosebtn {
+    height: 9%;
+    margin-top: -51px;
+}
+
+.k-dialog-wrapper .k-dialog {
+    width: 50% !important;
+    height: 47% !important;
+}
+
+.delete-wrapper {
+    height: 280px !important;
+    width: 662px !important;
+}
+
+.modalHeight {
+    width: 98%;
+    height: 100%;
+}
+
+::ng-deep .event-form-dialog {
+    justify-content: center;
+}
+@media only screen and (max-width: 1024px) {
+    ::ng-deep .k-dialog-wrapper .k-dialog {
+        margin-left: 221px !important;
+    }
+}

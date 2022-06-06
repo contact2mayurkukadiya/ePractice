@@ -1,0 +1,174 @@
+<block-ui message="Loading...">
+</block-ui>
+
+<h3 class="mb-3 pl-5 mt-3" id="heading">
+    Tools
+</h3>
+
+<div *ngIf="!isError">
+    <div *ngIf="isRoot" class="pl-5 pr-5">
+        <mat-tab-group color="warn" [(selectedIndex)]="appState.selectedTab" (selectedTabChange)="tabChanged($event)"> 
+            <mat-tab label="Business Information" *ngIf="showBusinessInformationTab">
+                <div *ngIf="isError">
+                    <app-alert [message]="'Unexpected error occurred'" [type]="messageType.error" id="alert">
+                    </app-alert>
+                </div>
+                <div class="row bg-white mt-3 p-3" *ngIf="business && businessAccess.indexOf('E') >= 0 || businessAccess.indexOf('V') >= 0">
+                    <div class="col-xl-2">
+                        <div *ngIf="business && business.businessLogo">
+                            <img [src]="business.businessLogo || ''" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-xl-4" *ngIf="business">
+                        <h5 *ngIf="businessAccess.indexOf('E') >= 0; else textResult">
+                            <a [routerLink]="['/tools/business/edit']">{{ business.businessName }}</a>
+                        </h5>
+                        <ng-template #textResult>
+                            {{ business.businessName }}
+                        </ng-template>
+                        <div class="d-flex align-items-center">
+                            <mat-icon class="default-icon">location_city</mat-icon> Business Address
+                        </div>
+                        <div class="pl-4">
+                            <div>
+                                <small>
+                                    {{ business.address1 }}
+                                </small>
+                            </div>
+                            <div>
+                                <small>
+                                    {{ business.address2 }}
+                                </small>
+                            </div>
+                            <div>
+                                <small>
+                                    {{ business.city }}, {{ business.state }} {{ business.postCode }}
+                                </small>
+                            </div>
+                            <div>
+                                <small>
+                                    {{ business.country }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4" *ngIf="business">
+                        <div class="d-flex align-items-center mt-4">
+                            <mat-icon class="default-icon">schedule</mat-icon> Trading hours
+                        </div>
+                        <small class="pl-4">
+                            {{ business.timeString }}
+                        </small>
+                    </div>
+                </div>
+                <div class="row mt-5" *ngIf="locationAccess.indexOf('E') >= 0 || locationAccess.indexOf('V') >= 0">
+                    <div class="col-xl-12 text-left">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <mat-button-toggle-group appearance="legacy" name="Locations" value="active" (change)="locationActiveChanged($event);">
+                                <mat-button-toggle value="active">Active</mat-button-toggle>
+                                <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <button mat-raised-button color="accent" class="wide ml-3" [routerLink]="['/tools/locations/add']" *ngIf="locationAccess.indexOf('E') >= 0">Add Location</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3" *ngIf="locationAccess.indexOf('E') >= 0 || locationAccess.indexOf('V') >= 0">
+                    <app-locations [data]="true"></app-locations>
+                </div>
+            </mat-tab>
+            <mat-tab label="Specialisation" *ngIf="showSpecialisationTab">
+                <div class="vertical mt-3">
+                    <mat-tab-group [@.disabled]="true" [(selectedIndex)]="appState.selectedSpecialisationTab" (selectedTabChange)="specialisationTabChanged($event)" [ngClass]="{ 'mt-5 mb-3': appState.isTablet }">
+                        <mat-tab *ngFor="let tab of specialisationTabs; let tabIndex = index" [label]="tab.title">
+                            <div [ngClass]="{ 'pr-5 mt-3' : !appState.isTablet }">
+                                <div class="d-flex justify-content-between" [ngClass]="{ 'mt-3 mb-3' : !appState.isTablet, 'mt-5 mb-5': appState.isTablet }">
+                                    <div class="d-flex align-items-center">
+                                        <button mat-stroked-button color="accent" class="wide" [routerLink]="tab.addUrl">{{ tab.addLabel}}</button>
+                                        <mat-button-toggle-group appearance="legacy" [name]="tab.title" class="ml-5 mr-3" value="active" (change)="specialisationActiveChanged($event);">
+                                            <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                                            <mat-button-toggle value="active">Active</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                    </div>
+                                    <h5>
+                                        {{ tab.title }}
+                                    </h5>
+                                </div>
+                                <app-tab-content [tab]="tab" [(active)]="tab.active"></app-tab-content>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-tab>
+            <mat-tab label="Appointment settings" *ngIf="showAppointmentSettingsTab">
+                <div class="vertical mt-3">
+                    <mat-tab-group [@.disabled]="true" [(selectedIndex)]="appState.selectedAppointmentTab" (selectedTabChange)="appointmentTabChanged($event)" [ngClass]="{ 'mt-5 mb-3': appState.isTablet }">
+                        <mat-tab *ngFor="let tab of appointmentTabs; let tabIndex = index" [label]="tab.title">
+                            <div [ngClass]="{ 'pr-5 mt-3' : !appState.isTablet }">
+                                <div class="d-flex justify-content-between"  [ngClass]="{ 'mt-3 mb-3' : !appState.isTablet, 'mt-5 mb-5': appState.isTablet }">
+                                    <div class="d-flex align-items-center">
+                                        <button mat-stroked-button color="accent" class="wide" [routerLink]="tab.addUrl">{{ tab.addLabel}}</button>
+                                        <mat-button-toggle-group appearance="legacy" [name]="tab.title" class="ml-5 mr-3" value="active" (change)="appointmentActiveChanged($event);">
+                                            <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                                            <mat-button-toggle value="active">Active</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                    </div>
+                                    <h5>
+                                        {{ tab.title }}
+                                    </h5>
+                                </div>
+                                <app-tab-content [tab]="tab" [(active)]="tab.active"></app-tab-content>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-tab>
+            <mat-tab label="Patient Settings" *ngIf="showPatientSettingsTab">
+                <div class="vertical mt-3">
+                    <mat-tab-group [@.disabled]="true" [(selectedIndex)]="appState.selectedPatientTab" (selectedTabChange)="patientTabChanged($event)" [ngClass]="{ 'mt-5 mb-3': appState.isTablet }">
+                        <mat-tab *ngFor="let tab of patientTabs; let tabIndex = index" [label]="tab.title">
+                            <div [ngClass]="{ 'pr-5 mt-3' : !appState.isTablet }">
+                                <div class="d-flex justify-content-between"  [ngClass]="{ 'mt-3 mb-3' : !appState.isTablet, 'mt-5 mb-5': appState.isTablet }">
+                                    <div class="d-flex align-items-center">
+                                        <button mat-stroked-button color="accent" class="wide" [routerLink]="tab.addUrl">{{ tab.addLabel}}</button>
+                                        <mat-button-toggle-group appearance="legacy" [name]="tab.title" class="ml-5 mr-3" value="active" (change)="patientActiveChanged($event);">
+                                            <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                                            <mat-button-toggle value="active">Active</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                    </div>
+                                    <h5>
+                                        {{ tab.title }}
+                                    </h5>
+                                </div>
+                                <app-tab-content [tab]="tab" [(active)]="tab.active"></app-tab-content>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-tab>
+            <mat-tab label="Billing" *ngIf="showBillingTab">
+                <div class="vertical mt-3">
+                    <mat-tab-group [@.disabled]="true" [(selectedIndex)]="appState.selectedBillingTab" (selectedTabChange)="billingTabChanged($event)" [ngClass]="{ 'mt-5 mb-3': appState.isTablet }">
+                        <mat-tab *ngFor="let tab of billingsTabs; let tabIndex = index" [label]="tab.title">
+                            <div [ngClass]="{ 'pr-5 mt-3' : !appState.isTablet }">
+                                <div class="d-flex justify-content-between" [ngClass]="{ 'mt-3 mb-3' : !appState.isTablet, 'mt-5 mb-5': appState.isTablet }">
+                                    <div class="d-flex align-items-center">
+                                        <button mat-stroked-button color="accent" class="wide" [routerLink]="tab.addUrl">{{ tab.addLabel}}</button>
+                                        <mat-button-toggle-group appearance="legacy" [name]="tab.title" class="ml-5 mr-3" value="active" (change)="billingActiveChanged($event);">
+                                            <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                                            <mat-button-toggle value="active">Active</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                    </div>
+                                    <h5>
+                                        {{ tab.title }}
+                                    </h5>
+                                </div>
+                                <app-tab-content [tab]="tab" [(active)]="tab.active"></app-tab-content>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <router-outlet *ngIf="!isRoot"></router-outlet>
+</div>

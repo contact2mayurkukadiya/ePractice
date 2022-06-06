@@ -1,0 +1,33 @@
+<mat-drawer-container hasBackdrop="false" fullscreen [ngClass]="{ 'kavanii-drawer' : appState.authenicatied, 'kavanii-drawer-non': !appState.authenicatied }">
+
+    <mat-drawer #drawer mode="side" [opened]="true" class="nav-container" *ngIf="appState.authenicatied">
+        <app-sidenav></app-sidenav>
+    </mat-drawer>
+
+    <mat-drawer-content [@onMainContentChange]="appState.sideNavToggle ? 'open': 'close'" [ngClass]="{ 'main-content': appState.authenicatied, 
+                                   'stand-content' : !appState.authenicatied,
+                                   'contrast-content': appState.contrastBackground }">
+        <div class="row" *ngIf="appState.authenicatied">
+            <div class="col-xl-12 text-right pt-3 pb-3">
+                <div class="profilePanel" class="mr-5">
+                    <img class="person mr-3" src="../../assets/user.jpg" alt="" [matMenuTriggerFor]="menu" matTooltip="">
+                    <span>Hi,{{ appState.userProfile?.firstName }}</span>
+                </div>
+                <mat-menu #menu="matMenu" class="kavanii-menu">
+                    <button mat-menu-item><mat-icon>people</mat-icon>Account</button>
+                    <button mat-menu-item><mat-icon>help</mat-icon> Help</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="logout()"><mat-icon >exit_to_app</mat-icon>Logout</button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <div [ngClass]="{ 'container': !appState.authenicatied }">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+
+</mat-drawer-container>
+
+
+<!-- <app-footer></app-footer> -->

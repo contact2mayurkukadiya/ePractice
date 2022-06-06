@@ -1,0 +1,56 @@
+body {
+    background-color: white;
+}
+
+.register-margin {
+    margin-top: 6rem;
+    /* margin-bottom: 4rem; */
+}
+
+.register-form {
+    /* border: 1px solid #bbb; */
+    background-color: #f3f3f4;
+    padding: 2rem;
+    border-radius: 4px;
+    opacity: 0.9;
+}
+
+.mat-button-base {
+    width: 100%;
+}
+
+.logo {
+    max-width: 250px;
+}
+
+.mat-icon {
+    vertical-align: middle;
+    font-size: 1.3rem;
+}
+
+ul.list-unstyled li {
+    padding: 0.5rem 0;
+}
+
+.register-bg {
+    background: url(../../assets/slide-05.jpg) no-repeat -300px 50px;
+}
+
+.registered {
+    height: 600px;
+    background-color: white;
+}
+
+.registered h4 {
+    color: #191e57;
+}
+
+:host ::ng-deep .big .mat-checkbox-label {
+    white-space: normal !important; 
+    line-height: 2 !important;
+    font-size: 0.8rem;
+}
+
+.sub {
+    max-width: 550px;
+}

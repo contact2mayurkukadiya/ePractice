@@ -1,0 +1,30 @@
+<div [ngClass]="{ 'd-flex justify-content-between justify-content-center' : !appState.isTablet }">
+    <h3 class="mb-3 mt-3 bold" id="heading">
+        Appointments
+    </h3>
+    <div class="mb-3 mt-3" [ngClass]="{ 'text-right' : appState.isTablet  }">
+        <button mat-stroked-button            
+            color="primary" 
+            class="no-underline matchBorderColor"
+            (click)="onCreateAppointmentClick($event);">
+            Create Appointment
+        </button>
+        
+        <ng-container *ngFor="let menu of appointmentLinks; index as $index">
+            <button *ngIf="!menu.show" mat-stroked-button            
+                color="primary" 
+                class="no-underline matchBorderColor ml-3"
+                [disabled]="!menu.enabled"
+                (click)="onMenuClick($event, menu)">
+                {{ menu.name }}
+            </button> 
+            <button *ngIf="menu.show" mat-raised-button
+            color="primary" 
+            class="no-underline matchBorderColor ml-3"
+            [disabled]="!menu.enabled"
+            (click)="onMenuClick($event, menu)">
+                {{ menu.name }}
+            </button> 
+        </ng-container>
+    </div>
+</div>

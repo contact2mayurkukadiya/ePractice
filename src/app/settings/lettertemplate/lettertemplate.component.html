@@ -1,0 +1,65 @@
+<block-ui message="Loading..."> </block-ui>
+<div class="pl-5 pr-5">
+    <span class="mb-3 mt-3" id="heading">Letter Template</span>
+    <mat-tab-group color="warn">
+        <mat-tab label="Details">
+            <div class="row mt-3">
+                <div class="col-xl-5">
+                    <app-alert [message]="displaySuccessMessage" [type]="messageType.success" id="alert">
+                    </app-alert>
+                </div>
+                <div class="col-xl-7 d-flex justify-content-end">
+                    <div class="ml-auto">
+                        <mat-button-toggle-group appearance="legacy" name="status" aria-label="status" class="ml-3 mt-2"
+                            value="active" (change)="LetterActiveChanged($event)">
+                            <mat-button-toggle value="active">Active</mat-button-toggle>
+                            <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                    <div class="ml-3">
+                        <button mat-raised-button color="accent" [routerLink]="['/settings/lettertemplate/add']"
+                            class="wide">
+                            Add Template
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="listViewLetterShow" class="mt-3">
+                <kendo-grid [data]="gridView" [pageSize]="pageSize" [skip]="skip" [pageable]="true" [columnMenu]="true"
+                    (pageChange)="pageChanges($event)" [sortable]="{
+                            allowUnsort: allowUnsort,
+                            mode: multiple ? 'multiple' : 'single'
+                            }" [sort]="sort" (sortChange)="sortChanges($event)" [filterable]="true"
+                    [filter]="states.filter" (dataStateChange)="dataStateChanges($event)" [sortable]="true"
+                    [groupable]="true" [group]="groups" [reorderable]="reorder" (groupChange)="groupChanges($event)">
+                    <kendo-grid-column field="name" title="Letter Name" width="50">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <a class="bold_20px_font" [routerLink]="['/settings/lettertemplate/edit', dataItem.id]">
+                                {{ dataItem.name }}
+                            </a>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="description" title="Description" width="50"
+                        [style]="{'text-align': 'center'}">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <span class="descriptionText">{{ dataItem.description }}</span>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="businessTemplateLocations" title="Location" width="50">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="modifiedBy" title="Created By" width="50">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="modifiedDate" title="Created On" width="50">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.modifiedDate | date: 'dd/MM/yyyy' }}
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+            <app-grid-no-data [title]="letterTitle" [routeLink]="letterRouteLink" [routeName]="letterRouteName"
+                [description]="letterDescription" id="letterNoData">
+            </app-grid-no-data>
+        </mat-tab>
+    </mat-tab-group>
+</div>

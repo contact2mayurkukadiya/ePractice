@@ -1,0 +1,266 @@
+h3 {
+  color: #191e57;
+}
+
+:host {
+  position: relative;
+  /* bottom: 60px; */
+}
+
+:host ::ng-deep .mat-tab-body-content {
+  overflow-y: auto !important;
+  padding-top: 2rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+:host ::ng-deep .mat-tab-body-content::-webkit-scrollbar {
+  display: none;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  color: #191e57;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid rgb(214, 216, 226);
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  border-bottom: 4px solid #a18bd6;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: block;
+  padding: 6px 0px;
+  border: 1px solid rgb(214, 216, 226);
+  border-top: none;
+  min-height: 550px;
+}
+
+.tabcontent-padding {
+  padding: 6px 12px;
+}
+
+.header-switch {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 15px;
+  text-align: right;
+  margin-top: 12px;
+  margin-right: 10px;
+}
+
+.kendo-panel-bar-width {
+  -webkit-box-flex: 0;
+  flex: 0 0 100%;
+  position: relative;
+  width: 100%;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.header-title {
+  font-weight: 700;
+}
+
+:host ::ng-deep .k-panelbar .k-header {
+  height: 70px;
+}
+
+.mat-header-accord {
+  height: 70px;
+}
+
+.mat-expansion-panel-header-title-accord {
+  font-size: x-large;
+}
+
+.xx-large-text {
+  font-size: xx-large;
+}
+
+.x-large-text {
+  font-size: x-large;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  height: 80px !important;
+  background-color: #d2c5f0;
+  height: 100px;
+}
+
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover,
+.mat-expansion-panel-header.mat-expanded:focus {
+  background-color: #d2c5f0;
+}
+
+.mat-expansion-panel-header,
+.mat-expansion-panel-header:hover,
+.mat-expansion-panel-header:focus {
+  background-color: #d2c5f0;
+}
+
+.mat-accordion .mat-expansion-panel:first-of-type {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.mat-expansion-panel {
+  background: none;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.mat-expansion-panel-header {
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
+  align-items: center;
+  border-radius: inherit;
+}
+
+.mat-expansion-panel-header {
+  border-bottom: 1px solid #eee;
+  border-radius: 0;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.material-icons-style {
+  font-size: 30px;
+  padding: 0;
+  color: #7a62b4;
+}
+.item-type-heading {
+  font-size: 16px;
+}
+.item-type-description {
+  font-size: 12px;
+  padding: 0;
+}
+
+.radio-button-style {
+  border: 1px solid #eee;
+  height: 45px;
+  width: 100%;
+  margin-left: 0px;
+}
+
+.button-size {
+  height: 45px;
+  width: 45px;
+  text-align: center;
+  background-color: dodgerblue;
+}
+
+.mat-icon {
+  margin-right: 0rem;
+}
+
+.button-border {
+  border: 1px solid #eee;
+  padding: 5px;
+  width: 58px;
+  height: 58px;
+}
+
+.radio-group-vertical {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.normal-checkbox .mat-checkbox-inner-container {
+  height: 26px;
+  width: 26px;
+}
+
+.textbox-style {
+  border: 1px solid #eee;
+  width: 250px;
+  height: 26px;
+  margin-left: 10px;
+}
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.k-dateinput,
+.k-datepicker,
+.k-datetimepicker,
+.k-timepicker {
+  height: 40px;
+}
+
+mat-slider {
+  width: 300px;
+}
+
+.k-upload {
+  width: 100%;
+}
+
+.dd-height {
+  height: 750px;
+}
+
+img {
+  border-style: none;
+  margin: 0;
+  padding: 0 5px 0 0;
+  float: left;
+}
+
+div.scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.label:after {
+  content: "\A";
+  white-space: pre;
+}
+
+.matinputwrapper {
+  width: 150px !important;
+}
+
+.matinputtablewrapper {
+  width: 75px !important;
+}
+
+
+.prvieww-row {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+}
+
+.mat-expansion-panel-header-description-accord {
+  direction: ltr;
+}
+
+
+

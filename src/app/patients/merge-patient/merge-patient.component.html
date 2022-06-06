@@ -1,0 +1,276 @@
+<div class="pl-5 pr-5">
+  <mat-tab-group color="warn">
+    <mat-tab label="Merge Patient">
+      <div class="row mt-3 mb-3">
+        <div class="col-xl-9">
+          <app-alert [message]="message" [type]="type" id="alert"></app-alert>
+        </div>
+        <div class="col-xl-3 d-flex justify-content-end">
+          <button
+            mat-raised-button
+            color="accent"
+            [routerLink]="['/patients/add']"
+            class="wide"
+          >
+            Add Patient
+          </button>
+        </div>
+      </div>
+      <mat-expansion-panel expanded="true" class="panel-height">
+        <div class="row">
+          <div class="col-xl-6 d-block align-items-center">
+            <div class="d-flex bold mt-4 mb-2">Original Patient</div>
+            <kendo-combobox
+              [data]="originalPatients"
+              [textField]="'name'"
+              [valueField]="'id'"
+              [filterable]="true"
+              class="kendo-dropdown-size"
+              (filterChange)="handleOriginalFilter($event)"
+              (valueChange)="handleOriginalChange($event)"
+              [valuePrimitive]="true"
+            >
+              <ng-template kendoComboBoxItemTemplate let-dataItem>
+                <div class="col-xl-12 row">
+                  <div class="col-xl-9 d-flex bold">
+                    {{ dataItem.name }} ({{ dataItem.gender }})
+                  </div>
+                  <div class="col-xl-3 d-flex justify-content-end">
+                    ID: {{ dataItem.patientId }}
+                  </div>
+                  <div class="col-xl-12 mt-2 mb-1">
+                    <span class="material-icons material-icons-style"
+                      >stay_primary_portrait</span
+                    >
+                    {{ dataItem.mobile }}
+                    <span class="material-icons material-icons-style ml-3">
+                      email
+                    </span>
+                    {{ dataItem.email }}
+                  </div>
+
+                  <div class="col-xl-12">
+                    <span class="material-icons material-icons-style">
+                      cake
+                    </span>
+                    {{ dataItem.dob | date}}
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-combobox>
+            <div *ngIf="originalPatientId" class="mt-3">
+              <kendo-card [width]="'100%'">
+                <kendo-card-body>
+                  <div class="row">
+                    <div class="picture-layout-width">
+                      <img
+                        [src]="'data:image/jpeg;base64,' + originalImage"
+                        width="150px"
+                        height="174px"
+                        kendoCardMedia
+                        alt="cover_img"
+                      />
+                    </div>
+                    <div class="col-xl-9 d-block">
+                      <h4 class="bold">{{ originalName }}</h4>
+
+                      <p>ID : {{ originalPatientId }}</p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >cake</span
+                        >
+                        {{ originalDOB | date }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >call</span
+                        >
+                        {{ originalPhoneNo }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >stay_primary_portrait</span
+                        >
+                        {{ originalMobileNo }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >email</span
+                        >
+                        {{ originalEmailId }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >location_on</span
+                        >
+                        {{ originalAdress }}
+                      </p>
+                      <p>
+                        Total Appointments : {{ originalTotalAppointments }}
+                      </p>
+                      <p>Total Outstanding : {{ originalTotalOutstanding }}</p>
+                    </div>
+                  </div>
+                </kendo-card-body>
+              </kendo-card>
+            </div>
+          </div>
+          <div class="col-xl-6 d-block align-items-center">
+            <div class="d-flex bold mt-4 mb-2">Duplicate Patient</div>
+            <kendo-combobox
+              [data]="duplicatePatients"
+              [textField]="'name'"
+              [valueField]="'id'"
+              [filterable]="true"
+              class="kendo-dropdown-size"
+              (filterChange)="handleDuplicateFilter($event)"
+              (valueChange)="handleDuplicateChange($event)"
+              [valuePrimitive]="true"
+            >
+              <ng-template kendoComboBoxItemTemplate let-dataItem>
+                <div class="col-xl-12 row">
+                  <div class="col-xl-9 d-flex bold">
+                    {{ dataItem.name }} ({{ dataItem.gender }})
+                  </div>
+                  <div class="col-xl-3 d-flex justify-content-end">
+                    ID: {{ dataItem.patientId }}
+                  </div>
+
+                  <div class="col-xl-12 mt-2 mb-1">
+                    <span class="material-icons material-icons-style"
+                      >stay_primary_portrait</span
+                    >
+                    {{ dataItem.mobile }}
+
+                    <span class="material-icons material-icons-style ml-3">
+                      email
+                    </span>
+                    {{ dataItem.email }}
+                  </div>
+
+                  <div class="col-xl-12">
+                    <span class="material-icons material-icons-style">
+                      cake
+                    </span>
+                    {{ dataItem.dob | date }}
+                  </div>
+                </div>
+              </ng-template>
+            </kendo-combobox>
+            <div *ngIf="duplicatePatientId" class="mt-3">
+              <kendo-card [width]="'100%'">
+                <kendo-card-body>
+                  <div class="row">
+                    <div class="picture-layout-width">
+                      <img
+                        [src]="'data:image/jpeg;base64,' + duplicateImage"
+                        width="150px"
+                        height="174px"
+                        kendoCardMedia
+                        alt="cover_img"
+                      />
+                    </div>
+                    <div class="col-xl-9 d-block">
+                      <h4 class="bold">{{ duplicateName }}</h4>
+
+                      <p>ID : {{ duplicatePatientId }}</p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >cake</span
+                        >
+                        {{ duplicateDOB | date }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >call</span
+                        >
+                        {{ duplicatePhoneNo }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >stay_primary_portrait</span
+                        >
+                        {{ duplicateMobileNo }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >email</span
+                        >
+                        {{ duplicateEmailId }}
+                      </p>
+                      <p>
+                        <span class="material-icons material-icons-style"
+                          >location_on</span
+                        >
+                        {{ duplicateAdress }}
+                      </p>
+                      <p>
+                        Total Appointments : {{ duplicateTotalAppointments }}
+                      </p>
+                      <p>Total Outstanding : {{ duplicateTotalOutstanding }}</p>
+                    </div>
+                  </div>
+                </kendo-card-body>
+              </kendo-card>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="originalPatientId && duplicatePatientId"
+          class="text-right control-row"
+        >
+          <div class="pt-3">
+            <button
+              mat-stroked-button
+              color="accent"
+              class="mr-3"
+              (click)="cancel()"
+            >
+              Cancel
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              class="mr-2 wide"
+              (click)="submitMergePatient()"
+            >
+              Merge Patient
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<kendo-dialog
+  title="Are you sure you want to merge duplicate patient records to original patient?"
+  *ngIf="opened"
+  (close)="close('cancel')"
+  [minWidth]="250"
+  [width]="850"
+>
+  <p style="margin-top: 10px; margin-bottom: 20px; text-align: left">
+    This is a permanemt action and cannot be undone
+  </p>
+
+  <mat-divider class="mb-2"></mat-divider>
+  <button
+    mat-raised-button
+    (click)="processMergePatient()"
+    primary="true"
+    color="accent"
+    class="mr-2 button-width"
+  >
+    Yes
+  </button>
+  <button
+    mat-stroked-button
+    (click)="close()"
+    color="accent"
+    class="mr-2 button-width"
+  >
+    No
+  </button>
+</kendo-dialog>

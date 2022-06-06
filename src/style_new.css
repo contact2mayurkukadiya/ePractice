@@ -1,0 +1,293 @@
+:host ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+.columnpadding {
+    padding-left: 0px !important;
+  }
+  .rowdata{
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+/* Color Code Start */
+.lightgrey
+{
+  color: #7A7A7A;
+}
+.blucolor{
+  color: #191E57;
+}
+.lightcolor{
+    color: #1C1B1B;
+}
+.grey{
+    color: #A6A6A6;
+}
+.black{
+    color: #000000;
+}
+.lightsgrey{
+    color: #939393;
+}
+.custobutton{
+    position: absolute !important;
+    right: 1px;
+}
+.darkblue{
+    color: #394085;
+}
+.white
+{
+    color: #FAFAFA;
+}
+.light-purple-bg{
+    background-color:#DBDEFF
+}
+.purple-bg
+{
+    background-color: #B195DB;
+}
+.light-black{
+    color: #575757;
+}
+.dblack{
+    color: #1C1C1C;
+}
+/* Color Code End */
+/* Checkbox Start */
+.checkboxitem{
+    width: 22px;
+    height: 22px;
+    background: #FFFFFF;
+    border: 1px solid rgba(171,170,176,0.5);
+    border-radius: 3px;
+    margin-left: 13px;
+  }
+/* Checkbox End */
+#heading{
+    font-size: 28px;
+    font-family: 'Quicksand';
+    font-weight: 700;
+}
+.cancelbutton {
+    font-size: 14px;
+    font-weight: 700;
+    height: 42px;
+    background: #F3F2F4;
+    border: 1px solid #394085;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 0px #394085;
+    border-radius: 4px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  }
+  .deletebutton button {
+    background: #D41515;
+    box-shadow: 0px 2px #394085 !important;
+    width: 100px;
+    color: #ffffff;
+    border: 1px solid #394085;
+  }
+  .mat-raised-button{
+    box-shadow: 0px 2px #B195DB !important;
+    padding: 0px 24px !important;
+  }
+  .mat-stroked-button:not([disabled]) {
+    border-color:#394085;
+}
+.bottom-bar-wrapper .custom-delete-btn:hover {
+    background: #D41515 !important;
+  }
+  .mat-raised-button[disabled]:not([class*=mat-elevation-z]) {
+    color: #575757;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0px 0px 0px 2px #f3f2f4 !important;
+}
+.normalhelfont
+{
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+    font-style: normal;
+}
+.bold_18px_font,.normal_16px_39px_font {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+}
+.normal_12px_font,.normal_12px_18px_font{
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+}
+.normal_16px_font,.normal_18px_font,.normal_16px_22px_font,.normal_12px_44px_font,.normal_14px_22px_font,.normal_22px_14px_font,.normal_14px_16px_font,.normal_10px_44px_font,.normal_13px_15px_font,.normal_20px_22px_font,.normal_12px_22px_font,.normal_16px_44px_font{
+    font-weight: 400;
+}
+.normal_16px_39px_font,.normal_11px_font,.normal_12px_font,.normal_12px_18px_font{
+    font-weight: 500;
+}
+.bold_18px_font,.bold_20px_font,.bold_20px_26px_font,.bold_14px_16px_font{
+    font-weight: 700;
+}
+.normal_16px_22px_font,.bold_18px_font,.normal_14px_22px_font,.normal_12px_22px_font{
+    line-height: 22px;
+}
+.bold_20px_font,.normal_12px_44px_font,.normal_10px_44px_font,.normal_16px_44px_font{
+    line-height: 44px;
+}
+.normal_16px_font{
+    font-size: 16px;
+    line-height: 19px;
+}
+.normal_16px_22px_font{
+    font-size: 16px;
+    letter-spacing:0.15px;
+}
+.normal_16px_44px_font{
+    font-size: 16px;
+}
+.normal_16px_39px_font{
+    font-size: 16px;
+    line-height: 39px;
+}
+.normal_11px_font{
+    font-size: 11px;
+    line-height: 13px;
+}
+.normal_18px_font{
+    font-size: 18px;
+    line-height: 14px;
+}
+.bold_18px_font{
+    font-size: 18px;
+}
+.bold_20px_font{
+    font-size: 20px;
+}
+.normal_12px_font{
+    font-size: 12px;
+    line-height: 20px;
+}
+.normal_12px_22px_font{
+    font-size: 12px;
+}
+.normal_12px_44px_font{
+    font-size: 12px;
+}
+.normal_14px_22px_font{
+    font-size: 14px;
+}
+.normal_22px_14px_font{
+    font-size: 22px;
+    line-height: 14px;
+}
+.bold_20px_26px_font{
+    font-size: 20px;
+    line-height: 26x;
+}
+.bold_14px_16px_font{
+    font-size: 14px;
+    line-height: 16px;
+}
+.normal_14px_16px_font{
+    font-size: 14px;
+    line-height: 16px;
+}
+.normal_10px_44px_font{
+    font-size: 10px;
+}
+.normal_13px_15px_font{
+    font-size: 13px;
+    line-height: 15px;
+}
+.normal_12px_18px_font{
+    font-size: 12px;
+    line-height: 18px;
+}
+.normal_20px_22px_font{
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: 0.15px;
+}
+.letterspacing_15{
+    letter-spacing: 0.15px;
+}
+.emodaltitle
+{
+    color: #000000 !important;
+}
+.k-window
+{
+    background-color: #FAFAFA;
+}
+.mat-form-field-appearance-outline._mat-animation-noopable .mat-form-field-outline
+{
+    background-color: #FFFFFF;
+}
+.bottom-bar-wrapper{
+    display: flex;
+    margin-bottom: -16px;
+}
+.borderbox{
+    border: 1px solid #979797;
+    background: #FFFFFF;
+  }
+  
+::ng-deep .deletepopup
+{
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.25);
+    border-radius: 4px;
+}
+.uppercasetext
+{
+    text-transform: uppercase;
+}
+.normal_12px_font,.normal_12px_18px_font,.italicfont{
+    font-style: italic;
+}
+.mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
+    color: rgb(0 0 0 / 0%) !important;
+}
+  .tabcontent {
+    display: block;
+    padding: 6px 0px;
+    border-top: none;
+  }
+  .iconcolor
+  {
+    left: 39%;
+    color: #575757;
+  }
+  ::ng-deep input.mat-input-element {
+    margin-top: -0.300em !important;
+}
+.rowdatapaddingl{
+    padding-left: 8px;
+}
+.paddingtop{
+    padding-top: 6px;
+}
+
+  /* Laptop Screen Start */
+@media (max-width: 1440px){
+    .k-dialog-wrapper .k-dialog {
+        margin-left: 20%;
+    }
+    .normal_12px_font {
+      font-size: 10px !important;
+      line-height: 20px;
+  }
+  .tab button {
+    font-size: 15px !important;
+  }
+  .bold_20px_font {
+    font-size: 16px !important;}
+    .generaltemplate .col-xl-4 {
+        max-width: 31.333333%;}
+        .templateName {
+            padding: 0px !important;
+        }
+}
+@media (max-width: 1280px){
+.bold_20px_font {
+    font-size: 14px !important;
+}
+.templateName {
+    padding: 0px !important;
+}
+}
+/* Laptop Screen End */

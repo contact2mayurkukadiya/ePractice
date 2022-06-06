@@ -1,0 +1,122 @@
+<!-- <div class="pl-5 pr-5">
+    <app-appointment-header></app-appointment-header> -->
+    
+<kendo-splitter style="height: 100vh;">
+    <kendo-splitter-pane [size]="panelSize" [resizable]="false">
+        <div class="d-flex justify-content-between justify-content-center" [ngClass]="{ 'p-3': panelExpand, 'pt-3 pb-3': !panelExpand }" style="background: white;">
+            <h5 [ngClass]="{ 'collapseHeader' : !panelExpand }">Room List</h5>
+            <button mat-mini-fab disabled>
+                <mat-icon *ngIf="panelExpand" (click)="togglePanel($event);" class="m-0">menu</mat-icon>
+                <mat-icon *ngIf="!panelExpand" (click)="togglePanel($event);" class="m-0">menu_open</mat-icon>
+            </button>
+        </div>
+        <div class="d-flex p-3 align-items-center">
+            <input kendoTextBox style="width: 90%;" placeholder="Search Room" />
+            <mat-icon class="pl-2 default-icon">
+                filter_alt
+            </mat-icon>
+        </div>
+        <div class="list">
+            <div class="room" *ngFor="let room of rooms" [ngClass]="{ 'selected': room.selected }">
+                <div class="k-hbox">
+                    <div class="" [ngClass]="{ 'w-100 d-flex align-items-center' : panelExpand }">
+                        <b>
+                            {{ room.treatmentType }}
+                        </b>
+                    </div>
+                    <div class="flex-shrink-1">
+                        <mat-icon class="grey-icon hover-icon" (click)="onRoomClick(room);">
+                            {{ room.selected ? 'remove' : 'add' }}
+                        </mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </kendo-splitter-pane>
+    <kendo-splitter-pane>
+        <kendo-scheduler [ngClass]="{ 'fixed' : numberOfPractitioners > 3 }"
+            [selectedDate]="selectedDate"
+            [group]="group" 
+            [resources]="resources"
+            timezone="Australia/NSW"
+            (dateChange)="onDateChange($event)"
+            (slotDblClick)="slotDblClickHandler($event)"
+            (eventDblClick)="eventDblClickHandler($event)"
+            [startTime]="_startTime" [endTime]="_endTime"
+            [kendoSchedulerBinding]="editService.events | async"
+            [modelFields]="editService.fields"
+            [loading]="editService.loading"
+            [(selectedViewIndex)]="selectedViewIndex"
+            [columnWidth]="400">
+
+            <ng-template kendoSchedulerGroupHeaderTemplate let-resource="resource">
+                <div *ngIf="resource">
+                    {{ resource.treatmentType }}
+                </div>
+            </ng-template>
+
+            <ng-template kendoSchedulerTimeSlotTemplate let-date="date" let-resources="resources">
+                <!-- <div style="background:lavender; height: 100%; width: 100%;">
+                    {{ resources | json }}
+                    {{ date }}
+                </div> -->
+                
+                <!-- <strong>{{ date | kendoDate : 't' }}</strong> -->
+            </ng-template>
+
+            <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
+                <div class="room-event" [ngClass]="{ 'd-flex align-items-center ' : selectedViewIndex == 0 }"
+                    [ngStyle]="{ 'background' : event.dataItem.practitioner.color, 'height': '100%', 'width': '100%' }">
+                    <div class="ml-3">
+                        <kendo-avatar *ngIf="!event.dataItem.practitioner.photo" [shape]="'circle'" [initials]="event.dataItem.practitioner.initial" [height]="50" [width]="50"></kendo-avatar>
+                        <kendo-avatar *ngIf="event.dataItem.practitioner.photo" [shape]="'circle'" [imageSrc]="event.dataItem.practitioner.photo" [height]="50" [width]="50"></kendo-avatar>
+                    </div>
+                    <div [ngClass]="{ 'ml-3' : selectedViewIndex == 0 }">
+                        <b [matTooltip]="event.title">John Smith - testname</b>
+                        <div>
+                            <span>Initial Visit - test description</span>
+                        </div>
+                        <div>
+                            <span>First Visit - test description 2</span>
+                        </div>
+                        <div style="display: none;">
+                            {{ event | json }}
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <kendo-scheduler-day-view>
+            </kendo-scheduler-day-view>
+
+            <kendo-scheduler-work-week-view>
+            </kendo-scheduler-work-week-view>
+
+            <kendo-scheduler-week-view>
+            </kendo-scheduler-week-view>
+        </kendo-scheduler>
+    </kendo-splitter-pane>
+</kendo-splitter>
+<!-- </div> -->
+
+<div id="room_sliderShadow" class="overlay-shadow">
+    <div id="room_slider" class="overlay">
+      <div class="overlay-header">
+        <div class="row">
+          <span class="overlay-title">{{ sliderTitle }}</span>
+          <a href="javascript:void(0)" class="closebtn" (click)="closeSlider()">
+              <mat-icon>clear</mat-icon>
+          </a>
+        </div>
+      </div>
+      <div class="overlay-content">
+        <app-add-room (save)="onScheduleSave($event);" 
+                        (cancel)="onCancel($event);" 
+                        [practitioners]="practitioners"
+                        [rooms]="rooms" 
+                        [event]="editedEvent"
+                        [editMode]="editMode"
+                        [isNew]="isNew"></app-add-room>
+      </div>
+    </div>
+</div>

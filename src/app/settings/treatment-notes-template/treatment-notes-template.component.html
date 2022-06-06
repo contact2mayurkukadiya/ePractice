@@ -1,0 +1,135 @@
+<block-ui message="Loading..."> </block-ui>
+<div class="pl-5 pr-5">
+  <h3 class="mb-3 mt-3" id="heading">Treatment Notes Template</h3>
+  <mat-tab-group color="warn">
+    <mat-tab label="Details">
+      <div class="row mt-3">
+        <div class="col-xl-6">
+          <p
+            *ngIf="displaySuccessMessage"
+            class="alert d-flex align-items-center mb-4"
+            class="alert-success"
+          >
+            <mat-icon class="success"> check_circle </mat-icon>
+            <span>
+              {{ displaySuccessMessage }}
+            </span>
+          </p>
+        </div>
+        <div class="col-xl-6 d-flex justify-content-end">
+          <div class="ml-auto">
+            <mat-button-toggle-group
+              appearance="legacy"
+              name="status"
+              aria-label="status"
+              class="ml-3 mt-2"
+              value="active"
+              (change)="treatmentNotesActiveChanged($event)"
+            >
+              <mat-button-toggle value="active">Active</mat-button-toggle>
+              <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+          <div class="ml-3">
+            <button
+              mat-stroked-button
+              color="accent"
+              [routerLink]="['/settings/templatelibrary']"
+              class="wide"
+            >
+              Template Library
+            </button>
+          </div>
+          <div class="ml-3">
+            <button
+              mat-raised-button
+              color="accent"
+              [routerLink]="['/settings/treatmentnotestemplate/add']"
+              class="wide"
+            >
+              Add Template
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="treatmentNotesShow" class="mt-3">
+        <kendo-grid
+          [data]="gridData"
+          [pageSize]="pageSize"
+          [skip]="skip"
+          [pageable]="true"
+          [columnMenu]="true"
+          [reorderable]="true"
+          [filterable]="true"
+          [filter]="state.filter"
+          (dataStateChange)="dataStateChange($event)"
+          [sortable]="true"
+          [groupable]="true"
+          [group]="groups"
+          [reorderable]="reorder"
+          [sortable]="{
+            allowUnsort: allowUnsort,
+            mode: multiple ? 'multiple' : 'single'
+          }"
+          [sort]="sort"
+          (sortChange)="sortChange($event)"
+          (groupChange)="groupChange($event)"
+        >
+          <kendo-grid-column width="60" field="id">
+            <ng-template
+              kendoGridHeaderTemplate
+              let-column
+              let-columnIndex="columnIndex"
+            >
+              Name
+            </ng-template>
+            <ng-template
+              kendoGridCellTemplate
+              let-dataItem
+              let-rowIndex="rowIndex"
+            >
+              <h6>
+                <strong>
+                  <a
+                    [routerLink]="['/settings/treatmentnotestemplate/edit', dataItem.id]"
+                  >
+                    {{ dataItem.templateName }}
+                  </a></strong
+                >
+              </h6>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column
+            field="allLocationName"
+            title="Location"
+            width="50"
+          ></kendo-grid-column>
+          <kendo-grid-column
+            field="allLocationName"
+            title="Specialty"
+            width="50"
+          ></kendo-grid-column>
+          <kendo-grid-column
+            field="sharedToLibrary"
+            title="Shared to Library"
+            width="50"
+          ></kendo-grid-column>
+          <kendo-grid-column
+            field="createdBy"
+            title="Created By"
+            width="50"
+          ></kendo-grid-column>
+        </kendo-grid>
+      </div>
+      <app-grid-no-data
+        [title]="treatmentNotesTitle"
+        [routeLink]="treatmentNotesRouteLink"
+        [routeName]="treatmentNotesRouteName"
+        [description]="treatmentNotesDescription"
+        id="treatmentNotesNoData"
+      >
+      </app-grid-no-data>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,143 @@
+<div class="w-100">
+    <div class="col-xl-12 align-items-center">
+        <div class="aformheading">
+            <div class="normal_22px_14px_font normalhelfont Aformtitle lightcolor" style="font-size: 18px;color:1c1c1c; font-weight: bold; ">
+                Spine</div>
+            <div>
+                <img src="../../../assets/Edit.png" class="additemmodulehw" (click)="editTitle()" kendoTooltip title="Edit" />
+                <img src="../../../assets/down.png" class="additemmodulehw" kendoTooltip title="Down" (click)="doMoveDown()" />
+                <img src="../../../assets/up.png" class="additemmodulehw" kendoTooltip title="Up" (click)="doMoveUp()" />
+                <img src="../../../assets/Delete.png" class="additemmodulehw" (click)="deleteChart()" kendoTooltip title="Delete" />
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 align-items-center gray-border">
+        <div class="mb-3 d-flex justify-content-end align-items-center">
+            <div class="d-flex align-items-center">
+                <button matTooltip="Undo" (click)="undo()" [disabled]="_config.disableUndo" class="editor-button mr-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100"><path fill="currentColor" d="M28.485 28.485L80.65 80.65C125.525 35.767 187.515 8 255.999 8 392.66 8 504.1 119.525 504 256.185 503.9 393.067 392.905 504 256 504c-63.926 0-122.202-24.187-166.178-63.908-5.113-4.618-5.353-12.561-.482-17.433l19.738-19.738c4.498-4.498 11.753-4.785 16.501-.552C160.213 433.246 205.895 452 256 452c108.321 0 196-87.662 196-196 0-108.321-87.662-196-196-196-54.163 0-103.157 21.923-138.614 57.386l54.128 54.129c7.56 7.56 2.206 20.485-8.485 20.485H20c-6.627 0-12-5.373-12-12V36.971c0-10.691 12.926-16.045 20.485-8.486z"/></svg>
+                </button>
+                <button matTooltip="Redo" (click)="redo()" [disabled]="_config.disableRedo" class="editor-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100"><path fill="currentColor" d="M483.515 28.485L431.35 80.65C386.475 35.767 324.485 8 256.001 8 119.34 8 7.9 119.525 8 256.185 8.1 393.067 119.095 504 256 504c63.926 0 122.202-24.187 166.178-63.908 5.113-4.618 5.353-12.561.482-17.433l-19.738-19.738c-4.498-4.498-11.753-4.785-16.501-.552C351.787 433.246 306.105 452 256 452c-108.321 0-196-87.662-196-196 0-108.321 87.662-196 196-196 54.163 0 103.157 21.923 138.614 57.386l-54.128 54.129c-7.56 7.56-2.206 20.485 8.485 20.485H492c6.627 0 12-5.373 12-12V36.971c0-10.691-12.926-16.045-20.485-8.486z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="canvas-wrapper" [ngClass]="{'invisible': loading}">
+            <div class="mr-2 spine-node-container">
+                <div class="spine-node-checkbox d-flex align-items-center justify-content-end" *ngFor="let left of data.leftData;let i = index">
+                    <label for="left{{i}}" class="lightsgrey checktext">{{left.label}}</label>
+                    <input type="checkbox" id="left{{i}}" kendoCheckBox class="checkboxitem" [(ngModel)]="left.value" />
+                </div>
+            </div>
+            <canvas [id]="randomCanvasId"></canvas>
+            <div class="ml-2 spine-node-container">
+                <div class="spine-node-checkbox d-flex align-items-center justify-content-start" *ngFor="let right of data.rightData;let i = index">
+                    <input type="checkbox" id="right{{i}}" kendoCheckBox class="checkboxitem" [(ngModel)]="right.value" />
+                    <label for="right{{i}}" class="lightsgrey checktext">{{right.label}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button matTooltip="Pencil" (click)="activateDrawingTool('pencil')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'pencil'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                        <path fill="currentColor" d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/>
+                    </svg>
+                </button>
+                <button matTooltip="Pen" (click)="activateDrawingTool('pen')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'pen'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                        <path fill="currentColor" d="M497.94 74.17l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.75 18.75-49.15 0-67.91zm-246.8-20.53c-15.62-15.62-40.94-15.62-56.56 0L75.8 172.43c-6.25 6.25-6.25 16.38 0 22.62l22.63 22.63c6.25 6.25 16.38 6.25 22.63 0l101.82-101.82 22.63 22.62L93.95 290.03A327.038 327.038 0 00.17 485.11l-.03.23c-1.7 15.28 11.21 28.2 26.49 26.51a327.02 327.02 0 00195.34-93.8l196.79-196.79-82.77-82.77-84.85-84.85z"/>
+                    </svg>
+                </button>
+                <button matTooltip="Brush" (click)="activateDrawingTool('marker')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'marker'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100">
+                        <path fill="currentColor" d="M365.99 33.1L194.11 289.51l78 65 218.81-221.52C564.15 52.52 427.95-55.3 365.99 33.1zM167.87 309.29c-40.45 2.41-77.23 17.53-98.03 72.35-2.35 6.21-8 9.98-14.59 9.98-11.11 0-45.46-27.67-55.25-34.35C0 439.62 37.93 512 128 512c75.86 0 128-43.77 128-120.19 0-3.39-.68-6.64-1.06-9.96l-87.07-72.56z"/>
+                    </svg>
+                </button>
+                <button matTooltip="Highlighter" (click)="activateDrawingTool('highlighter')" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'highlighter'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544 512" class="w-100 h-100">
+                        <path fill="currentColor" d="M0 479.98L99.92 512l35.45-35.45-67.04-67.04L0 479.98zm124.61-240.01a36.592 36.592 0 00-10.79 38.1l13.05 42.83-50.93 50.94 96.23 96.23 50.86-50.86 42.74 13.08c13.73 4.2 28.65-.01 38.15-10.78l35.55-41.64-173.34-173.34-41.52 35.44zm403.31-160.7l-63.2-63.2c-20.49-20.49-53.38-21.52-75.12-2.35L190.55 183.68l169.77 169.78L530.27 154.4c19.18-21.74 18.15-54.63-2.35-75.13z"/>
+                    </svg>
+                </button>
+                <button matTooltip="Eraser" (click)="enableEraserTool()" class="editor-button" [ngClass]="{'selected-color': selectedDrawingTool.type == 'eraser'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-100 h-100"><path fill="currentColor" d="M497.941 273.941c18.745-18.745 18.745-49.137 0-67.882l-160-160c-18.745-18.745-49.136-18.746-67.883 0l-256 256c-18.745 18.745-18.745 49.137 0 67.882l96 96A48.004 48.004 0 00144 480h356c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12H355.883l142.058-142.059zm-302.627-62.627l137.373 137.373L265.373 416H150.628l-80-80 124.686-124.686z"/></svg>
+                </button>
+                <button matTooltip="Clear All" (click)="isClearSketchDialog = true;" class="editor-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-100 h-100"><path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"/></svg>
+                </button>
+                <!-- <button (click)="generatePreview()" class="editor-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-100 h-100"><path fill="currentColor" d="M112 192a48 48 0 10-48-48 48 48 0 0048 48zm0-64a16 16 0 11-16 16 16 16 0 0116-16zm304-96H32A32 32 0 000 64v384a32 32 0 0032 32h384a32 32 0 0032-32V64a32 32 0 00-32-32zm0 416H32v-80h384zM85.2 336l52-69.33 40 53.33-12 16zm120 0l76-101.33 76 101.33zm210.8 0h-18.8L294 198.41c-6.06-8.07-19.56-8.07-25.62 0l-71.19 94.91L150 230.41c-6.06-8.07-19.56-8.07-25.62 0L45.18 336H32V64h384z"/></svg>
+                </button> -->
+            </div>
+            <div class="d-flex align-items-center">
+                <button class="color-item" (click)="enableLineColor(color)" [ngStyle]="{'background': color}" [ngClass]="{'selected-color': color == selectedLineColor}" *ngFor="let color of lineColors"></button>
+            </div>
+        </div>
+        <!-- <img [src]="data.finalImage" /> -->
+        <div class="row mt-5 no-gutters">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Spine Note</mat-label>
+                <textarea matInput [(ngModel)]="data.spineNote" placeholder="Type here..." rows="5" style="width: 95%; border-radius: 5px;" matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=5></textarea>
+            </mat-form-field>
+        </div>
+        <!-- <mat-form-field appearance="outline" class="full-width mt-5" style="min-height: 100px;">
+            <mat-label>Spine Note</mat-label>
+            <textarea matInput [(ngModel)]="data.spineNote" placeholder="Type here..." rows="3"></textarea>
+        </mat-form-field> -->
+    </div>
+</div>
+
+<!-- Dialogs -->
+<kendo-dialog *ngIf="isTitleInEditing" (close)="closeTitleEditing('cancel')" [height]="auto" [width]="880">
+    <span class="bold_18px_font black uppercasetext">
+        EDIT SPINE
+    </span>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="modalClosebtn exportclose">
+        <button mat-icon-button (click)="closeTitleEditing('cancel')" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="d-flex align-items-center mt-4 mb-4">
+        <input type="checkbox" id="mendatory" kendoCheckBox class="checkboxitem" [(ngModel)]="isMendatory" />
+        <label for="mendatory" class="lightsgrey checktext">Make this as a Mandatory item</label>
+    </div>
+    <mat-divider class="ml-3 mr-4 mt-3"></mat-divider>
+    <div class="bottom-bar-wrapper">
+        <div class="text-left control-row deletebutton" style="padding-left: 30px;">
+            <div class="pt-3">
+                <button mat-raised-button class="deletebutton-wrapper custom-delete-btn cancelbutton" (click)="deleteChart">
+                    Delete
+                </button>
+            </div>
+        </div>
+        <div class="text-right control-row">
+            <div class="pt-3">
+                <button mat-stroked-button color="accent" class="mr-3 cancelbutton" (click)="closeTitleEditing('cancel')">Cancel</button>
+                <button mat-raised-button color="accent" (click)="saveTitleChanges();">Save</button>
+            </div>
+        </div>
+    </div>
+</kendo-dialog>
+
+<kendo-dialog *ngIf="isClearSketchDialog" (close)="closeClearSketchDialog('cancel')" [height]="auto" [width]="700">
+    <span class="bold_18px_font black uppercasetext">
+        DO YOU WISH TO CLEAR THIS SKETCH?
+    </span>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="modalClosebtn exportclose">
+        <button mat-icon-button (click)="closeClearSketchDialog('cancel')" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <p class="normal_14px_22px_font mt-5 mb-5 pl-3">Cleared sketch can not be restored</p>
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="bottom-bar-wrapper">
+        <div class="text-right control-row">
+            <div class="pt-3">
+                <button mat-stroked-button color="accent" class="mr-3 cancelbutton" (click)="closeClearSketchDialog('cancel')">No</button>
+                <button mat-raised-button color="accent" (click)="closeClearSketchDialog('');">Yes</button>
+            </div>
+        </div>
+    </div>
+</kendo-dialog>

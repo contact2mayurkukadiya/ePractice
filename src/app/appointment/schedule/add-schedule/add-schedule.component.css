@@ -1,0 +1,18 @@
+:host ::ng-deep .k-recurrence-editor .k-edit-field {
+    float: left;
+    clear: left;
+}
+
+:host ::ng-deep .k-recurrence-editor .k-edit-label {
+    float: left;
+    text-align: left;
+}
+
+
+:host ::ng-deep .k-button-group .k-button:active, 
+:host ::ng-deep .k-button-group .k-button.k-state-active, 
+:host ::ng-deep .k-button-group .k-button.k-state-selected,
+:host ::ng-deep .k-radio:checked {
+    background-color: #a18bd6;
+    border-color: #a18bd6;
+}

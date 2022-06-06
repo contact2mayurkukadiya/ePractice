@@ -1,0 +1,132 @@
+<block-ui message="Loading...">
+</block-ui>
+<div class="pl-5 pr-5">
+    <h3 class="mb-3 mt-3" id="heading">
+        Staffs
+    </h3>
+
+    
+    <mat-tab-group color="warn" >
+        <mat-tab label="Our Group">
+            <div class="row mt-3">
+                <div class="col-xl-12">
+                    <div class="d-flex align-items-center">
+                        <!-- <div class="mr-3 ddl">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                                <mat-label>Staff</mat-label>
+                                <mat-select [(ngModel)]="staffSelection">
+                                    <mat-option value="All">
+                                        All staff
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+                        <div class="ml-auto">
+                            <mat-button-toggle-group appearance="legacy" #group="matButtonToggleGroup" [(ngModel)]="displaySelection">
+                                <mat-button-toggle value="list" aria-label="list">
+                                    <mat-icon>list</mat-icon>
+                                </mat-button-toggle>
+                                <mat-button-toggle value="pic" aria-label="pic">
+                                    <mat-icon>location_on</mat-icon>
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <mat-button-toggle-group appearance="legacy" name="status" aria-label="status" class="ml-3" [(ngModel)]="status" (change)="staffActiveChanged($event);">
+                                <mat-button-toggle value="active">Active</mat-button-toggle>
+                                <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                        <div class="ml-3">
+                            <button mat-raised-button color="accent" [routerLink]="['/staffs/add']" class="wide">Add Staff</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3" *ngIf="displaySelection == 'list'">
+                <div class="col-xl-12">
+                    <kendo-grid [data]="gridView" 
+                        [pageSize]="pageSize"
+                        [skip]="skip"
+                        [pageable]="true"
+                        [columnMenu]="true"
+                        (pageChange)="pageChange($event)"
+                        [sortable]="{
+                            allowUnsort: allowUnsort,
+                            mode: multiple ? 'multiple' : 'single'
+                            }"
+                        [sort]="sort"
+                        (sortChange)="sortChange($event)"
+                        [filterable]="true"
+                        [filter]="state.filter"
+                        (dataStateChange)="dataStateChange($event)"
+                        [groupable]="true"
+                        [group]="groups"
+                        [reorderable]="reorder"
+                        (groupChange)="groupChange($event)">
+                            <kendo-grid-column field="nickName" title="Staff Name" width="50">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <a [routerLink]="['/staffs/', dataItem.id]">
+                                        {{ dataItem.nickName }} 
+                                    </a>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="mobile" title="Mobile" width="50">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="position" title="Position" width="50">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="specialities" title="Speciality" width="50">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="locations" title="Locations" width="50">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="roles" title="Roles" width="50">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="practitioners" title="Practitioner Calendar" width="50">
+                            </kendo-grid-column>
+                    </kendo-grid>
+                </div>
+            </div>
+
+            <div class="row mt-3" *ngIf="displaySelection == 'pic'">
+                <div class="col-xl-12 mt-1 mb-1">
+                    <p>Showing 12 of 120 staffs</p>
+                </div>
+                <div class="col-xl-3 mb-4" *ngFor="let key of [1,2,3,4,5,6,7,8,9,10,11,12]" >
+                    <div class="p-4 grey-rounded-border">
+                        <img src="../../../assets/placeholder-image.png" class="img-fluid" />
+        
+                        <h5 class="mt-3">Name</h5>
+                        <p>Title</p>
+                        <p>
+                            Descrption....
+                        </p>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="d-inline-block color mr-3">
+                            </span> 
+                            <span class="d-inline-block">Mon-Fri</span>
+                        </div>
+                        <p>0400 000 000</p>
+                    </div>
+                </div>
+                <mat-paginator [length]="120"
+                               [pageSize]="12"
+                               [pageSizeOptions]="[12, 24, 36, 48]">
+                </mat-paginator>
+            </div>
+
+        </mat-tab>
+        <mat-tab label="Roles and Permissions">
+            <app-roles-and-permissions></app-roles-and-permissions>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+
+
+
+
+
+
+    
+
+    
+

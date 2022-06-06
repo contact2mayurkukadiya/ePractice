@@ -1,0 +1,90 @@
+
+<form [formGroup]="editForm" autocomplete="off" class="p-3">
+    <div class="form-group row">
+        <div class="col-xl-12">
+
+            <div class="pb-3">
+                <span>Break Name</span>
+                <app-add-new-dropdown class="full-width"
+                    [categoryId]="breakNameParentId"
+                    [selectedId]="breakNameId"
+                    (appId)="appIdBreakNameChangedHandler($event)">
+                </app-add-new-dropdown>
+                <mat-error *ngIf="editForm.get('breakId').hasError('required')">
+                    Break Name is required.
+                </mat-error>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="text-left">
+                <span>Start Time</span>
+            </div>
+            
+            <kendo-datepicker formControlName="start" [hidden]="true">
+            </kendo-datepicker>
+            <kendo-timepicker formControlName="start" *ngIf='!editForm.controls.isAllDay.value' [steps]="steps" [min]="min" [max]="max">
+            </kendo-timepicker>
+        </div>
+        <div class="col-xl-6">
+            <div class="text-left">
+                <span>End Time</span>
+            </div>
+            <kendo-datepicker formControlName="end" [hidden]="true">
+            </kendo-datepicker>
+            <kendo-timepicker formControlName="end" *ngIf='!editForm.controls.isAllDay.value' [steps]="steps" [min]="min" [max]="max">
+            </kendo-timepicker>
+        </div>
+
+        <div class="col-xl-12 mt-3">
+            <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Practitioner</mat-label>
+                <mat-select formControlName="practitionerId" disabled>
+                    <mat-select-trigger>
+                        <div *ngIf="selectedPractitioner" class="d-flex align-items-center">
+                            <kendo-avatar *ngIf="!selectedPractitioner.photo" [shape]="'circle'" [initials]="selectedPractitioner.initial"></kendo-avatar>
+                            <kendo-avatar *ngIf="selectedPractitioner.photo" [shape]="'circle'" [imageSrc]="selectedPractitioner.photo"></kendo-avatar>
+                            <span class="pl-1">{{ selectedPractitioner.practitionerName }}</span>
+                        </div>
+                      </mat-select-trigger>
+                    <mat-option *ngFor="let p of Practitioners" [value]="p.practitionerId">
+                        <div class="d-flex align-items-center">
+                            <kendo-avatar *ngIf="!p.photo" [shape]="'circle'" [initials]="p.initial"></kendo-avatar>
+                            <kendo-avatar *ngIf="p.photo" [shape]="'circle'" [imageSrc]="p.photo"></kendo-avatar>
+                            <span class="pl-1">{{ p.practitionerName }}</span>
+                        </div>
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editForm.get('practitionerId').hasError('required')">
+                    Practitioner is required.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        
+        <div class="col-xl-12">
+            <div class="mt-3 mb-3">
+                <div>
+                    <b>Recurrence Pattern</b>
+                </div>
+                <div class="mt-3">
+                    <kendo-recurrence-editor *ngIf="isEditingSeries" formControlName='recurrenceRule'>
+                    </kendo-recurrence-editor>
+                </div>                
+            </div>
+        </div>
+        <div class="col-xl-12">
+            <div class="mt-3 mb-3">
+                <mat-form-field [appearance]="apperance" class="full-width">
+                    <mat-label>Notes</mat-label>
+                    <textarea matInput placeholder="Notes" formControlName="note" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="col-xl-12">
+            <div class="pt-3">
+                <button mat-raised-button color="accent" [disabled]="editForm.invalid" (click)="onSave($event)">Save</button>
+                <button mat-stroked-button color="accent" class="ml-1" (click)="onCancel($event)">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

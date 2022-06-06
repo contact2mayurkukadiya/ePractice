@@ -1,0 +1,1043 @@
+<block-ui message="Loading..."> </block-ui>
+
+<form [formGroup]="patientForm">
+  <div class="form-group row">
+    <div class="col-xl-3">
+      <div class="row">
+        <div class="col-xl-12 d-flex align-items-center">
+          <app-image-upload [buttonText]="'Upload Photo'" #photo></app-image-upload>
+        </div>
+
+        <!-- Patient ID  -->
+        <div *ngIf="pId !== ''" class="col-xl-12 patientid-color">
+          Patient ID :{{ pId }}
+        </div>
+
+        <!-- First Visit Date  -->
+        <div *ngIf="firstVisitDate !== ''" class="col-xl-12 patientid-color">
+          First Visit Date :{{ firstVisitDate | date }}
+        </div>
+
+        <!-- Status  -->
+        <div class="col-xl-6 kendo-dropdown-label">Status</div>
+        <div class="col-xl-6 d-flex justify-content-end">
+          <span class="hazel-text">Required</span>
+        </div>
+        <div class="col-xl-12 d-block align-items-center mb-1">
+          <app-add-new-dropdown [categoryId]="patientStatusParentId" [selectedId]="patientStatusId"
+            (appId)="appIdPatientStatusHandler($event)"></app-add-new-dropdown>
+        </div>
+
+        <!-- Position  -->
+        <div class="col-xl-6 kendo-dropdown-label">Position</div>
+        <div class="col-xl-6 d-flex justify-content-end">
+          <span class="hazel-text">Required</span>
+        </div>
+        <div class="col-xl-12 d-block align-items-center mb-1">
+          <app-add-new-dropdown [categoryId]="patientPositionParentId" [selectedId]="patientPositionId"
+            (appId)="appIdPatientPositionHandler($event)"></app-add-new-dropdown>
+        </div>
+
+        <!-- Mobile  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Mobile</mat-label>
+            <input matInput placeholder="Mobile" type="tel" formControlName="mobile" />
+          </mat-form-field>
+        </div>
+
+        <!-- Email  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email id" formControlName="email" />
+          </mat-form-field>
+        </div>
+
+        <!-- Location  -->
+        <div class="col-xl-6 kendo-dropdown-label">Location</div>
+        <div class="col-xl-6 d-flex justify-content-end">
+          <span class="hazel-text">Required</span>
+        </div>
+        <div class="col-xl-12 d-block align-items-center">
+          <kendo-multiselect [data]="locationList" placeholder="Location" formControlName="locationName"
+            [filterable]="true" [textField]="'locationName'" [valueField]="'id'" required
+            (valueChange)="onLocationChange($event)">
+          </kendo-multiselect>
+        </div>
+
+        <!-- Practitioner  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Primary Practitioner</mat-label>
+            <mat-select formControlName="practitionerId">
+              <mat-option *ngFor="let p of practitionerData" [value]="p.id">
+                {{ p.firstName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Patient Classification  -->
+        <div class="col-xl-12 d-block align-items-center">
+          <div class="kendo-dropdown-label">Patient Classification</div>
+          <app-add-new-dropdown [categoryId]="patientClassificationParentId" [selectedId]="patientClassificationId"
+            (appId)="appIdPatientClassificationHandler($event)"></app-add-new-dropdown>
+        </div>
+        <div class="col-xl-12 d-flex align-items-center small-font-size">
+          Purpose of consult i.e., Weight Loss, Fitness, Trauma
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <!-- Personal Details-->
+      <div *ngIf="personalDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Personal details
+          </div>
+          <div class="row">
+            <!-- Title  -->
+            <div class="col-xl-6 d-block align-items-center">
+              <div class="row">
+                <div class="col-xl-8 d-block align-items-center">Title</div>
+                <div class="col-xl-4 d-block align-items-center">Required</div>
+              </div>
+            </div>
+            <div class="col-xl-6 d-block align-items-center">
+              <div class="row">
+                <div class="col-xl-8 d-block align-items-center">Title</div>
+                <div class="col-xl-4 d-block align-items-center">Required</div>
+              </div>
+            </div>
+            <div class="col-xl-6 d-block align-items-center">
+              <app-add-new-dropdown [categoryId]="titleParentId" [selectedId]="titleId"
+                (appId)="appIdTitleHandler($event)"></app-add-new-dropdown>
+            </div>
+
+            <!-- Gender  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender">
+                  <mat-option value="Male"> Male </mat-option>
+                  <mat-option value="Female"> Female </mat-option>
+                  <mat-option value="Other"> Other </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-xl-6 d-flex justify-content-end">
+              <span class="hazel-text">Required</span>
+            </div>
+            <div class="col-xl-6 d-flex justify-content-end">
+              <span class="hazel-text">Required</span>
+            </div>
+            <!-- First Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" formControlName="firstName" required />
+              </mat-form-field>
+            </div>
+
+            <!-- Last Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" formControlName="lastName" required />
+              </mat-form-field>
+            </div>
+
+            <div class="col-xl-12 d-flex justify-content-end">
+              <span class="hazel-text">Required</span>
+            </div>
+            <!-- Middle Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Middle Name</mat-label>
+                <input matInput placeholder="Middle Name" formControlName="middleName" />
+              </mat-form-field>
+            </div>
+
+            <!-- Preferred Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Preferred Name</mat-label>
+                <input matInput placeholder="Preferred Name" formControlName="preferredName" required />
+              </mat-form-field>
+            </div>
+
+            <!-- Date of birth  -->
+            <div class="col-xl-6">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Date of birth</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dob"
+                  (dateChange)="dateOfBirthchange($event.value)" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-hint>DD/MM/YYYY</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <!-- Date of birth  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <input matInput placeholder="0 years 0 months" formControlName="dobDisable" type="text"
+                  [readonly]="true" />
+              </mat-form-field>
+            </div>
+
+            <!-- Nationality  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Nationality</mat-label>
+                <mat-select formControlName="nationality">
+                  <mat-option value="Australian"> Australian </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Language  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="language">
+                  <mat-option value="English"> English </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+      <!-- Contact Details-->
+      <div *ngIf="contactDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Contact Details
+          </div>
+          <div class="row">
+            <!-- Address  -->
+            <div class="col-xl-12 d-block align-items-center">Address</div>
+            <div class="col-xl-12 d-block align-items-center mb-3">
+              <kendo-autocomplete [data]="addressData" style="height: 50px; width: 100%" formControlName="address"
+                [filterable]="true" (filterChange)="onAddressSearchChange($event)">
+                <ng-template kendoAutoCompleteItemTemplate let-dataItem>
+                  <span style="color: #00f">{{ dataItem.label }}</span>
+                </ng-template>
+              </kendo-autocomplete>
+            </div>
+
+            <!-- Country  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="country" [disabled]="true">
+                  <mat-option *ngFor="let c of countries" [value]="c.country_Name">
+                    {{ c.country_Name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- State  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="state">
+                  <mat-option value="ACT"> ACT </mat-option>
+                  <mat-option value="NSW"> NSW </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- City  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>City</mat-label>
+                <mat-select formControlName="city">
+                  <mat-option value="Sydney"> Sydney </mat-option>
+                  <mat-option value="Melbourne"> Melbourne </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Post code  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Post code</mat-label>
+                <input matInput placeholder="Post code" formControlName="postCode" type="number" required />
+              </mat-form-field>
+            </div>
+
+            <!-- Home Phone  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Home Phone</mat-label>
+                <input matInput placeholder="Home Phone" formControlName="homePhone" type="number" />
+              </mat-form-field>
+            </div>
+
+            <!-- Work Phone  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Work Phone</mat-label>
+                <input matInput placeholder="Work Phone" formControlName="workPhone" type="number" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Emergency Contact
+          </div>
+          <div class="row">
+            <!-- Relationship  -->
+            <div class="col-xl-12 d-block align-items-center">Relationship</div>
+            <div class="col-xl-6 d-block align-items-center">
+              <app-add-new-dropdown [categoryId]="patientRelationshipParentId" [selectedId]="patientRelationshipId"
+                (appId)="appIdPatientRelationshipHandler($event)"></app-add-new-dropdown>
+            </div>
+
+            <!-- Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="emergencyContactName" />
+              </mat-form-field>
+            </div>
+
+            <!-- Home Phone  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Home Phone</mat-label>
+                <input matInput placeholder="Home Phone" formControlName="emergencyContactHomePhone" type="number" />
+              </mat-form-field>
+            </div>
+
+            <!-- Work Phone  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Work Phone</mat-label>
+                <input matInput placeholder="Work Phone" formControlName="emergencyContactWorkPhone" type="number" />
+              </mat-form-field>
+            </div>
+
+            <!-- Mobile  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Mobile</mat-label>
+                <input matInput placeholder="Mobile" formControlName="emergencyContactMobile" type="number" />
+              </mat-form-field>
+            </div>
+
+            <!-- Email  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="emergencyContactEmail" />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+      <!-- Medical Details-->
+      <div *ngIf="medicalDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Medical Details
+          </div>
+          <div class="row">
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Medical Condition</mat-label>
+                <textarea matInput placeholder="Medical Condition" formControlName="medicalCondition"
+                  rows="7"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Allergy</mat-label>
+                <textarea matInput placeholder="Allergy" formControlName="allergy" rows="7"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Medication</mat-label>
+                <textarea matInput placeholder="Medication" formControlName="medication" rows="7"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <!-- Employer Details-->
+      <div *ngIf="employerDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Employer Details
+          </div>
+          <div class="row">
+            <!-- Patient Occupation  -->
+            <div class="col-xl-12 d-block align-items-center mb-3">
+              <div class="kendo-dropdown-label">Patient Occupation</div>
+              <app-add-new-dropdown [categoryId]="patientOccupationParentId" [selectedId]="patientOccupationId"
+                (appId)="appIdPatientOccupationHandler($event)"></app-add-new-dropdown>
+            </div>
+
+            <!-- Patient Designation  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Patient Designation</mat-label>
+                <input matInput placeholder="Patient Designation" formControlName="designation" />
+              </mat-form-field>
+            </div>
+
+            <!-- Employer name  -->
+            <div class="col-xl-12 d-block align-items-center mb-3">
+              <div class="kendo-dropdown-label">Employer</div>
+              <div class="d-flex">
+                <kendo-dropdownlist [data]="employers" [valuePrimitive]="true"
+                  [formControl]="patientForm.get('employer')" [textField]="'name'" [valueField]="'id'"
+                  class="kendo-dropdown-size" formControlName="employer" (valueChange)="handleEmployerChange($event)">
+                </kendo-dropdownlist>
+                <button mat-stroked-button color="accent" class="plus-button" (click)="openSlider()">
+                  +
+                </button>
+              </div>
+            </div>
+
+            <!-- Department  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Department</mat-label>
+                <input matInput placeholder="Department" formControlName="employerDepartmentName" [readonly]="true" />
+              </mat-form-field>
+            </div>
+
+            <!-- Contact Person  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Contact Person</mat-label>
+                <input matInput placeholder="Contact Person" formControlName="employerContactPerson"
+                  [readonly]="true" />
+              </mat-form-field>
+            </div>
+
+            <!-- Work Phone  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Work Phone</mat-label>
+                <input matInput placeholder="Work Phone" formControlName="employerWorkPhone" [readonly]="true" />
+              </mat-form-field>
+            </div>
+
+            <!-- Email  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" [readonly]="true" formControlName="employerEmail" />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <!-- Marketing Details-->
+      <div *ngIf="marketingDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Marketing Referral Source
+          </div>
+          <div class="row">
+            <!-- Marketing Referral Source  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Marketing Referral Source</mat-label>
+                <mat-select formControlName="marketingSource">
+                  <mat-option *ngFor="let m of marketingSourcesData" [value]="m.id">
+                    {{ m.marketingName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Communication Consent  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <table id="commconsent" style="width: 100%">
+                <tr>
+                  <th>Communication Consent</th>
+                  <th>Reminders</th>
+                  <th>Marketing</th>
+                </tr>
+                <tr>
+                  <td>SMS</td>
+                  <td>
+                    <mat-checkbox formControlName="communicationConsentSMSReminder"></mat-checkbox>
+                  </td>
+                  <td>
+                    <mat-checkbox formControlName="communicationConsentSMSMarketing"></mat-checkbox>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>
+                    <mat-checkbox formControlName="communicationConsentEmailReminder"></mat-checkbox>
+                  </td>
+                  <td>
+                    <mat-checkbox formControlName="communicationConsentEmailMarketing"></mat-checkbox>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col-xl-12 d-flex align-items-center small-font-size">
+              Patient has agreed to be contacted using the above selected
+              communication methods regarding his or her personal health
+              information, evaluation, treatment,account information such as
+              future appointments, offers, etc.
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <!-- Billing Details-->
+      <div *ngIf="billingDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Billing Details
+          </div>
+          <div class="row">
+            <!-- Concession  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Concession</mat-label>
+                <mat-select formControlName="concession">
+                  <mat-option *ngFor="let c of concessionsData" [value]="c.id">
+                    {{ c.concessionType }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Invoice Notes  -->
+            <div class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Invoice Notes</mat-label>
+                <textarea matInput placeholder="Invoice Notes" formControlName="invoiceNotes" rows="3"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Credit Card Details
+          </div>
+          <div class="row">
+            <!-- Card Type  -->
+            <div class="col-xl-12 d-block align-items-center">Card Type</div>
+            <div class="col-xl-6 d-block align-items-center">
+              <app-add-new-dropdown [categoryId]="cardTypeParentId" [selectedId]="cardTypeId"
+                (appId)="appIdCardTypeHandler($event)"></app-add-new-dropdown>
+            </div>
+            <!-- Card Holder Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Card Holder Name</mat-label>
+                <input matInput placeholder="Card Holder Name" formControlName="cardHolderName" />
+              </mat-form-field>
+            </div>
+
+            <!-- Card Number  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Card Number</mat-label>
+                <input matInput #creditCardNumber placeholder="Card Number" formControlName="creditCardNumber"
+                  (input)="cardValidatorChange(creditCardNumber.value)" maxlength="16" />
+                <mat-error> Invalid card Number </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Expiry Month  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Expiry Month</mat-label>
+                <mat-select formControlName="expiryMonth">
+                  <mat-option *ngFor="let m of months" [value]="m">
+                    {{ m }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Expiry Year  -->
+            <div class="col-xl-6 d-block align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Expiry Year</mat-label>
+                <input matInput placeholder="Expiry Year" formControlName="expiryYear" maxlength="4" />
+              </mat-form-field>
+            </div>
+
+            <!-- CVV  -->
+            <div class="col-xl-6 d-block align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>CVV</mat-label>
+                <input matInput placeholder="CVV" formControlName="cvv" maxlength="3" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Bank Details
+          </div>
+          <div class="row">
+            <!-- Account Name  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Account Name</mat-label>
+                <input matInput placeholder="Account Name" formControlName="accountName" />
+              </mat-form-field>
+            </div>
+
+            <!-- BSB Code -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>BSB Code</mat-label>
+                <input matInput placeholder="BSB Code" formControlName="bsbCode" maxlength="6" />
+              </mat-form-field>
+            </div>
+            <!-- Account Number  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Account Number</mat-label>
+                <input matInput placeholder="Account Number" formControlName="accountNumber" />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <!-- Health Fund Details-->
+      <div *ngIf="healthFundDetails">
+        <mat-expansion-panel expanded="true" class="panel-height">
+          <div class="col-xl-12 d-flex align-items-center mat-panel-header">
+            Health Fund Details
+            <div style="position: absolute; right: 0px">
+              <button mat-stroked-button color="accent" (click)="addNewFund($event)" [disabled]="addNewFundFlag">
+                + Add New Fund
+              </button>
+            </div>
+          </div>
+          <div *ngIf="!isFundAvaiable" class="row health-fund-centered">
+            <div class="col-xl-12">
+              <div class="grid-child">
+                <p><img src="../../../assets/Add Referral.png" /></p>
+                <p>
+                  <strong> You haven't added a Health Fund detail</strong>
+                </p>
+                <p>
+                  Click on Add New Fund button to add patient's health fund
+                  details. A patient can have multiple health fund
+                </p>
+                <p>
+                  <strong>
+                    <a href="#" (click)="addNewFund($event)"> Add New Fund</a>
+                  </strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="addNewFundFlag" class="row">
+            <!-- Health Fund Name  -->
+            <div [ngClass]="
+                expandCss === 'col-xl-12'
+                  ? 'col-xl-12 d-block align-items-center mb-3'
+                  : 'col-xl-6 d-block align-items-center mb-3'
+              ">
+              <div class="kendo-dropdown-label">Health Fund Name</div>
+              <app-add-new-dropdown [categoryId]="healthFundNameParentId" [selectedId]="healthFundNameId"
+                (appId)="appIdHealthFundNameHandler($event)"></app-add-new-dropdown>
+            </div>
+            <div *ngIf="expandCss !== 'col-xl-12'" class="col-xl-6 d-flex align-items-center">
+              <button mat-stroked-button color="accent" (click)="verifyPatient()" class="mr-3">
+                Verify Patient
+              </button>
+
+              <button mat-stroked-button color="accent" (click)="getFundList()">
+                Get Fund List
+              </button>
+            </div>
+
+            <!-- Membership Number  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Membership Number</mat-label>
+                <input matInput #membershipNumber placeholder="Membership Number" formControlName="membershipNumber"
+                  (input)="membershipNumberChange(membershipNumber.value)" />
+                <mat-error> Invalid Membership Number </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- IRN / UPI  -->
+            <div *ngIf="!dvaFlag" class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>IRN / UPI</mat-label>
+                <mat-select formControlName="irnUpi">
+                  <mat-option *ngFor="let i of irnUpis" [value]="i">
+                    {{ i }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Card Type  -->
+            <div *ngIf="dvaFlag" [ngClass]="
+                dvaFlag
+                  ? 'col-xl-6 d-flex align-items-center'
+                  : 'col-xl-12 d-flex align-items-center'
+              ">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Card Type</mat-label>
+                <mat-select formControlName="healthFundCardType">
+                  <mat-option value="None"> None </mat-option>
+                  <mat-option value="White Card"> White Card </mat-option>
+                  <mat-option value="Gold Card"> Gold Card </mat-option>
+                  <mat-option value="Orange Card"> Orange Card </mat-option>
+                  <mat-option value="Pensioner Concession Card">
+                    Pensioner Concession Card
+                  </mat-option>
+                  <mat-option value="Commonwealth Seniors Healthcare card">
+                    Commonwealth Seniors Healthcare card
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Expiry Month  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Expiry Month</mat-label>
+                <mat-select formControlName="healthFundExpiryMonth">
+                  <mat-option *ngFor="let m of months" [value]="m">
+                    {{ m }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Expiry Year  -->
+            <div class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Expiry Year</mat-label>
+                <input matInput placeholder="Expiry Year" formControlName="healthFundExpiryYear" maxlength="4" />
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="medicareFlag" class="col-xl-6 d-flex align-items-center mb-3">
+              <div *ngIf="!addClaimantFlag">
+                <mat-icon class="default-icon blue-icon">add_circle</mat-icon>
+                <a href="#" (click)="addClaimant($event, true)">
+                  Add Claimant Details</a>
+              </div>
+              <div *ngIf="addClaimantFlag">
+                <mat-icon class="default-icon blue-icon">remove_circle</mat-icon>
+                <a href="#" (click)="addClaimant($event, false)">
+                  Remove Claimant Details</a>
+              </div>
+            </div>
+            <div *ngIf="medicareFlag" class="col-xl-6 d-flex align-items-center"></div>
+
+            <!-- First Name  -->
+            <div *ngIf="addClaimantFlag" class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" formControlName="claimantFirstName" />
+              </mat-form-field>
+            </div>
+
+            <!-- Last Name  -->
+            <div *ngIf="addClaimantFlag" class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" formControlName="claimantLastName" />
+              </mat-form-field>
+            </div>
+
+            <!-- Membership Number  -->
+            <div *ngIf="addClaimantFlag" class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Membership Number</mat-label>
+                <input matInput placeholder="Membership Number" formControlName="claimantMedicareNo" />
+              </mat-form-field>
+            </div>
+
+            <!-- IRN / UPI  -->
+            <div *ngIf="addClaimantFlag" class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>IRN / UPI</mat-label>
+                <mat-select formControlName="claimantIrnUpi">
+                  <mat-option *ngFor="let i of irnUpis" [value]="i">
+                    {{ i }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Date of birth  -->
+            <div *ngIf="addClaimantFlag" class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-label>Date of birth</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="claimantDOB" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-hint>DD/MM/YYYY</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="col-xl-6 d-flex justify-content-start"></div>
+            <div class="col-xl-6 d-flex justify-content-start">
+              <button *ngIf="addClaimantFlag" mat-stroked-button color="accent" (click)="verifyClaimant()">
+                Verify Claimant
+              </button>
+            </div>
+            <div [ngClass]="
+                addClaimantFlag
+                  ? 'col-xl-6 d-flex justify-content-end'
+                  : 'col-xl-12 d-flex justify-content-end'
+              ">
+              <div class="text-right control-row">
+                <div class="pt-3">
+                  <button mat-stroked-button color="accent" (click)="cancelHealthFund()">
+                    Cancel
+                  </button>
+                  {{ " " }}
+                  <button mat-stroked-button color="accent" (click)="saveFund()">
+                    Save Fund
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 d-flex">
+              <div class="col-xl-12 d-flex border-with-text">
+                Medicare or DVA response message is displayed here <br />
+                Based on content, the message box size varies
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngIf="patientMedicareHealthFund" class="col-xl-12 d-flex align-items-center">
+              <table class="tabledata" style="width: 100%">
+                <tr>
+                  <th style="width: 20%">Fund Name</th>
+                  <th style="width: 30%">: Medicare</th>
+                  <th style="width: 30%"></th>
+                  <th style="width: 20%; text-align: right">
+                    <a href="javascript:void(0)" (click)="deleteMedicare()">
+                      <span class="material-icons" style="
+                          font-size: 30px;
+                          color: rgba(252, 252, 252, 0.945);
+                          float: right;
+                        ">
+                        delete
+                      </span>
+                    </a>
+                    <a href="javascript:void(0)" (click)="editMedicare()">
+                      <span class="material-icons" style="
+                          font-size: 30px;
+                          color: rgba(252, 252, 252, 0.945);
+                          float: right;
+                        ">
+                        create
+                      </span>
+                    </a>
+                  </th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td style="font-weight: 900">Claimant Details</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Membership No</td>
+                  <td>: {{ patientMedicareHealthFund.membershipNumber }}</td>
+                  <td>Name</td>
+                  <td>
+                    : {{ patientMedicareHealthFund.claimantFirstName }}
+                    {{ " " }}
+                    {{ patientMedicareHealthFund.claimantLastName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>IRN \ UPI</td>
+                  <td>: {{ patientMedicareHealthFund.irnUpi }}</td>
+                  <td>DOB</td>
+                  <td>: {{ patientMedicareHealthFund.claimantDOB | date }}</td>
+                </tr>
+                <tr>
+                  <td>Expiry Month</td>
+                  <td>: {{ patientMedicareHealthFund.expiryMonth }}</td>
+                  <td>Membership No</td>
+                  <td>: {{ patientMedicareHealthFund.claimantMedicareNo }}</td>
+                </tr>
+                <tr>
+                  <td>Expiry Year</td>
+                  <td>: {{ patientMedicareHealthFund.expiryYear }}</td>
+                  <td>IRN \ UPI</td>
+                  <td>: {{ patientMedicareHealthFund.claimantIrnUpi }}</td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="patientDVAHealthFund" class="col-xl-6 d-flex align-items-center">
+              <table class="tabledata" style="width: 100%">
+                <tr>
+                  <th style="width: 40%">Fund Name</th>
+                  <th style="width: 40%">: DVA</th>
+                  <th style="width: 20%; text-align: right">
+                    <a href="javascript:void(0)" (click)="deleteDVA()">
+                      <span class="material-icons" style="
+                          font-size: 30px;
+                          color: rgba(252, 252, 252, 0.945);
+                          float: right;
+                        ">
+                        delete
+                      </span>
+                    </a>
+                    <a href="javascript:void(0)" (click)="editDVA()">
+                      <span class="material-icons" style="
+                          font-size: 30px;
+                          color: rgba(252, 252, 252, 0.945);
+                          float: right;
+                        ">
+                        create
+                      </span>
+                    </a>
+                  </th>
+                </tr>
+                <tr>
+                  <td>Membership No</td>
+                  <td>: {{ patientDVAHealthFund.membershipNumber }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Card Type</td>
+                  <td>: {{ patientDVAHealthFund.cardType }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Expiry Month</td>
+                  <td>: {{ patientDVAHealthFund.expiryMonth }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Expiry Year</td>
+                  <td>: {{ patientDVAHealthFund.expiryYear }}</td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+            <div *ngFor="let h of patientHealthFund" class="col-xl-6 d-flex align-items-center">
+              <table class="tabledata" style="width: 100%">
+                <tr>
+                  <th style="width: 40%">Fund Name</th>
+                  <th style="width: 40%">: Bupa</th>
+                  <th style="width: 20%; text-align: right">
+                    <a href="javascript:void(0)" (click)="deleteOtherInsurance(h)">
+                      <span class="material-icons" style="
+                          font-size: 30px;
+                          color: rgba(252, 252, 252, 0.945);
+                          float: right;
+                        ">
+                        delete
+                      </span>
+                    </a>
+                    <a href="javascript:void(0)" (click)="editOtherInsurance(h)">
+                      <span class="material-icons" style="
+                          font-size: 30px;
+                          color: rgba(252, 252, 252, 0.945);
+                          float: right;
+                        ">
+                        create
+                      </span>
+                    </a>
+                  </th>
+                </tr>
+                <tr>
+                  <td>Membership No</td>
+                  <td>: {{ h.membershipNumber }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>IRN \ UPI</td>
+                  <td>: {{ h.irnUpi }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Expiry Month</td>
+                  <td>: {{ h.expiryMonth }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Expiry Year</td>
+                  <td>: {{ h.expiryYear }}</td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+    <div class="col-xl-3">
+      <div class="col-xl-12 text-right">
+        <kendo-switch formControlName="isStatus" [onLabel]="'Active'" [offLabel]="'Inactive'" class="wider-switch">
+        </kendo-switch>
+      </div>
+      <div class="vertical-menu" *ngFor="let tab of patientTabs">
+        <div class="row">
+          <div class="col-xl-12">
+            <a href="javascript:void(0)" (click)="clickPatientTabs(tab)"
+              [ngClass]="tab.active === true ? 'active' : 'inactive'">{{ tab.title }}
+              <span *ngIf="tab.validate === 1" class="material-icons" style="
+                  font-size: 30px;
+                  color: rgba(59, 161, 88, 0.945);
+                  float: right;
+                ">
+                check_circle
+              </span>
+              <span *ngIf="tab.validate === 2" class="material-icons" style="font-size: 30px; color: red; float: right">
+                error_outline
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="text-right control-row">
+  <div class="pt-3">
+    <button *ngIf="deleteButton" mat-stroked-button color="accent" class="delete-button-left">
+      Delete
+    </button>
+    <button mat-stroked-button color="accent" class="mr-3" (click)="cancel()">
+      Cancel
+    </button>
+    <button mat-raised-button color="accent" class="mr-2 wide" [disabled]="patientForm.invalid"
+      (click)="submitPatient()">
+      Save
+    </button>
+  </div>
+</div>
+
+<div id="sliderShadow" class="overlay-shadow">
+  <div id="slider" class="overlay">
+    <div class="overlay-header">
+      <div class="row">
+        <span class="overlay-title">Add Employer</span>
+        <a href="javascript:void(0)" class="closebtn" (click)="closeSlider()">
+          <span class="material-icons md-36"> clear </span>
+        </a>
+      </div>
+    </div>
+    <div class="overlay-content">
+      <app-add-general-contacts [contact]="contact" [generalType]="47"
+        (parentProductCallBack)="parentProductCallBack($event)"></app-add-general-contacts>
+    </div>
+  </div>
+</div>

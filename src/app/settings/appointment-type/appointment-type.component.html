@@ -1,0 +1,43 @@
+<kendo-grid [data]="gridView" 
+    [pageSize]="pageSize"
+    [skip]="skip"
+    [pageable]="true"
+    [columnMenu]="true"
+    (pageChange)="pageChange($event)"
+    [sortable]="{
+        allowUnsort: allowUnsort,
+        mode: multiple ? 'multiple' : 'single'
+        }"
+      [sort]="sort"
+      (sortChange)="sortChange($event)"
+      [filterable]="true"
+      [filter]="state.filter"
+      (dataStateChange)="dataStateChange($event)"
+      [groupable]="true"
+      [reorderable]="reorder"
+      [group]="groups"
+      (groupChange)="groupChange($event)">
+        <kendo-grid-column field="appointmentType" title="Appointment Type" width="100">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <a [routerLink]="['/tools/appointmentType/edit', dataItem.id]">
+                    {{ dataItem.appointmentType }} 
+                </a>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column width="30" field="color" title="Color" [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="d-flex align-items-center">
+                    <span class="d-inline-block color" [ngStyle]="{ 'background-color' : dataItem.color }">
+
+                    </span>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="locationName" title="Location Name" width="100">
+        </kendo-grid-column>
+        <kendo-grid-column field="isStatus" title="Status"  width="50" filter="boolean" [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                {{ dataItem.isStatus ? "Active" : "Inactive" }}
+            </ng-template>
+        </kendo-grid-column>
+</kendo-grid>

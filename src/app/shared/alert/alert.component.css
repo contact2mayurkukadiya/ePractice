@@ -1,0 +1,46 @@
+:host .alert-danger {
+    background-color: #FDE7E5 !important;
+    border: none;
+}
+
+:host .alert-success {
+    background-color: #F6FFF3 !important;
+    border: none;
+}
+
+.error {
+    color: #C83427;
+}
+
+:host .alert span {
+    color: black !important;
+}
+
+.label-icon {
+    /* width: 100%; */
+    background: #f6fff3;
+    border-radius: 4px;
+    padding: 20px 7px 20px 20px;
+    display: flex;
+    box-shadow: 0px 1px 2px 0px #ABAAB0;
+}
+.label-icon-error {
+    background: #FDE7E5;
+    border-radius: 4px;
+    padding: 20px 12px 20px 20px;
+    display: flex;
+    box-shadow: 0px 1px 2px 0px #ABAAB0;
+}
+
+.label-icon .success {
+    color: #317C1C;
+}
+
+.close-icon {
+    padding-left: 197px;
+    color: #00AEEF;
+}
+.messagewidth
+{
+    width: fit-content;
+}

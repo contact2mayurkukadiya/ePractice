@@ -1,0 +1,63 @@
+<div class="row justify-content-md-center login-margin">
+    <div class="col-xl-12">
+        <app-alert [message]="errorMessage" [type]="messageType.error"></app-alert>
+    </div>
+    <div class="col-xl-7 pr-5">
+        <img src="../../assets/kavanii_logo2.PNG" alt="logo" class="logo">
+
+        <h4 class="mt-3 bold">
+            Where managing practitioners is easy
+        </h4>
+
+        <p class="bold mt-3">
+            The simplest, easy to use yet most comprehensive software to help practitioner manager their practices.
+        </p>
+        <img src="../../assets/placeholder.jpg" alt="sub" class="sub" />
+    </div>
+    <div class="col-xl-5">
+        <form class="login-form" [formGroup]="loginForm">
+            <div class="mb-3">
+                <span class="ml-2">Don't have an account?</span> <a class="ml-1 bold" [routerLink]="'/register'">Regiser your business</a>
+            </div>
+            <div class="mb-3">
+                <h5 class="bold">Log In</h5>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput placeholder="Email ID" type="text" formControlName="userid" name="userid" />
+                    <mat-error *ngIf="loginForm.get('userid').hasError('required')">
+                        Email ID is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="no-margin-field full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Password" type="password" formControlName="password" name="password" />
+                    <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                        Password is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="mt-2">
+                    <mat-checkbox class="d-inline big">
+                        Keep me logged in
+                    </mat-checkbox>
+                </div>
+            </div>
+            <div class="mt-3">
+                <p class="mt-2">
+                    By logging in, you agree to the <a href="#" class="bold">Terms of Service</a> and <a href="#" class="bold">Privacy Notice</a>.
+                </p>
+            </div>
+
+            <div class="mt-3 text-center">
+                <button mat-raised-button color="primary" (click)="signIn($event)" [disabled]="signing || !loginForm.valid">{{ signInMessage }}</button>
+            </div>
+            <div class="mt-3 text-center">
+                <a href="#" class="d-block mb-4 bold" [routerLink]="'/forgotpassword'">Forgotten password?</a>
+            </div>
+        </form>
+    </div>
+</div>

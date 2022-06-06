@@ -1,0 +1,102 @@
+/* .container { position: relative; }
+.container img { display: block; }
+.container .fa-download { position: absolute; bottom:0; left:0; } */
+
+.imagepreveiw {
+    position: relative;
+}
+
+.imagepreveiw .previeImages {
+    width: 100%;
+}
+
+.docicon {
+    position: absolute;
+    top: 3%;
+    right: 14%;
+    font-size: 26px;
+    color: #00AEEF;
+}
+
+.dociconfull {
+    font-size: 26px;
+    color: #00AEEF;
+    position: absolute;
+    top: 3%;
+    right: 7%;
+    width: 22px !important;
+}
+
+p {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-bottom: 5px;
+    padding-left: 25%;
+    padding-right: 25%;
+    /*  margin: 17px 0px -48px 8rem;  */
+}
+
+::ng-deep .mat-dialog-container {
+    width: 75% !important;
+}
+
+button {
+    background: none;
+}
+
+button:focus {
+    outline: 0px dotted;
+    outline: 0px auto -webkit-focus-ring-color;
+    background: none;
+}
+
+.modalClosebtn {
+    margin-top: 0 !important;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    color: #00aeef;
+}
+
+.modalClosebtn button {
+    box-shadow: none;
+    outline: none;
+    border: none;
+    color: #00aeef;
+}
+
+.image-wrapper {
+    width: 50%;
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 50px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.image-wrapper .previeImages {
+    width: 100%;
+}
+
+.event-form-dialog {
+    justify-content: center;
+}
+
+@media screen and (max-width:1024px) {
+    .docicon {
+        position: absolute;
+        top: 3%;
+        right: 17%;
+        font-size: 26px;
+        color: #00AEEF;
+    }
+    .dociconfull {
+        font-size: 26px;
+        color: #00AEEF;
+        position: absolute;
+        top: 3%;
+        right: 5%;
+        
+    }
+}

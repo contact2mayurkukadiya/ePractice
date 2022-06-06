@@ -1,0 +1,63 @@
+:host {
+    background-color: white;
+}
+
+.login-form {
+    /* border: 1px solid #bbb; */
+    background-color: #f3f3f4;
+    padding: 2rem;
+    border-radius: 4px;
+    opacity: 0.9;
+}
+
+/* 
+.mat-button-base {
+    width: 100%;
+} */
+
+.login-margin {
+    margin-top: 6rem;
+}
+
+.form-container {
+    max-width: 600px;
+}
+
+@media (max-width: 1199px) {
+    .login-form {
+        margin-top: 3rem;
+    }
+}
+
+.forgotPassword {
+    font-size: 0.8rem;
+    float: right;
+}
+
+.no-margin-field .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+
+.logo {
+    max-width: 250px;
+}
+
+.small-cb {
+    font-size: 0.8rem;
+}
+
+.percentage {
+    font-size: 0.8rem;
+    background-color: #a18bd6;
+    color: white;
+    /* opacity: 0.7; */
+    width: 100px;
+    padding: 5px 10px;
+}
+
+.login-bg {
+    background: url(../../assets/slide-04.jpg) no-repeat -300px 60px;
+}
+.sub {
+    max-width: 550px;
+}

@@ -1,0 +1,245 @@
+<block-ui message="Loading..."> </block-ui>
+
+<h3 class="mb-3 pl-5 mt-3" id="heading">
+    {{ addItem ? ' Add Letter Template' : 'Edit Letter Template' }}
+</h3>
+
+<app-alert [message]="message" [type]="type" id="alert"> </app-alert>
+<div class="bg-white custom-form-update">
+    <mat-tab-group>
+        <mat-tab label="Details">
+            <form class="" autocomplete="off" [formGroup]="letterForm">
+                <div class="form-group ">
+                    <div class="row pt-3">
+                        <div class="col-xl-4 custom-border">
+                            <div class="row pb-2 pl-3 pr-3">
+                                <div class="col-xl-12 text-right pr-0">
+                                    <span style="color: #939393;">Required</span>
+                                </div>
+                                <!-- Template Name  -->
+                                <div class="col-xl-12 d-flex align-items-left pr-0">
+                                    <mat-form-field [appearance]="apperance" class="full-width" id="templatename-field">
+                                        <mat-label class="custom-input-label-text">Template Name</mat-label>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="width: 93%;">
+                                                <input matInput placeholder="Template Name" formControlName="name"
+                                                    required />
+                                            </div>
+                                            <div>
+                                                <mat-icon
+                                                    [ngClass]="{'icon-invalid' :  (letterForm.get('name').dirty || letterForm.get('name').touched)}">
+                                                    cancel</mat-icon>
+                                            </div>
+                                        </div>
+                                        <mat-error *ngIf="letterForm.get('name').hasError('required')">
+                                            Template Name is required.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row pb-2 pl-3 pr-3 topmargin bottommargin">
+                                <div class="col-xl-12 text-right pr-0">
+                                    <span style="color: #939393;">Required</span>
+                                </div>
+                                <!-- Location  -->
+                                <div class="col-xl-12 d-flex align-items-left pr-0">
+                                    <p style="margin-top: -27px;">Location:</p>
+                                    <kendo-multiselect [data]="locationData" placeholder="Location Name"
+                                        [filterable]="true" [textField]="'locationName'" [valueField]="'locationId'"
+                                        [value]="bussinesstemplate.businessTemplateLocations"
+                                        style="min-height: 54px;margin-left: -66px;"
+                                        (valueChange)="onLocationChange($event)" formControlName="locationName"
+                                        [kendoDropDownFilter]="filterSettings">
+                                    </kendo-multiselect>
+                                </div>
+                            </div>
+                            <div class="row pb-2 pl-3 pr-3">
+                                <!-- Description  -->
+                                <div class="col-xl-12 d-flex align-items-left pr-0">
+                                    <mat-form-field [appearance]="apperance" class="full-width">
+                                        <mat-label class="custom-input-label-text">Description</mat-label>
+                                        <textarea matInput placeholder="Description" formControlName="description"
+                                            rows="3"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row pb-2 pl-3 pr-3">
+                                <!-- Tag  -->
+                                <div class="col-xl-12 d-flex align-items-left pr-0">
+                                    <kendo-card>
+                                        <kendo-card-body>
+                                            <span (click)="toggleRecipe()"><b>Tags</b>
+                                                <span [ngClass]="heartIcon()" (click)="toggleLike()"></span></span>
+                                            <div *ngIf="expanded">
+                                                <hr kendoCardSeparator />
+                                                <div class="recipe-wrap">
+                                                    <kendo-treeview [nodes]="data" textField="text"
+                                                        kendoTreeViewExpandable kendoTreeViewSelectable
+                                                        kendoTreeViewHierarchyBinding childrenField="items"
+                                                        [selectBy]="'text'" [(selectedKeys)]="selectedKeys"
+                                                        (selectionChange)="handleSelection($event)">
+                                                        <ng-template kendoTreeViewNodeTemplate let-dataItem
+                                                            draggable="true">
+
+                                                            <span (dragstart)="drag($event)">{{
+                                                                dataItem.class
+                                                                }}&nbsp;
+                                                                {{ dataItem.text }}</span>
+                                                        </ng-template>
+                                                    </kendo-treeview>
+                                                </div>
+                                            </div>
+                                        </kendo-card-body>
+                                    </kendo-card>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="row pb-2 pl-3 pr-3">
+                                <div class="col-xl-12 text-right pr-0">
+                                    <span style="color: #939393;">Required</span>
+                                </div>
+                                <!-- Subject  -->
+                                <div class="col-xl-12 d-flex align-items-left pr-0">
+                                    <mat-form-field [appearance]="apperance" class="full-width" id="templatename-field">
+                                        <mat-label class="custom-input-label-text">Subject</mat-label>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="width: 93%;">
+                                                <input matInput placeholder="Subject" formControlName="subject"
+                                                    required />
+                                            </div>
+                                            <div>
+                                                <mat-icon
+                                                    [ngClass]="{'icon-invalid' :  (letterForm.get('subject').dirty || letterForm.get('subject').touched)}">
+                                                    cancel</mat-icon>
+                                            </div>
+                                        </div>
+                                        <mat-error *ngIf="letterForm.get('subject').hasError('required')">
+                                            Subject is required.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row pb-2 pl-3 pr-3">
+                                <div style="width: 100%;">
+                                    <!-- Document Description  -->
+                                    <div class="col-xl-12 d-flex align-items-left pr-0">
+                                        <ckeditor formControlName="body" name="myckeditor" debounce="1000"
+                                            class="full-width" required rows="10" (drop)="drop($event)"
+                                            (dragover)="allowDrop($event)">
+                                        </ckeditor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <mat-divider style="margin-left: 30px;"></mat-divider>
+                <div class="bottom-bar-wrapper">
+                    <div class="text-left control-row deletebutton" style="padding-left: 30px;">
+                        <div class="pt-3">
+                            <button *ngIf="!addItem" mat-raised-button
+                                class="deletebutton-wrapper custom-delete-btn cancelbutton" (click)="delete()">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-right control-row">
+                        <div class="pt-3">
+                            <button *ngIf="!addItem" mat-stroked-button color="accent" class="mr-3 cancelbutton"
+                                (click)="duplicate()">
+                                Duplicate
+                            </button>
+                            <button mat-stroked-button color="accent" class="mr-3 cancelbutton" (click)="cancel()">
+                                Cancel
+                            </button>
+                            <button mat-raised-button color="accent" class="wide" [disabled]="letterForm.invalid"
+                                (click)="submitform()">
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end custom-switch">
+                    <h5 class="">Status</h5>
+                    <kendo-switch [onLabel]="'Active'" formControlName="status" [offLabel]="'Inactive'"
+                        class=" ml-3 wide-switch">
+                    </kendo-switch>
+                </div>
+            </form>
+
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<!-- Delete Template Dialog Start -->
+<kendo-dialog *ngIf="opened" (close)="close('cancel')" [height]="auto" [width]="680">
+    <div class="modalHeight">
+        <div class="col-xl-12 p-0">
+            <div class="custom-delete-modal">
+                <span class="QUI_BOLD_24_32 deletetext">
+                    Are you sure you want to delete?
+                </span>
+                <button mat-icon-button (click)="close()" aria-label="Close dialog">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-divider class=""></mat-divider>
+        <div class="deleteDescription custom-dlt-content">
+            <p class="HEL_REG_16_22 patientdeletemodal custom-font">Deleted template cannot be restored.</p>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-dialog-content>
+            <div class="text-right control-row bottom-btn">
+                <div class="pt-3">
+                    <button mat-stroked-button color="accent" class="mr-3" (click)="close();" style="padding: 0 30px">
+                        No
+                    </button>
+                    <button mat-raised-button color="accent" class="" (click)="confirdelete('yes','delete');"
+                        style="padding: 0 30px">
+                        Yes
+                    </button>
+
+                </div>
+            </div>
+        </mat-dialog-content>
+    </div>
+</kendo-dialog>
+<!-- Delete Template Dialog End -->
+<!-- Duplicate Template Dialog Start -->
+<kendo-dialog *ngIf="openedduplicate" (close)="close('cancel')" [height]="auto" [width]="790">
+    <div class="modalHeight">
+        <div class="col-xl-12 p-0">
+            <div class="custom-delete-modal">
+                <span class="QUI_BOLD_24_32 deletetext">
+                    DO YOU WISH TO DUPLICATE THIS EMAIL TEMPLATE?
+                </span>
+                <button mat-icon-button (click)="close()" aria-label="Close dialog">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-divider class=""></mat-divider>
+        <div class="deleteDescription custom-dlt-content">
+            <p class="HEL_REG_16_22 patientdeletemodal custom-font mt-2">Click "Yes",to save the changes made to the
+                current
+                template and create a duplicate.</p>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-dialog-content>
+            <div class="text-right control-row bottom-btn">
+                <div class="pt-3">
+                    <button mat-stroked-button color="accent" class="mr-3" (click)="close();" style="padding: 0 30px">
+                        No
+                    </button>
+                    <button mat-raised-button color="accent" class="" (click)="confirdelete('yes','duplicate');"
+                        style="padding: 0 30px">
+                        Yes
+                    </button>
+
+                </div>
+            </div>
+        </mat-dialog-content>
+    </div>
+</kendo-dialog>
+<!-- Duplicate Template Dialog End -->

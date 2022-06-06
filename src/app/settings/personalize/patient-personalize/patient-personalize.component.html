@@ -1,0 +1,91 @@
+<form [formGroup]="patientIdForm">
+  <div class="row">
+    <!-- Prefix  -->
+    <div class="col-xl-8 d-flex align-items-center">
+      <mat-form-field [appearance]="apperance" class="full-width">
+        <mat-label>Prefix</mat-label>
+        <input
+          matInput
+          placeholder="Prefix"
+          formControlName="prefix"
+          oninput="this.value = this.value.toUpperCase()"
+          required
+          (input)="onChangeEvent()"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Starting Number  -->
+    <div class="col-xl-8 d-flex align-items-center">
+      <mat-form-field [appearance]="apperance" class="full-width">
+        <mat-label>Starting Number</mat-label>
+        <input
+          matInput
+          placeholder="Starting Number"
+          formControlName="startingNumber"
+          required
+          type="number"
+          (input)="onChangeEvent()"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Suffix  -->
+    <div class="col-xl-8 d-flex align-items-center">
+      <mat-form-field [appearance]="apperance" class="full-width">
+        <mat-label>Suffix</mat-label>
+        <input
+          matInput
+          placeholder="Suffix"
+          formControlName="suffix"
+          oninput="this.value = this.value.toUpperCase()"
+          (input)="onChangeEvent()"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Last Patient ID -->
+    <div class="col-xl-8 d-flex align-items-center">
+      <mat-form-field [appearance]="apperance" class="full-width">
+        <mat-label>Last Patient ID</mat-label>
+        <input
+          matInput
+          placeholder="Last Patient ID"
+          disabled="true"
+          [value]="lastPatientId"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Preview  -->
+    <div class="col-xl-8 d-flex align-items-center">
+      <mat-form-field [appearance]="apperance" class="full-width">
+        <mat-label>Preview</mat-label>
+        <input
+          matInput
+          placeholder="Preview"
+          disabled="true"
+          [value]="preview"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+
+<div class="text-right control-row">
+  <mat-divider class="ml-3 mr-3"></mat-divider>
+  <div class="pt-3">
+    <button mat-stroked-button color="accent" class="mr-3"  [routerLink]="['/settings']">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      class="mr-2 wide"
+      [disabled]="patientIdForm.invalid"
+      (click)="submitPatientId()"
+    >
+      Save
+    </button>
+  </div>
+</div>

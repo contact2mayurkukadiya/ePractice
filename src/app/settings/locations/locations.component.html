@@ -1,0 +1,59 @@
+<div *ngIf="permission && permission.length > 0">
+    <kendo-grid [data]="gridView" 
+        [pageSize]="pageSize"
+        [skip]="skip"
+        [pageable]="true"
+        [columnMenu]="true"
+        [filterable]="true"
+        (pageChange)="pageChange($event)"
+        [filter]="state.filter"
+        [sortable]="{
+            allowUnsort: allowUnsort,
+            mode: multiple ? 'multiple' : 'single'
+            }"
+        [sort]="sort"
+        (sortChange)="sortChange($event)"
+        (dataStateChange)="dataStateChange($event)"
+        [groupable]="true"
+        [group]="groups"
+        [reorderable]="reorder"
+        (groupChange)="groupChange($event)">
+            <kendo-grid-column width="20" [filterable]="false">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div *ngIf="dataItem.locationLogo">
+                        <img [src]="'data:image/jpeg;base64,'+ dataItem.locationLogo" style="max-width: 110px; width: 100%;">
+                    </div>
+                    <div *ngIf="!dataItem.locationLogo">
+                        <img src="../../assets/placeholder-image.png" style="max-width: 110px; width: 100%;">
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column width="50" field="locationName" title="Location Name">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <a [routerLink]="['/tools/locations/edit', dataItem.id]" *ngIf="permission && permission.indexOf('E') >= 0">
+                        {{ dataItem.locationName }}
+                    </a>
+                    <span *ngIf="permission && (permission.indexOf('E') < 0 && permission.indexOf('V') >= 0)">
+                        {{ dataItem.locationName }}
+                    </span>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="timeZone" title="Time Zone" width="50">
+            </kendo-grid-column>
+            
+            <kendo-grid-column width="50" field="timeString" title="Calendar">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="d-flex align-items-center">
+                        <span class="d-inline-block color" [ngStyle]="{ 'background-color' : dataItem.calendarColor }">
+                        </span>
+                        <span class="ml-2">
+                            {{ dataItem.timeString }} 
+                        </span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            
+            <kendo-grid-column field="contactPerson" title="Contact Person" width="50">
+            </kendo-grid-column>
+    </kendo-grid>
+</div>

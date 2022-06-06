@@ -1,0 +1,27 @@
+
+<kendo-grid [data]="gridView" 
+    [pageSize]="pageSize"
+    [skip]="skip"
+    [pageable]="true"
+    (pageChange)="pageChange($event)"
+    [sortable]="{
+        allowUnsort: allowUnsort,
+        mode: multiple ? 'multiple' : 'single'
+        }"
+      [sort]="sort"
+      (sortChange)="sortChange($event)">
+        <kendo-grid-column field="blockoutTypeName" title="Blockout Type" width="100">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <a [routerLink]="['/tools/blockoutType/edit', dataItem.id]">
+                    {{ dataItem.blockoutTypeName }} 
+                </a>
+            </ng-template>
+        </kendo-grid-column>
+        <!-- TODO: color template -->
+        <kendo-grid-column field="colorCode" title="Color Code" width="100">
+        </kendo-grid-column>
+        <kendo-grid-column field="locationName" title="Location Name" width="100">
+        </kendo-grid-column>
+        <kendo-grid-column field="status" title="Status"  width="50" >
+        </kendo-grid-column>
+</kendo-grid>

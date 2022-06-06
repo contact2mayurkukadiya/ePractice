@@ -1,0 +1,82 @@
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="d-flex mt-3 mb-3 align-items-center">
+            <div class="mr-auto">
+                <p>Allow to give full, to deny or to give partial permission to your stuffs</p>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" class="mr-3 wide">Reset</button>
+                <button mat-raised-button color="primary" class="wide">Add Role</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <table class="table table-responsive mt-3 mb-3">
+            <thead style="border: 1px solid #dee2e6;">
+                <tr>
+                    <th>                    
+                    </th>
+                    <th *ngFor="let r of roles" class="text-center">
+                        {{ r.roleName }}
+                    </th>
+                    <th class="no-min-width">                        
+                    </th>
+                </tr>                
+            </thead>
+            
+            <tbody *ngFor="let r of permissionRoles" style="border: 1px solid #dee2e6;">
+                <ng-container *ngIf="r.appFullPermissionModule && r.appFullPermissionModule.length > 0 && r.appFullPermissionModule[0].modulePermission">
+                    <tr *ngIf="r.appFullPermissionModule && r.appFullPermissionModule.length > 0 && r.appFullPermissionModule[0].modulePermission">                                
+                        <td style="min-width: 200px;">
+                            <b>{{ r.moduleName }}</b>
+                        </td>
+                        <td *ngFor="let p of r.appFullPermissionModule[0].modulePermission" class="text-center">                        
+                            <kendo-switch [onLabel]="'Full'" [offLabel]="'Partial'" [ngClass]="{ 'wide-switch': !appState.isTablet, 'medium-switch': appState.isTablet }" [(ngModel)]="p.isFullAccess" [readonly]="p.roleName == 'Owner'">
+                            </kendo-switch>
+                        </td>
+                        <td class="text-right no-min-width">
+                            <mat-icon class="blue-icon large-header-icon" (click)="r.isExpand = !r.isExpand">{{ r.isExpand ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+                        </td>                    
+                    </tr>
+                    <tr *ngFor="let rp of r.appSubModulesPermission; index as $index" [hidden]="!r.isExpand">
+                        <td [ngClass]="{ 'pl-4 full-header': !appState.isTablet, 'pl-2 quarter-header': appState.isTablet }">
+                            {{ rp.subModuleName }} 
+                        </td>
+                        <td *ngFor="let p of rp.subModulePermissions; index as $index" class="text-center">
+                            <mat-button-toggle-group *ngIf="r.appFullPermissionModule && 
+                                                            r.appFullPermissionModule.length > 0 && 
+                                                            !r.appFullPermissionModule[0].modulePermission[$index].isFullAccess" 
+                                                    #group="matButtonToggleGroup" 
+                                                    appearance="legacy" 
+                                                    multiple="true" 
+                                                    class="noPadding" 
+                                                    [vertical]="appState.isTablet" 
+                                                    [(ngModel)]="p.accessLevelSelector">
+                                <mat-button-toggle value="V" matTooltip="View">
+                                    <mat-icon>visibility</mat-icon>
+                                </mat-button-toggle>
+                                <mat-button-toggle value="E" matTooltip="Create and Edit">
+                                    <mat-icon>create</mat-icon>
+                                </mat-button-toggle>
+                                <mat-button-toggle value="D" matTooltip="Delete">
+                                    <mat-icon>delete</mat-icon>
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </td>
+                        <td>                        
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" [hidden]="true" id="debug">
+        <pre>
+            {{ permissionRoles | json }}
+        </pre>
+    </div>
+</div>

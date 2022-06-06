@@ -1,0 +1,14 @@
+.logo {
+    margin: 0 auto;
+    max-width: 200px;
+    text-align: center;
+}
+
+.activation-margin {
+    margin-top: 6rem;
+}
+
+.activation-bg {
+    background-color: white;
+    padding: 5rem 0;
+}

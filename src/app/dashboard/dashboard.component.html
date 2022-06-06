@@ -1,0 +1,115 @@
+
+<div class="row pl-5 pr-5" *ngIf="pageLoaded && progressPercentage < 100">
+    <div class="col-xl-6">
+        <div class="card p-5">
+            <h3 class="bold">
+                30 days remaining
+            </h3>
+            <p>
+                Welcome to Kavanii, <b>{{ appState.userProfile?.firstName }}</b>!
+            </p>
+            <p class="mt-3">
+                Thanks for signing up and we'd like you to have the best experience with us, so we recommend taking the time to setup <b>{{ businessName }}</b>
+            </p>
+        
+            <p class="mt-3">
+                Here's your checklist and let's get started
+            </p>
+        
+            <div class="pl-5 pr-5">
+                <p class="text-right">
+                    Completed
+                </p>
+            
+                <mat-progress-bar mode="determinate" [value]="progressPercentage" class="mt-3 mb-3" color="warn"></mat-progress-bar>
+            </div>
+
+            <div *ngFor="let s of dashboardMapping" class="d-flex align-items-center justify-content-between">
+                <mat-checkbox class="mt-3 big" color="warn" [disableRipple]="true" (click)="$event.preventDefault()" [(ngModel)]="s.value">
+                    {{ s.title }}
+                </mat-checkbox>
+                <a href="" *ngIf="s.skipOption && !s.value" (click)="onSkipClick($event, s);" class="bold">Skip</a>
+            </div>                        
+        </div>
+    </div>
+    
+    <div [ngClass]="{ 'col-xl-3': !dashboard.isBusinessAdded || !dashboard.isLocationAdded || !dashboard.isStaffAdded || !dashboard.isStaffPermissionAdded || !dashboard.isPractitionerScheduled }">
+        <div class="card pl-5 pr-5 pt-5 pb-4" [hidden]="dashboard.isBusinessAdded">
+            <h3 class="bold">Business</h3>
+            <p>
+                Provide us more information about your business.
+            </p>
+            <button mat-raised-button color="accent" [routerLink]="['/tools/business/edit']">Set up Business</button>
+        </div>
+
+        <div class="card pl-5 pr-5 pt-5 pb-4" [hidden]="dashboard.isLocationAdded" [ngClass]="{ 'mt-3': !dashboard.isBusinessAdded }">
+            <h3 class="bold">Location</h3>
+            <p>
+                Tell us information on where your location will be
+            </p>
+            <button mat-raised-button color="accent" [routerLink]="['/tools/locations/add']">Add Location</button>
+        </div>
+
+        <div class="card pl-5 pr-5 pt-5 pb-4" [hidden]="dashboard.isStaffAdded && dashboard.isStaffPermissionAdded && dashboard.isPractitionerScheduled" [ngClass]="{ 'mt-3' : !dashboard.isBusinessAdded || !dashboard.isLocationAdded }">
+            <h3 class="bold">Staff</h3>
+            <p>
+                You must add staff first before giving them an appointment.
+            </p>
+            <button mat-stroked-button color="accent" class="full-width" [routerLink]="['/staffs/add']" [disabled]="!dashboard.isBusinessAdded" [hidden]="dashboard.isStaffAdded">Add staff</button>
+            <button mat-stroked-button color="accent" class="mt-3 full-width" [routerLink]="['/staffs']" [disabled]="!dashboard.isStaffAdded" [hidden]="dashboard.isStaffPermissionAdded">Set permission</button>
+            <button mat-stroked-button color="accent" class="mt-3 full-width" [routerLink]="['/appointment']" [disabled]="!dashboard.isStaffPermissionAdded" [hidden]="dashboard.isPractitionerScheduled">Add schedule</button>
+        </div>
+
+        
+    </div>
+    
+    <div class="col-xl-3">
+        <div class="card pl-5 pr-5 pt-5 pb-4" [hidden]="dashboard.isServiceAdded && dashboard.isClassAdded && dashboard.isProductAdded">
+            <h3 class="bold">Offerings</h3>
+            <div [hidden]="dashboard.isServiceAdded">
+                <p>
+                    <b>Services</b> you offer to your patients and practitioners
+                </p>
+                <button mat-stroked-button color="accent" class="full-width" [routerLink]="['/offerings/service/add']" [disabled]="!dashboard.isBusinessAdded">Add service</button>
+            </div>
+            
+            <div [hidden]="dashboard.isClassAdded">
+                <p class="mt-3">
+                    <b>Classes</b> you offer to your patients outside consultations
+                </p>
+                <button mat-stroked-button color="accent" class="full-width" [routerLink]="['/offerings/classes/add']" [disabled]="!dashboard.isBusinessAdded">Add class</button>
+            </div>
+            
+            <div [hidden]="dashboard.isProductAdded">
+                <p class="mt-3">
+                    <b>Products</b> you will offer to patients to add value on the service they availed
+                </p>
+                <button mat-stroked-button color="accent" class="full-width" [routerLink]="['/offerings/products/add']" [disabled]="!dashboard.isBusinessAdded">Add product</button>
+            </div>            
+        </div>
+        <div class="card pl-5 pr-5 pt-5 pb-4" [hidden]="dashboard.isContactAdded" [ngClass]="{ 'mt-3': !dashboard.isProductAdded || !dashboard.isClassAdded || !dashboard.isServiceAdded }">
+            <h3 class="bold">Contacts</h3>
+            <p>
+                Save your contact information to easily get in touched.
+            </p>
+            <button mat-stroked-button color="accent" class="full-width" [routerLink]="['/contacts/general/add']" [disabled]="!dashboard.isBusinessAdded">Add other contact</button>
+            <button mat-stroked-button color="accent" class="mt-3 full-width" [routerLink]="['/contacts/referral/add']" [disabled]="!dashboard.isBusinessAdded">Add referral</button>
+            <button mat-stroked-button color="accent" class="mt-3 full-width" [routerLink]="['/contacts/thirdparty/add']" [disabled]="!dashboard.isBusinessAdded">Add third party</button>
+        </div>
+    </div>
+</div>
+
+<div class="row pl-5 pr-5" *ngIf="pageLoaded && progressPercentage == 100">
+    TODO
+    <ul>
+        <li>
+            Message board
+        </li>
+        <li>
+            Appointments
+        </li>
+        <li>
+            Etc...
+        </li>
+    </ul>    
+</div>

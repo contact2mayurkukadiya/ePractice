@@ -1,0 +1,313 @@
+<block-ui message="Loading..."> </block-ui>
+
+<h3 class="mb-3 pl-5 mt-3" id="heading">
+  {{ addItem ? "Add Product" : "Edit Product" }}
+</h3>
+
+<app-alert [message]="message" [type]="type" id="alert"> </app-alert>
+
+<form class="pl-5 pr-5" [formGroup]="productForm">
+  <div class="form-group row">
+    <div class="col-xl-3">
+      <div class="row">
+        <div class="col-xl-12 d-flex align-items-center">
+          <app-image-upload></app-image-upload>
+        </div>
+
+        <!-- Location  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <kendo-multiselect
+            [data]="locationList"
+            placeholder="Location Name"
+            formControlName="locationName"
+            style="height: 104px"
+            [filterable]="true"
+            [textField]="'locationName'"
+            [valueField]="'id'"
+          >
+          </kendo-multiselect>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 bg-white">
+      <div class="row mt-3 pb-2 pl-3 pr-3">
+        <div class="col-xl-6 text-right">
+          <span>Required</span>
+        </div>
+        <div class="col-xl-6 text-right">
+          <span></span>
+        </div>
+        <!-- Product Code  -->
+        <div class="col-xl-6 d-flex align-items-left">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Product Code</mat-label>
+            <input
+              matInput
+              placeholder="Product Code"
+              required
+              formControlName="productCode"
+            />
+            <mat-error
+              *ngIf="productForm.get('productCode').hasError('required')"
+            >
+              Product Code is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Medicare Code  -->
+        <div class="col-xl-6 align-items-right">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Medicare Code</mat-label>
+            <input
+              matInput
+              placeholder="Medicare Code"
+              maxlength="5"
+              formControlName="medicareCode"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- DVA Code  -->
+        <div class="col-xl-6 align-items-right">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>DVA Code</mat-label>
+            <input
+              matInput
+              placeholder="DVA Code"
+              maxlength="4"
+              formControlName="dvaCode"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-xl-12">
+          <mat-divider></mat-divider>
+        </div>
+
+        <div class="col-xl-12 text-right">
+          <span>Required</span>
+        </div>
+
+        <!-- Product Name  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <mat-label>Product Name</mat-label>
+            <input
+              matInput
+              placeholder="Product Name"
+              formControlName="productName"
+            />
+            <mat-error
+              *ngIf="productForm.get('productName').hasError('required')"
+            >
+              Product Name is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Description  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <textarea
+              matInput
+              placeholder="Description"
+              formControlName="description"
+              rows="3"
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <!-- Supplier name  -->
+        <div class="col-xl-12">
+          <span>Supplier Name*</span>
+        </div>
+        <div class="col-xl-12 d-flex">
+          <kendo-dropdownlist
+            [data]="suppliers"
+            [valuePrimitive]="true"
+            [formControl]="productForm.get('supplierId')"
+            [textField]="'name'"
+            [valueField]="'id'"
+            formControlName="supplierId"
+            class="kendo-dropdown-size"
+          >
+          </kendo-dropdownlist>
+          <button
+            mat-stroked-button
+            color="accent"
+            class="plus-button"
+            (click)="openSlider()"
+          >
+            +
+          </button>
+        </div>
+
+        <!-- Serial Number  -->
+        <div class="col-xl-12 d-flex align-items-center">
+          <mat-form-field [appearance]="apperance" class="full-width">
+            <input
+              matInput
+              placeholder="Serial Number"
+              formControlName="serialNumber"
+            />
+            <mat-hint>Serial number on the package.</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3">
+      <div class="col-xl-12 text-right">
+        <kendo-switch
+          formControlName="status"
+          [onLabel]="'Active'"
+          [offLabel]="'Inactive'"
+          class="wider-switch"
+        >
+        </kendo-switch>
+      </div>
+      <br />
+      <div class="col-xl-12">
+        <mat-divider></mat-divider>
+        <h4 class="mt-3 mb-3 bold d-flex align-items-center d-inline-block">
+          <mat-icon>shopping_basket</mat-icon>
+          Units and Pricing
+        </h4>
+      </div>
+
+      <!-- Unit Of Measurement  -->
+      <div class="col-xl-12">
+        <span>Unit Of Measurement*</span>
+      </div>
+      <div class="col-xl-12 d-block align-items-center">
+        <app-add-new-dropdown
+          [categoryId]="unitOfMeasurementParentId"
+          [selectedId]="unitOfMeasurement"
+          (appId)="appIdUnitOfMeasurementChangedHandler($event)"
+        ></app-add-new-dropdown>
+      </div>
+
+      <!-- AWC Mascot -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance" class="full-width">
+          <mat-label>Current Stock</mat-label>
+          <input
+            matInput
+            placeholder="Current Stock"
+            formControlName="currentStock"
+            type="number"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Minimum Stock  -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance" class="full-width">
+          <mat-label>Minimum Stock</mat-label>
+          <input
+            matInput
+            placeholder="Minimum Stock"
+            formControlName="minimumStock"
+            type="number"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Cost Price  -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance" class="full-width">
+          <mat-label>Cost Price (AUD)</mat-label>
+          <input matInput formControlName="costPrice" type="number" />
+        </mat-form-field>
+      </div>
+
+      <!-- Sale Price  -->
+      <div class="col-xl-12 d-flex align-items-center">
+        <mat-form-field [appearance]="apperance" class="full-width">
+          <input
+            matInput
+            placeholder="Sale Price"
+            type="number"
+            formControlName="salePrice"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Tax Type  -->
+      <div class="col-xl-12">
+        <span>Tax Type*</span>
+      </div>
+      <div class="col-xl-12 d-flex align-items-center kendo-dropdown-bottom">
+        <kendo-dropdownlist
+          [data]="taxTypes"
+          [valuePrimitive]="true"
+          [textField]="'taxType'"
+          [valueField]="'id'"
+          formControlName="taxTypeId"
+          [formControl]="productForm.get('taxTypeId')"
+          (valueChange)="handleTaxTypeChange($event)"
+          class="mat-form-field-infix cat-height"
+        >
+        </kendo-dropdownlist>
+      </div>
+
+      <!-- Tax Option  -->
+      <div
+        *ngIf="taxOptionHide"
+        class="col-xl-12 d-flex align-items-center radio-margin"
+      >
+        Tax Option
+      </div>
+      <div *ngIf="taxOptionHide" class="col-xl-12 d-flex align-items-center">
+        <mat-radio-group formControlName="taxOptionId">
+          <mat-radio-button
+            class="radio-margin"
+            *ngFor="let to of taxOptions"
+            [value]="to.id"
+            [checked]="taxOptionSelect === to.id"
+            >{{ to.categoryName }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="text-right products-control-row">
+  <mat-divider class="ml-5 mr-5"></mat-divider>
+  <div class="pt-3">
+    <button mat-stroked-button color="accent" class="mr-3" (click)="cancel()">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      class="mr-5 wide"
+      (click)="createProduct()"
+      [disabled]="productForm.invalid"
+    >
+      <span *ngIf="!submitting">Save</span>
+      <span *ngIf="submitting">Saving...</span>
+    </button>
+  </div>
+</div>
+
+<div id="sliderShadow" class="overlay-shadow">
+  <div id="slider" class="overlay">
+    <div class="overlay-header">
+      <div class="row">
+        <span class="overlay-title">Add Supplier</span>
+        <a href="javascript:void(0)" class="closebtn" (click)="closeSlider()">
+          <span class="material-icons md-36"> clear </span>
+        </a>
+      </div>
+    </div>
+    <div class="overlay-content">
+      <app-add-general-contacts
+        [contact]="contact"
+        [generalType]="46"
+        (parentProductCallBack)="parentProductCallBack($event)"
+      ></app-add-general-contacts>
+    </div>
+  </div>
+</div>

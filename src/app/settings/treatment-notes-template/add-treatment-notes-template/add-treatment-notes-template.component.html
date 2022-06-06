@@ -1,0 +1,1555 @@
+<block-ui message="Loading..."> </block-ui>
+
+<h3 class="mb-3 pl-5 mt-3 bold" id="heading">Add Treatment Notes Template</h3>
+
+<div class="pl-5 pr-5">
+  <form>
+    <div class="form-group row">
+      <div class="col-xl-6">
+        <div class="tab bg-white">
+          <div class="row">
+            <div class="col-xl-6 d-flex align-items-center">
+              <button class="tablinks active bold">Items</button>
+            </div>
+            <div class="col-xl-6 d-flex justify-content-end pt-2">
+              <a href="javascript:void(0)" (click)="copyTemplate()">
+                <span class="material-icons" style="font-size: 40px">
+                  content_copy
+                </span>
+              </a>
+              <a href="javascript:void(0)" (click)="shareTemplate()">
+                <span class="material-icons" style="font-size: 40px">
+                  share
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabcontent tabcontent-padding bg-white">
+          <form>
+            <div class="row">
+              <div class="col-xl-5 kendo-dropdown-label"></div>
+              <div class="col-xl-4 d-flex justify-content-end">
+                <span class="hazel-text">Required</span>
+              </div>
+              <div class="col-xl-9 d-block align-items-center">
+                <mat-form-field [appearance]="apperance" class="full-width">
+                  <mat-label>Template Name</mat-label>
+                  <input matInput required placeholder="Template Name" [value]="treatmentNotes.templateName"
+                    #templateName (input)="templateNameChange(templateName.value)" />
+                </mat-form-field>
+              </div>
+              <div class="col-xl-3 d-block align-items-center">
+                <button mat-raised-button color="accent" class="mr-2 mt-2"
+                  [disabled]="treatmentNotes.templateName === ''" (click)="onAddItem()">
+                  Add Item
+                </button>
+              </div>
+
+              <div class="col-xl-3 kendo-dropdown-label"></div>
+              <div class="col-xl-3 d-flex justify-content-end">
+                <span class="hazel-text">Required</span>
+              </div>
+              <div class="col-xl-3 kendo-dropdown-label"></div>
+              <div class="col-xl-3 d-flex justify-content-end">
+                <span class="hazel-text">Required</span>
+              </div>
+
+              <!-- Location  -->
+              <div class="col-xl-6 d-flex align-items-center">
+                <kendo-multiselect [data]="locationData" placeholder="Location Name" [filterable]="true"
+                  [textField]="'locationName'" required [valueField]="'locationId'"
+                  [value]="treatmentNotes.treatmentNotesTemplateLocation" style="height: 74px"
+                  (valueChange)="onLocationChange($event)">
+                </kendo-multiselect>
+              </div>
+
+              <!-- specialty  -->
+              <div class="col-xl-6 d-flex align-items-center">
+                <kendo-multiselect [data]="groupedSpecialtyData" placeholder="Specialty Name" [filterable]="true"
+                  [textField]="'specialtyName'" required [valueField]="'idAndLocationId'"
+                  [value]="treatmentNotes.treatmentNotesTemplateSpeciality" (valueChange)="onSpecialtyChange($event)"
+                  style="height: 74px">
+                </kendo-multiselect>
+              </div>
+
+              <div class="kendo-panel-bar-width mt-3">
+                <!-- Expansion Panel -->
+                <mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
+                  <mat-expansion-panel *ngFor="let tn of treatmentNotes.itemTypeModel" cdkDrag
+                    (opened)="panelOpenState = true" [expanded]="tn.isOpen" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <div class="col">
+                        <mat-panel-title class="mat-expansion-panel-header-title-accord">
+                          {{ tn.itemLabel }}</mat-panel-title>
+                        <mat-panel-description class="mat-expansion-panel-header-description-accord">
+                          {{ tn.itemTypeText }}
+                        </mat-panel-description>
+                      </div>
+                    </mat-expansion-panel-header>
+
+                    <ng-container *ngIf="tn">
+                      <!-- Label  -->
+                      <div class="col-xl-12 d-flex align-items-center mt-3">
+                        <mat-form-field [appearance]="apperance" class="full-width">
+                          <mat-label>Label</mat-label>
+                          <input matInput placeholder="Label" [value]="tn.itemLabel" #label
+                            (input)="labelChange(tn.id, label.value)" />
+                        </mat-form-field>
+                      </div>
+
+                      <!-- Duplicate Label  -->
+                      <div *ngIf="tn.showMirrored" class="col-xl-12 d-flex align-items-center">
+                        <mat-form-field [appearance]="apperance" class="full-width">
+                          <mat-label>Label</mat-label>
+                          <input matInput placeholder="Label" [value]="tn.itemLabelDuplicate" #duplicateLabel (input)="
+                              duplicateLabelChange(tn.id, duplicateLabel.value)
+                            " />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-xl-12 d-block align-items-center">
+                        <div class="d-flex bold mb-2">Item type</div>
+                        <kendo-combobox [data]="itemTypesData" [textField]="'title'" [valueField]="'id'"
+                          [filterable]="true" [value]="tn.itemTypeId" class="kendo-dropdown-size mb-4"
+                          (filterChange)="handleItemTypeFilter($event)" listHeight="400"
+                          (valueChange)="handleItemTypeChange(tn.id, $event)" [valuePrimitive]="true">
+                          <ng-template kendoComboBoxItemTemplate let-dataItem>
+                            <div class="col-xl-12 row mb-1 mt-1">
+                              <div class="d-flex">
+                                <span class="material-icons material-icons-style">
+                                  {{ dataItem.icon }}
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="col-xl-12 d-block align-items-center">
+                                  <span class="item-type-heading">{{
+                                    dataItem.title
+                                    }}</span>
+                                </div>
+                                <div class="col-xl-12 d-block align-items-center">
+                                  <span class="item-type-description">
+                                    {{ dataItem.description }}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-combobox>
+                      </div>
+
+                      <div class="col-xl-12 d-block align-items-center">
+                        <!-- Date Time -->
+                        <div *ngIf="tn.itemTypeText === 'Date Time'" class="row">
+                          <div class="col-xl-12 d-flex mb-4">
+                            <kendo-datepicker class="mr-4" [format]="'dd/MM/yyyy'" placeholder="Date..."
+                              [(value)]="tn.dateTime.date" (valueChange)="onDateChange(tn.id, $event)">
+                            </kendo-datepicker>
+                            <kendo-timepicker [format]="'HH:mm'" placeholder="Time..." [(value)]="tn.dateTime.time"
+                              (valueChange)="onTimeChange(tn.id, $event)">
+                            </kendo-timepicker>
+                          </div>
+
+                          <!-- Duplicate Date Time -->
+                          <div class="col-xl-12 d-flex mb-4" *ngIf="tn.showMirrored">
+                            <kendo-datepicker class="mr-4" [format]="'dd/MM/yyyy'" placeholder="Date..."
+                              [(value)]="tn.dateTimeDuplicate.date" (valueChange)="
+                                onDuplicateDateChange(tn.id, $event)
+                              ">
+                            </kendo-datepicker>
+                            <kendo-timepicker [format]="'HH:mm'" placeholder="Time..."
+                              [(value)]="tn.dateTimeDuplicate.time" (valueChange)="
+                                onDuplicateTimeChange(tn.id, $event)
+                              ">
+                            </kendo-timepicker>
+                          </div>
+                        </div>
+
+                        <!-- Text -->
+                        <div *ngIf="tn.itemTypeText === 'Text'" class="row">
+                          <div class="col-xl-12 d-flex mb-4">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Default Note</mat-label>
+                              <input matInput placeholder="Label" [value]="tn.text" #text
+                                (input)="textChange(tn.id, text.value)" />
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Duplicate Text -->
+                          <div class="col-xl-12 d-flex mb-4" *ngIf="tn.showMirrored">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Default Note</mat-label>
+                              <input matInput placeholder="Label" [value]="tn.textDuplicate" #textDuplicate (input)="
+                                  textDuplicateChange(
+                                    tn.id,
+                                    textDuplicate.value
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <!-- Number -->
+                        <div *ngIf="tn.itemTypeText === 'Number'" class="row">
+                          <div class="col-xl-12 d-flex mb-4">
+                            <mat-form-field [appearance]="apperance" class="full-width mr-2">
+                              <mat-label>Minimum Value</mat-label>
+                              <input matInput placeholder="Minimum Value" type="number" [value]="tn.number.minimum"
+                                #minimumValue (input)="
+                                  numberChange(
+                                    tn.id,
+                                    minimumValue.value,
+                                    'Minimum'
+                                  )
+                                " />
+                            </mat-form-field>
+                            <mat-form-field [appearance]="apperance" class="full-width mr-2">
+                              <mat-label>Maximum Value</mat-label>
+                              <input matInput placeholder="Maximum Value" type="number" [value]="tn.number.maximum"
+                                #maximumValue (input)="
+                                  numberChange(
+                                    tn.id,
+                                    maximumValue.value,
+                                    'Maximum'
+                                  )
+                                " />
+                            </mat-form-field>
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Default Value</mat-label>
+                              <input matInput placeholder="Default Value" [value]="tn.number.default" type="number"
+                                #defaultValue (input)="
+                                  numberChange(
+                                    tn.id,
+                                    defaultValue.value,
+                                    'Default'
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Duplicate Number -->
+                          <div class="col-xl-12 d-flex mb-4" *ngIf="tn.showMirrored">
+                            <mat-form-field [appearance]="apperance" class="full-width mr-2">
+                              <mat-label>Minimum Value</mat-label>
+                              <input matInput placeholder="Minimum Value" type="number"
+                                [value]="tn.numberDuplicate.minimum" #minimumDuplicateValue (input)="
+                                  numberChange(
+                                    tn.id,
+                                    minimumDuplicateValue.value,
+                                    'Minimum Duplicate'
+                                  )
+                                " />
+                            </mat-form-field>
+                            <mat-form-field [appearance]="apperance" class="full-width mr-2">
+                              <mat-label>Maximum Value</mat-label>
+                              <input matInput placeholder="Maximum Value" type="number"
+                                [value]="tn.numberDuplicate.maximum" #maximumDuplicateValue (input)="
+                                  numberChange(
+                                    tn.id,
+                                    maximumDuplicateValue.value,
+                                    'Maximum Duplicate'
+                                  )
+                                " />
+                            </mat-form-field>
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Default Value</mat-label>
+                              <input matInput placeholder="Default Value" type="number"
+                                [value]="tn.numberDuplicate.default" #defaultDuplicateValue (input)="
+                                  numberChange(
+                                    tn.id,
+                                    defaultDuplicateValue.value,
+                                    'Default Duplicate'
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div *ngIf="tn.itemTypeText === 'Dropdown'" class="row">
+                          <!-- Dropdown -->
+                          <div class="col-xl-3 d-flex">Dropdown Values</div>
+                          <div class="col-xl-9 d-block">
+                            <div *ngIf="!tn.setAsDefault" class="align-items-center">
+                              <a href="javascript:void(0)">No Default</a>
+                            </div>
+                            <div *ngFor="let d of tn.dropdowns" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <mat-radio-button class="ml-2 mt-2 big" color="warn" value="d.id" name="rbDropDown"
+                                  [checked]="d.default" matTooltip="Set as Default" (change)="
+                                    selectedDropDownDefault(tn.id, d.id)
+                                  ">
+                                </mat-radio-button>
+                                <input matInput (input)="
+                                    inputDropDownValue(tn.id, d.id, $event)
+                                  " placeholder="Need to type the value" [value]="d.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="removeDropDownOption(tn.id, d.id)">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addDropDownOption(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Duplicate Dropdown -->
+                          <div *ngIf="tn.showMirrored" class="col-xl-3 d-flex">
+                            Dropdown Values
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-9 d-block">
+                            <div *ngIf="!tn.setAsDuplicateDefault" class="align-items-center">
+                              <a href="javascript:void(0)">No Default</a>
+                            </div>
+                            <div *ngFor="let dd of tn.duplicateDropdowns" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <mat-radio-button class="ml-2 mt-2 big" color="warn" value="dd.id"
+                                  [checked]="dd.default" name="rbDropDownDuplicate" matTooltip="Set as Default"
+                                  (change)="
+                                    selectedDropDownDuplicateDefault(
+                                      tn.id,
+                                      dd.id
+                                    )
+                                  ">
+                                </mat-radio-button>
+                                <input matInput (input)="
+                                    inputDropDownDuplicateValue(
+                                      tn.id,
+                                      dd.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="dd.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="
+                                    removeDuplicateDropDownOption(tn.id, dd.id)
+                                  ">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addDuplicateDropDownOption(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div *ngIf="tn.itemTypeText === 'Radio Buttons'" class="row">
+                          <!-- Radio Button -->
+                          <div class="col-xl-3 d-flex">Radio Button Values</div>
+                          <div class="col-xl-9 d-block">
+                            <div *ngIf="!tn.setAsDefault" class="align-items-center">
+                              <a href="javascript:void(0)">No Default</a>
+                            </div>
+                            <div *ngFor="let rd of tn.radioButtons" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <mat-radio-button class="ml-2 mt-2 big" color="warn" value="rd.id"
+                                  [checked]="rd.default" matTooltip="Set as Default" (change)="
+                                    selectedRadioButtonDefault(tn.id, rd.id)
+                                  ">
+                                </mat-radio-button>
+                                <input matInput (input)="
+                                    inputRadioButtonValue(tn.id, rd.id, $event)
+                                  " placeholder="Need to type the value" [value]="rd.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="
+                                    removeRadioButtonOption(tn.id, rd.id)
+                                  ">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addRadioButtonOption(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Duplicate Radio Button -->
+                          <div *ngIf="tn.showMirrored" class="col-xl-3 d-flex">
+                            Radio Button Values
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-9 d-block">
+                            <div *ngIf="!tn.setAsDuplicateDefault" class="align-items-center">
+                              <a href="javascript:void(0)">No Default</a>
+                            </div>
+                            <div *ngFor="let rdd of tn.duplicateRadioButtons" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <mat-radio-button class="ml-2 mt-2 big" color="warn" value="rdd.id"
+                                  [checked]="rdd.default" matTooltip="Set as Default" (change)="
+                                    selectedRadioButtonDuplicateDefault(
+                                      tn.id,
+                                      rdd.id
+                                    )
+                                  ">
+                                </mat-radio-button>
+                                <input matInput (input)="
+                                    inputRadioButtonDuplicateValue(
+                                      tn.id,
+                                      rdd.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="rdd.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="
+                                    removeDuplicateRadioButtonOption(
+                                      tn.id,
+                                      rdd.id
+                                    )
+                                  ">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addDuplicateRadioButtonOption(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div *ngIf="tn.itemTypeText === 'Check Boxes'" class="row">
+                          <!-- Check Boxes -->
+                          <div class="col-xl-3 d-flex">Check Boxes Values</div>
+                          <div class="col-xl-9 d-block">
+                            <div *ngIf="!tn.setAsDefault" class="align-items-center">
+                              <a href="javascript:void(0)">No Default</a>
+                            </div>
+                            <div *ngFor="let cb of tn.checkBoxes" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <mat-checkbox class="ml-2 mt-2 mr-2 normal-checkbox" #checkbox color="warn"
+                                  value="cb.id" [checked]="cb.default" matTooltip="Set as Default" (change)="
+                                    selectedCheckBoxDefault(
+                                      tn.id,
+                                      cb.id,
+                                      checkbox.checked
+                                    )
+                                  ">
+                                </mat-checkbox>
+                                <input matInput (input)="
+                                    inputCheckBoxValue(tn.id, cb.id, $event)
+                                  " [value]="cb.value" placeholder="Need to type the value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="removeCheckBox(tn.id, cb.id)">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addCheckBox(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Duplicate Check Boxes -->
+                          <div *ngIf="tn.showMirrored" class="col-xl-3 d-flex">
+                            Check Boxes Values
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-9 d-block">
+                            <div *ngIf="!tn.setAsDuplicateDefault" class="align-items-center">
+                              <a href="javascript:void(0)">No Default</a>
+                            </div>
+                            <div *ngFor="let cbd of tn.checkBoxesDuplicate" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <mat-checkbox class="ml-2 mt-2 mr-2 normal-checkbox" color="warn" value="cbd.id"
+                                  #checkboxDuplicate [checked]="cbd.default" matTooltip="Set as Default" (change)="
+                                    selectedCheckBoxDuplicateDefault(
+                                      tn.id,
+                                      cbd.id,
+                                      checkboxDuplicate.checked
+                                    )
+                                  ">
+                                </mat-checkbox>
+                                <input matInput (input)="
+                                    inputCheckBoxDuplicateValue(
+                                      tn.id,
+                                      cbd.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="cbd.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="
+                                    removeDuplicateCheckBox(tn.id, cbd.id)
+                                  ">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addDuplicateCheckBox(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-12 d-block align-items-center mb-2">
+                            <mat-checkbox [checked]="tn.includeNotes" (change)="includeNotesValueChange(tn.id, $event)">
+                              Include Notes</mat-checkbox>
+                          </div>
+                        </div>
+                        <!-- End Duplicate Check Boxes -->
+
+                        <!-- Range or Scale -->
+                        <div *ngIf="tn.itemTypeText === 'Range or Scale'" class="row">
+                          <div class="col-xl-12 d-flex mb-4">
+                            <mat-radio-group (change)="rangeOrScaleChange(tn.id, $event)">
+                              <mat-radio-button value="1" class="mr-4">0-5</mat-radio-button>
+                              <mat-radio-button value="2">0-10</mat-radio-button>
+                            </mat-radio-group>
+                          </div>
+
+                          <!-- Duplicate Range or Scale -->
+                          <div class="col-xl-12 d-flex mb-4" *ngIf="tn.showMirrored">
+                            <mat-radio-group (change)="
+                                rangeOrScaleDuplicateChange(tn.id, $event)
+                              ">
+                              <mat-radio-button value="1" class="mr-4">0-5</mat-radio-button>
+                              <mat-radio-button value="2">0-10</mat-radio-button>
+                            </mat-radio-group>
+                          </div>
+                        </div>
+                        <!-- End Range or Scale -->
+
+                        <!-- Option List -->
+                        <div *ngIf="tn.itemTypeText === 'Option List'" class="row">
+                          <div class="col-xl-3 d-flex">Styles</div>
+                          <div class="col-xl-9 d-block">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-select [value]="tn.optionListStyleId" (valueChange)="
+                                  optionListStylesChange(tn.id, $event)
+                                ">
+                                <mat-option *ngFor="let o of optionListStyles" [value]="o.id">
+                                  {{ o.type }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-3 d-flex">Subjects</div>
+                          <div class="col-xl-9 d-block">
+                            <div *ngFor="let s of tn.optionListSubjects" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <input matInput (input)="
+                                    inputOptionListSubjectValue(
+                                      tn.id,
+                                      s.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="s.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="removeOptionListSubject(tn.id, s.id)">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addOptionListSubject(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 d-flex">Choices</div>
+                          <div class="col-xl-9 d-block">
+                            <div *ngFor="let c of tn.optionListChoices" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <input matInput (input)="
+                                    inputOptionListChoiceValue(
+                                      tn.id,
+                                      c.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="c.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="removeOptionListChoice(tn.id, s.id)">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addOptionListChoice(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Duplicate Option List -->
+                          <div *ngIf="tn.showMirrored" class="col-xl-3 d-flex">
+                            Styles
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-9 d-block">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-select [value]="tn.optionListStyleDuplicateId" (valueChange)="
+                                  optionListStylesDuplicateChange(tn.id, $event)
+                                ">
+                                <mat-option *ngFor="let o of optionListStyles" [value]="o.id">
+                                  {{ o.type }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-3 d-flex">
+                            Subjects
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-9 d-block">
+                            <div *ngFor="let s of tn.optionListSubjectsDuplicate" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <input matInput (input)="
+                                    inputOptionListSubjectDuplicateValue(
+                                      tn.id,
+                                      s.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="s.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="
+                                    removeOptionListSubjectDuplicate(
+                                      tn.id,
+                                      s.id
+                                    )
+                                  ">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addOptionListSubjectDuplicate(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-3 d-flex">
+                            Choices
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-9 d-block">
+                            <div *ngFor="let c of tn.optionListChoicesDuplicate" class="radio-button-style row mb-1">
+                              <div class="col-xl-11 d-flex align-items-center justify-content-between">
+                                <input matInput (input)="
+                                    inputOptionListChoiceDuplicateValue(
+                                      tn.id,
+                                      c.id,
+                                      $event
+                                    )
+                                  " placeholder="Need to type the value" [value]="c.value" />
+                              </div>
+                              <div class="col-xl-1 d-flex justify-content-end">
+                                <a href="javascript:void(0)" (click)="
+                                    removeOptionListChoiceDuplicate(tn.id, s.id)
+                                  ">
+                                  <span class="material-icons mt-2" style="font-size: 28px" matTooltip="Remove Option">
+                                    remove_circle_outline
+                                  </span>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-2 button-border mb-3">
+                              <button mat-mini-fab class="button-size" (click)="addOptionListChoiceDuplicate(tn.id)">
+                                <span class="material-icons" style="font-size: 28px">
+                                  add_circle_outline
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div *ngIf="tn.itemTypeText === 'Table'" class="row">
+                          <!-- Table -->
+                          <div class="col-xl-6 d-flex">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>No. of Rows</mat-label>
+                              <mat-select [value]="tn.table.rows" (valueChange)="tableRowChange(tn.id, $event)">
+                                <mat-option *ngFor="let t of maxTableRowsColumns" [value]="t">
+                                  {{ t }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-6 d-flex">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>No. of Columns</mat-label>
+                              <mat-select [value]="tn.table.columns" (valueChange)="tableColumnChange(tn.id, $event)">
+                                <mat-option *ngFor="let t of maxTableRowsColumns" [value]="t">
+                                  {{ t }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="tn.table.rowHeader.length > 0" class="col-xl-12 d-flex bold">
+                            Row headers
+                          </div>
+                          <div class="col-xl-12 d-flex scroll">
+                            <mat-form-field *ngFor="let t of tn.table.rowHeader" [appearance]="apperance"
+                              class="matinputwrapper mr-1">
+                              <mat-label>Header {{ t.id }}</mat-label>
+                              <input matInput [value]="t.value" (input)="
+                                  tableRowHeaderInput(tn.id, t.id, $event)
+                                " />
+                            </mat-form-field>
+                          </div>
+
+                          <div *ngIf="tn.table.columnHeader.length > 0" class="col-xl-12 d-flex bold">
+                            Column headers
+                          </div>
+                          <div class="col-xl-12 d-flex scroll">
+                            <mat-form-field *ngFor="let t of tn.table.columnHeader" [appearance]="apperance"
+                              class="matinputwrapper mr-1">
+                              <mat-label>Header {{ t.id }}</mat-label>
+                              <input matInput [value]="t.value" (input)="
+                                  tableColumnHeaderInput(tn.id, t.id, $event)
+                                " />
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Duplicate Table  -->
+                          <div *ngIf="tn.showMirrored" class="col-xl-6 d-flex">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>No. of Rows</mat-label>
+                              <mat-select [value]="tn.tableDuplicate.rows" (valueChange)="
+                                  tableRowDuplicateChange(tn.id, $event)
+                                ">
+                                <mat-option *ngFor="let t of maxTableRowsColumns" [value]="t">
+                                  {{ t }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-6 d-flex">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>No. of Columns</mat-label>
+                              <mat-select [value]="tn.tableDuplicate.columns" (valueChange)="
+                                  tableColumnDuplicateChange(tn.id, $event)
+                                ">
+                                <mat-option *ngFor="let t of maxTableRowsColumns" [value]="t">
+                                  {{ t }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div *ngIf="tn.tableDuplicate.rowHeader.length > 0" class="col-xl-12 d-flex bold">
+                            Row headers
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-12 d-flex scroll">
+                            <mat-form-field *ngFor="let t of tn.tableDuplicate.rowHeader" [appearance]="apperance"
+                              class="matinputwrapper mr-1">
+                              <mat-label>Header {{ t.id }}</mat-label>
+                              <input matInput [value]="t.value" (input)="
+                                  tableRowHeaderDuplicateInput(
+                                    tn.id,
+                                    t.id,
+                                    $event
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+
+                          <div *ngIf="tn.tableDuplicate.columnHeader.length > 0" class="col-xl-12 d-flex bold">
+                            Column headers
+                          </div>
+                          <div *ngIf="tn.showMirrored" class="col-xl-12 d-flex scroll">
+                            <mat-form-field *ngFor="let t of tn.tableDuplicate.columnHeader" [appearance]="apperance"
+                              class="matinputwrapper mr-1">
+                              <mat-label>Header {{ t.id }}</mat-label>
+                              <input matInput [value]="t.value" (input)="
+                                  tableColumnHeaderDuplicateInput(
+                                    tn.id,
+                                    t.id,
+                                    $event
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <!-- Chart -->
+                        <div *ngIf="tn.itemTypeText === 'Chart'" class="row">
+                          <div class="col-xl-12 d-block">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-select [value]="chartSize" (valueChange)="chartChange(tn.id, $event)">
+                                <mat-option value="Small">Small</mat-option>
+                                <mat-option value="Medium">Medium</mat-option>
+                                <mat-option value="Large">Large</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-12 d-flex align-items-center mb-3">
+                            <app-image-file-upload [headerDescription]="headerDescription" [source]="chartSrc"
+                              (parentChartCallBack)="
+                                parentChartCallBack(tn.id, $event)
+                              "></app-image-file-upload>
+                          </div>
+
+                          <!-- Duplicate Chart -->
+                          <div class="col-xl-12 d-block" *ngIf="tn.showMirrored">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-select [value]="chartDuplicateSize" (valueChange)="
+                                  chartDuplicateChange(tn.id, $event)
+                                ">
+                                <mat-option value="Small">Small</mat-option>
+                                <mat-option value="Medium">Medium</mat-option>
+                                <mat-option value="Large">Large</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-12 d-flex align-items-center mb-3" *ngIf="tn.showMirrored">
+                            <app-image-file-upload [headerDescription]="headerDescription" [source]="duplicateChartSrc"
+                              (parentChartCallBack)="
+                                parentChartDuplicateCallBack(tn.id, $event)
+                              "></app-image-file-upload>
+                          </div>
+                        </div>
+
+                        <!-- File Attachment -->
+                        <div *ngIf="tn.itemTypeText === 'File Attachment'" class="row">
+                          <div class="col-xl-12 d-flex align-items-center mb-3">
+                            <kendo-upload [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl"
+                              [restrictions]="myRestrictions">
+                            </kendo-upload>
+                          </div>
+
+                          <div class="col-xl-12 d-flex align-items-center mb-3">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>File Description</mat-label>
+                              <input matInput placeholder="File Description" #fileDescription (input)="
+                                  fileDescriptionChange(
+                                    tn.id,
+                                    fileDescription.value
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Duplicate File Attachment -->
+                          <div class="col-xl-12 d-flex align-items-center mb-3" *ngIf="tn.showMirrored">
+                            <kendo-upload [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl"
+                              [restrictions]="myRestrictions">
+                            </kendo-upload>
+                          </div>
+                          <div class="col-xl-12 d-flex align-items-center mb-3" *ngIf="tn.showMirrored">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>File Description</mat-label>
+                              <input matInput placeholder="File Description" #fileDescriptionDuplicate (input)="
+                                  fileDescriptionDuplicateChange(
+                                    tn.id,
+                                    fileDescriptionDuplicate.value
+                                  )
+                                " />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <!-- Instruction -->
+                        <div *ngIf="tn.itemTypeText === 'Instruction'" class="row">
+                          <div class="col-xl-12 d-block mb-4">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Text</mat-label>
+                              <input matInput placeholder="Label" #instruction (input)="
+                                  instructionChange(tn.id, instruction.value)
+                                " />
+                              <mat-hint>Instruction will not appear in printed or
+                                exported treatment notes</mat-hint>
+                            </mat-form-field>
+                          </div>
+
+                          <!-- Duplicate Instruction -->
+                          <div class="col-xl-12 d-flex mb-4" *ngIf="tn.showMirrored">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Text</mat-label>
+                              <input matInput placeholder="Label" #instructionDuplicate (input)="
+                                  instructionDuplicateChange(
+                                    tn.id,
+                                    instructionDuplicate.value
+                                  )
+                                " />
+                              <mat-hint>Instruction will not appear in printed or
+                                exported treatment notes</mat-hint>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!-- End Instruction -->
+
+                        <!-- Chief Complaint -->
+                        <div *ngIf="tn.itemTypeText === 'Chief Complaint'" class="row">
+                          <div class="col-xl-12 d-block mb-4">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Default Notes</mat-label>
+                              <textarea matInput rows="4" #chiefComplaint (input)="
+                                  chiefComplaintChange(
+                                    tn.id,
+                                    chiefComplaint.value
+                                  )
+                                "></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!-- End Chief Complaint -->
+
+                        <!-- Vitals -->
+                        <div *ngIf="tn.itemTypeText === 'Vitals'" class="row">
+                          <div class="col-xl-12 d-block mb-2">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label> Unit of Measurement</mat-label>
+                              <mat-select (valueChange)="vitalsChange(tn.id, $event)">
+                                <mat-option value="Metric">Metric</mat-option>
+                                <mat-option value="Imperial">Imperial</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-xl-12 d-block mb-2">
+                            <mat-checkbox *ngFor="let u of unitOfMeasurement" [value]="u.id" (change)="
+                                unitOfMeasurementChange(tn.id, $event, u.name)
+                              " class="mr-3">{{ u.name }}</mat-checkbox>
+                          </div>
+                        </div>
+                        <!-- End Vitals -->
+
+                        <!-- Spine -->
+                        <div *ngIf="tn.itemTypeText === 'Spine'" class="row">
+                          <div class="col-xl-12 d-block mb-4">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Spine Notes</mat-label>
+                              <textarea matInput rows="4" #spine (input)="spineChange(tn.id, spine.value)"></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!-- End Spine -->
+
+                        <!-- Optical Measurements -->
+                        <div *ngIf="tn.itemTypeText === 'Optical Measurements'" class="row">
+                          <div class="col-xl-12 d-block mb-4">
+                            <mat-form-field [appearance]="apperance" class="full-width">
+                              <mat-label>Optical Notes</mat-label>
+                              <textarea matInput rows="4" #optical
+                                (input)="opticalChange(tn.id, optical.value)"></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!-- End Optical Measurements -->
+                      </div>
+
+                      <div *ngIf="
+                          tn.itemTypeText !== 'Chief Complaint' &&
+                          tn.itemTypeText !== 'Vitals' &&
+                          tn.itemTypeText !== 'Spine' &&
+                          tn.itemTypeText !== 'Optical Measurements'
+                        " class="col-xl-12 d-block align-items-center mb-2">
+                        <mat-checkbox [checked]="tn.showMirrored" (change)="mirroredValueChange(tn.id, $event)">Show
+                          mirrored (For left/right or front/back type
+                          comparisions.)</mat-checkbox>
+                      </div>
+                      <div class="col-xl-12 d-block align-items-center mb-2">
+                        <mat-checkbox [checked]="tn.isMandatory" (change)="mandatoryValueChange(tn.id, $event)">Make
+                          this a mandatory item</mat-checkbox>
+                      </div>
+
+                      <!-- Help Text  -->
+                      <div class="col-xl-12 d-flex align-items-center">
+                        <mat-form-field [appearance]="apperance" class="full-width">
+                          <mat-label>Help Text</mat-label>
+                          <input matInput [value]="tn.helpText" placeholder="Help Text" #helpText
+                            (input)="helpTextChange(tn.id, helpText.value)" />
+                        </mat-form-field>
+                      </div>
+
+                      <!-- Duplicate Help Text  -->
+                      <div *ngIf="tn.showMirrored" class="col-xl-12 d-flex align-items-center">
+                        <mat-form-field [appearance]="apperance" class="full-width">
+                          <mat-label>Help Text</mat-label>
+                          <input matInput placeholder="Help Text" [value]="tn.helpTextDuplicate" #duplicateHelpText
+                            (input)="
+                              duplicateHelpTextChange(
+                                tn.id,
+                                duplicateHelpText.value
+                              )
+                            " />
+                        </mat-form-field>
+                      </div>
+
+                      <button mat-stroked-button color="accent" (click)="deleteItem(tn.id)">
+                        Delete Item
+                      </button>
+                    </ng-container>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+            </div>
+
+            <div *ngIf="treatmentNotes" class="text-right control-row mt-5">
+              <mat-divider></mat-divider>
+              <div class="pt-3">
+                <button mat-stroked-button color="accent" (click)="cancel()">
+                  Cancel
+                </button>
+                <button mat-raised-button color="accent" [disabled]="!isSave" class="ml-3 wide"
+                  (click)="createTreatmentNotes()">
+                  <span *ngIf="!submitting">Save</span>
+                  <span *ngIf="submitting">Saving...</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="col-xl-6">
+        <div class="tab bg-white">
+          <div class="d-block align-items-center">
+            <button class="tablinks active bold">Preview</button>
+          </div>
+          <div class="header-switch justify-content-end">
+            <h5 class="mr-2">Status</h5>
+            <kendo-switch [onLabel]="'Active'" [offLabel]="'Inactive'" [(ngModel)]="treatmentNotes.isStatus"
+              [ngModelOptions]="{ standalone: true }" class="wider-switch">
+            </kendo-switch>
+          </div>
+        </div>
+
+        <!-- <div class="tabcontent bg-white disabledDiv">-->
+        <div class="tabcontent bg-white disabledDiv">
+          <div class="col-xl-12 d-block align-items-center xx-large-text bold">
+            {{ treatmentNotes.templateName }}
+          </div>
+          <div class="col-xl-12 d-block align-items-center hazel-text">
+            {{ specialtyPreview }}
+          </div>
+          <mat-divider *ngIf="treatmentNotes.templateName" class="mb-3"></mat-divider>
+          <div class="col-xl-12 align-items-center mb-5 mt-1 prvieww-row"
+            *ngFor="let itm of treatmentNotes.itemTypeModel">
+            <!-- Preview Label-->
+            <div class="col-xl-6 d-block align-items-center x-large-text bold">
+              {{ itm.itemLabel }}
+            </div>
+            <div class="col-xl-6 d-block align-items-center x-large-text bold">
+              {{ itm.itemLabelDuplicate }}
+            </div>
+
+            <!-- Date Time -->
+            <div *ngIf="itm.itemTypeText === 'Date Time' && itm.dateTime" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-flex align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <kendo-datepicker [disabled]="true" class="mr-4" [format]="'dd/MM/yyyy'" placeholder="Date..."
+                [(value)]="itm.dateTime.date">
+              </kendo-datepicker>
+              <kendo-timepicker [disabled]="true" [format]="'HH:mm'" [(value)]="itm.dateTime.time"
+                placeholder="Time...">
+              </kendo-timepicker>
+            </div>
+
+            <!-- Duplicate Date Time -->
+            <div *ngIf="
+                itm.itemTypeText === 'Date Time' &&
+                itm.showMirrored === true &&
+                itm.dateTimeDuplicate
+              " class="col-xl-6 d-flex align-items-center">
+              <kendo-datepicker [disabled]="true" class="mr-4" [format]="'dd/MM/yyyy'" placeholder="Date..."
+                [(value)]="itm.dateTimeDuplicate.date">
+              </kendo-datepicker>
+              <kendo-timepicker [disabled]="true" [format]="'HH:mm'" [(value)]="itm.dateTimeDuplicate.time"
+                placeholder="Time...">
+              </kendo-timepicker>
+            </div>
+
+            <!-- Text -->
+            <div *ngIf="itm.itemTypeText === 'Text'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-flex align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <textarea matInput [value]="itm.text" rows="4" [disabled]="true"></textarea>
+              </mat-form-field>
+            </div>
+
+            <!-- Duplicate Text -->
+            <div *ngIf="itm.itemTypeText === 'Text' && itm.showMirrored === true"
+              class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <textarea matInput [value]="itm.textDuplicate" rows="4" [disabled]="true"></textarea>
+              </mat-form-field>
+            </div>
+
+            <!-- Number -->
+            <div *ngIf="itm.itemTypeText === 'Number'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-flex align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <input matInput [value]="itm.number.default" [disabled]="true" />
+              </mat-form-field>
+            </div>
+
+            <!-- Duplicate Number -->
+            <div *ngIf="itm.itemTypeText === 'Number' && itm.showMirrored === true"
+              class="col-xl-6 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <input matInput [value]="itm.numberDuplicate.default" [disabled]="true" />
+              </mat-form-field>
+            </div>
+
+            <!-- Dropdown -->
+            <div *ngIf="itm.itemTypeText === 'Dropdown'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-block align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-select [(value)]="itm.selectedDropdown">
+                  <mat-option *ngFor="let d of itm.dropdowns" [value]="d.id">
+                    {{ d.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Duplicate Dropdown -->
+            <div *ngIf="
+                itm.itemTypeText === 'Dropdown' && itm.showMirrored === true
+              " class="col-xl-6 d-block align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <mat-select [(value)]="itm.selectedDuplicateDropdown">
+                  <mat-option *ngFor="let d of itm.duplicateDropdowns" [value]="d.id">
+                    {{ d.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Radio Button -->
+            <div *ngIf="itm.itemTypeText === 'Radio Buttons'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-block align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <mat-radio-group class="radio-group-vertical">
+                <mat-radio-button *ngFor="let rb of itm.radioButtons" [checked]="rb.default" [value]="rb.id">
+                  {{ rb.value }}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <!-- Duplicate Radio Button -->
+            <div *ngIf="
+                itm.itemTypeText === 'Radio Buttons' &&
+                itm.showMirrored === true
+              " class="col-xl-6 d-block align-items-center">
+              <mat-radio-group class="radio-group-vertical">
+                <mat-radio-button *ngFor="let rb of itm.duplicateRadioButtons" [checked]="rb.default" [value]="rb.id">
+                  {{ rb.value }}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <!-- Check Boxes -->
+            <div *ngIf="itm.itemTypeText === 'Check Boxes'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-block align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <div class="radio-group-vertical">
+                <mat-checkbox *ngFor="let cb of itm.checkBoxes" [checked]="cb.default" [value]="cb.id">
+                  {{ cb.value }}
+                  <input *ngIf="itm.includeNotes" matInput class="textbox-style" />
+                </mat-checkbox>
+              </div>
+            </div>
+
+            <!-- Duplicate Check Boxes -->
+            <div *ngIf="
+                itm.itemTypeText === 'Check Boxes' && itm.showMirrored === true
+              " class="col-xl-6 d-block align-items-center">
+              <div class="radio-group-vertical">
+                <mat-checkbox *ngFor="let rbd of itm.checkBoxesDuplicate" [checked]="rbd.default" [value]="rbd.id">
+                  {{ rbd.value }}
+                  <input *ngIf="itm.includeNotes" matInput class="textbox-style" />
+                </mat-checkbox>
+              </div>
+            </div>
+
+            <!-- Range or Scale  -->
+            <div *ngIf="itm.itemTypeText === 'Range or Scale'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-flex align-items-center'
+                  : 'col-xl-12 d-flex align-items-center'
+              ">
+              <span *ngIf="rangeOrScaleMax">0</span>
+              <input type="range" list="tickmarks" class="full-width" />
+              <span *ngIf="rangeOrScaleMax">{{ rangeOrScaleMax }}</span>
+              <datalist id="tickmarks">
+                <option *ngFor="let r of rangeOrScale" [value]="r"></option>
+              </datalist>
+            </div>
+
+            <!-- Duplicate Range or Scale -->
+            <div *ngIf="
+                itm.itemTypeText === 'Range or Scale' &&
+                itm.showMirrored === true
+              " class="col-xl-6 d-flex align-items-center">
+              <span *ngIf="rangeOrScaleDuplicateMax">0</span>
+              <input type="range" list="tickmarksduplicate" class="full-width" />
+              <span *ngIf="rangeOrScaleDuplicateMax">{{
+                rangeOrScaleDuplicateMax
+                }}</span>
+              <datalist id="tickmarksduplicate">
+                <option *ngFor="let r of rangeOrScaleDuplicate" [value]="r"></option>
+              </datalist>
+            </div>
+
+            <!-- Option List -->
+            <div *ngIf="itm.itemTypeText === 'Option List'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-block align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <div *ngFor="let ols of itm.optionListSubjects" class="mb-3">
+                {{ ols.value }}
+                <span *ngIf="itm.optionListStyleId === 1">
+                  <button mat-stroked-button color="accent" class="ml-3 mr-3" *ngFor="let olc of itm.optionListChoices">
+                    {{ olc.value }}
+                  </button>
+                </span>
+                <span *ngIf="itm.optionListStyleId === 2">
+                  <mat-checkbox *ngFor="let olc of itm.optionListChoices" class="ml-3 mr-3" [value]="olc.id">
+                    {{ olc.value }}</mat-checkbox>
+                </span>
+                <span *ngIf="itm.optionListStyleId === 4">
+                  <mat-radio-button *ngFor="let olc of itm.optionListChoices" class="ml-3 mr-3" [value]="olc.id">
+                    {{ olc.value }}</mat-radio-button>
+                </span>
+                <span class="ml-3" *ngIf="itm.optionListStyleId === 3">
+                  <mat-form-field [appearance]="apperance">
+                    <mat-select>
+                      <mat-option *ngFor="let d of itm.optionListChoices" [value]="d.id">
+                        {{ d.value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </span>
+                <span *ngIf="itm.optionListStyleId === 5"> </span>
+              </div>
+            </div>
+
+            <!-- Duplicate Option List -->
+            <div *ngIf="
+                itm.itemTypeText === 'Option List' && itm.showMirrored === true
+              " class="col-xl-6 d-block align-items-center">
+              <div *ngFor="let ols of itm.optionListSubjectsDuplicate" class="mb-3">
+                {{ ols.value }}
+                <span *ngIf="itm.optionListStyleDuplicateId === 1">
+                  <button mat-stroked-button color="accent" class="ml-3 mr-3"
+                    *ngFor="let olc of itm.optionListChoicesDuplicate">
+                    {{ olc.value }}
+                  </button>
+                </span>
+                <span *ngIf="itm.optionListStyleDuplicateId === 2">
+                  <mat-checkbox *ngFor="let olc of itm.optionListChoicesDuplicate" class="ml-3 mr-3" [value]="olc.id">
+                    {{ olc.value }}</mat-checkbox>
+                </span>
+                <span *ngIf="itm.optionListStyleDuplicateId === 4">
+                  <mat-radio-button *ngFor="let olc of itm.optionListChoicesDuplicate" class="ml-3 mr-3"
+                    [value]="olc.id">
+                    {{ olc.value }}</mat-radio-button>
+                </span>
+                <span class="ml-3" *ngIf="itm.optionListStyleDuplicateId === 3">
+                  <mat-form-field [appearance]="apperance">
+                    <mat-select>
+                      <mat-option *ngFor="let d of itm.optionListChoicesDuplicate" [value]="d.id">
+                        {{ d.value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </span>
+                <span *ngIf="itm.optionListStyleDuplicateId === 5"> </span>
+              </div>
+            </div>
+
+            <!-- Table  -->
+            <div *ngIf="itm.itemTypeText === 'Table'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 scroll'
+                  : 'col-xl-12 scroll'
+              ">
+              <table>
+                <tr>
+                  <td></td>
+                  <th scope="col" *ngFor="let r of itm.table.rowHeader">
+                    {{ r.value }}
+                  </th>
+                </tr>
+                <tr *ngFor="let c of itm.table.columnHeader">
+                  <th scope="row">{{ c.value }}</th>
+                  <td *ngFor="let r of itm.table.rowHeader">
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1">
+                      <input matInput />
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Duplicate Table -->
+            <div *ngIf="itm.itemTypeText === 'Table' && itm.showMirrored === true"
+              class="col-xl-6 d-block align-items-center scroll mt-3">
+              <table>
+                <tr>
+                  <td></td>
+                  <th scope="col" *ngFor="let r of itm.tableDuplicate.rowHeader">
+                    {{ r.value }}
+                  </th>
+                </tr>
+                <tr *ngFor="let c of itm.tableDuplicate.columnHeader">
+                  <th scope="row">{{ c.value }}</th>
+                  <td *ngFor="let r of itm.tableDuplicate.rowHeader">
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1">
+                      <input matInput />
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Chart -->
+            <div *ngIf="itm.itemTypeText === 'Chart'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-block align-items-center scroll'
+                  : 'col-xl-12 d-block align-items-center scroll'
+              ">
+              <img [src]="originalImage" class="mb-3" />
+            </div>
+
+            <!-- Duplicate Chart -->
+            <div *ngIf="itm.itemTypeText === 'Chart' && itm.showMirrored === true"
+              class="col-xl-6 d-block align-items-center scroll">
+              <img [src]="originalDuplicateImage" class="mb-3" />
+            </div>
+
+            <!-- File Attachment -->
+            <div *ngIf="itm.itemTypeText === 'File Attachment'" [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 scroll'
+                  : 'col-xl-12 scroll'
+              ">
+              <kendo-upload [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" [restrictions]="myRestrictions">
+              </kendo-upload>
+              <p class="hazel-text">{{ itm.fileDescription }}</p>
+            </div>
+
+            <!-- End File Attachment -->
+            <!-- Duplicate File Attachment -->
+            <div *ngIf="
+                itm.itemTypeText === 'File Attachment' &&
+                itm.showMirrored === true
+              " class="col-xl-6 scroll">
+              <kendo-upload [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" [restrictions]="myRestrictions">
+              </kendo-upload>
+
+              <p class="hazel-text">{{ itm.fileDuplicateDescription }}</p>
+            </div>
+            <!-- End Duplicate File Attachment -->
+
+            <!-- Instruction -->
+            <div *ngIf="itm.itemTypeText === 'Instruction'"
+              [ngClass]="itm.showMirrored === true ? 'col-xl-6' : 'col-xl-12'">
+              <p class="hazel-text">{{ itm.instruction }}</p>
+            </div>
+            <!-- End Instruction -->
+            <!-- Duplicate Instruction -->
+            <div *ngIf="
+                itm.itemTypeText === 'Instruction' && itm.showMirrored === true
+              " class="col-xl-6">
+              <p class="hazel-text">{{ itm.instructionDuplicate }}</p>
+            </div>
+            <!-- End Duplicate Instruction -->
+
+            <!-- Chief Complaint -->
+            <div *ngIf="itm.itemTypeText === 'Chief Complaint'" class="col-xl-12 d-block align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <textarea matInput [value]="itm.chiefComplaint" rows="4" [disabled]="true"></textarea>
+              </mat-form-field>
+            </div>
+            <!-- End Chief Complaint -->
+
+            <!-- Vitals -->
+            <div *ngIf="itm.itemTypeText === 'Vitals'" class="col-xl-12 d-block align-items-center">
+              <div class="bold">{{ itm.vitals.vitalType }}</div>
+              <mat-form-field [appearance]="apperance" class="mr-1" *ngFor="let m of itm.vitals.measurements">
+                <input matInput [placeholder]="m" />
+              </mat-form-field>
+            </div>
+            <!-- End Vitals -->
+
+            <!-- Spine -->
+            <div *ngIf="itm.itemTypeText === 'Spine'" class="col-xl-12 d-flex justify-content-center">
+              <div class="d-block align-items-center" style="width: 80px">
+                <div class="bold">Left</div>
+                <mat-checkbox *ngFor="let s of spine" [value]="s.id" class="mr-3">{{ s.name }}</mat-checkbox>
+              </div>
+              <div class="d-flex align-items-center" style="width: 350px">
+                <img src="../../../assets/spine.jpg" alt="img" width="100%" height="1050px" />
+              </div>
+              <div class="d-block align-items-center" style="width: 80px">
+                <div class="bold">Right</div>
+                <mat-checkbox *ngFor="let s of spine" [value]="s.id" class="mr-3">{{ s.name }}</mat-checkbox>
+              </div>
+            </div>
+            <div *ngIf="itm.itemTypeText === 'Spine'" class="col-xl-12 d-flex align-items-center">
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <textarea matInput [value]="itm.chiefComplaint" rows="4" [disabled]="true"></textarea>
+              </mat-form-field>
+            </div>
+            <!-- End Spine -->
+
+            <!-- Optical Measurements -->
+            <div *ngIf="itm.itemTypeText === 'Optical Measurements'"
+              class="col-xl-12 d-block align-items-center scroll">
+              <table>
+                <tr>
+                  <td></td>
+                  <th scope="col">Sphere</th>
+                  <th scope="col">Cyl</th>
+                  <th scope="col">Axis</th>
+                  <th scope="col">Add</th>
+                  <th scope="col">Horizontal Prism</th>
+                  <th scope="col">Vertical Prism</th>
+                  <th scope="col">Visual Acuity</th>
+                </tr>
+                <tr>
+                  <th scope="row">OS</th>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">OD</th>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field [appearance]="apperance" class="matinputtablewrapper mr-1"><input matInput />
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+              <mat-form-field [appearance]="apperance" class="full-width">
+                <textarea matInput [value]="itm.chiefComplaint" rows="4" [disabled]="true"></textarea>
+              </mat-form-field>
+            </div>
+            <!-- End Optical Measurements -->
+
+            <!-- Heading -->
+            <div [ngClass]="
+                itm.showMirrored === true
+                  ? 'col-xl-6 d-flex align-items-center'
+                  : 'col-xl-12 d-block align-items-center'
+              ">
+              <span class="hazel-text">{{ itm.helpText }}</span>
+            </div>
+
+            <!-- Duplicate Heading -->
+            <div *ngIf="itm.showMirrored === true" class="col-xl-6 d-flex align-items-center">
+              <span class="hazel-text">{{ itm.helpTextDuplicate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,878 @@
+/*  New Css */
+
+:host {
+  position: relative;
+}
+
+:host ::ng-deep .mat-tab-body-content {
+  overflow-y: auto !important;
+  padding-top: 2rem;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.tab button.active {
+  border-bottom: 5px solid #a18bd6;
+}
+
+::ng-deep .datetimeitem .mat-form-field-outline {
+  border: 1px solid #DADADA;
+  border-radius: 4px;
+  height: 54px;
+}
+
+.standardtemplate {
+  border-radius: 4px !important;
+  box-shadow: 0px 2px 13px rgba(0, 0, 0, .25);
+  background: white;
+}
+
+.tabcontent {
+  min-height: 714px !important;
+}
+
+.headerctext {
+  color: #575757;
+}
+
+.borderitems {
+  border-bottom: 1px solid #DBDBDB;
+}
+
+.templateName {
+  color: #394085;
+  padding: 8px;
+}
+
+.k-filter-case {
+  position: absolute;
+  text-transform: uppercase;
+  background: #FAFAFA;
+  border: 1px solid #DBDBDB;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 0.25%);
+  border-radius: 7px;
+  overflow: initial;
+  z-index: 9999999;
+}
+
+.filtercasename {
+  align-items: center;
+  letter-spacing: 0.15px;
+  text-transform: uppercase;
+  color: #575757;
+  position: absolute;
+  top: 0px;
+  cursor: pointer;
+}
+
+.headerheight {
+  height: 38px;
+}
+
+.progressborder {
+  margin: 0px -15px 0px -15px;
+}
+
+.progresskcardA {
+  height: 58px;
+  background: #B195DB;
+  border-radius: 4px 4px 0px 0px;
+}
+
+.progresscardA {
+  position: absolute;
+  left: 2%;
+  right: 69%;
+  top: 42%;
+  bottom: 98%;
+  display: flex;
+  align-items: center;
+  color: #394085;
+}
+
+.progresscardSA {
+  position: absolute;
+  left: 2%;
+  top: 25%;
+  bottom: 84%;
+  color: #FAFAFA;
+}
+
+.dischargebutton {
+  width: 132px;
+  height: 42px;
+  top: -3px;
+  left: 22px;
+  background: #394085;
+  box-shadow: 0px 2px 0px #B195DB !important;
+  border-radius: 4px;
+}
+
+.dischargebutton:hover {
+  background-color: #394085 !important;
+}
+
+.progresscards {
+  width: auto;
+  height: 84px;
+  background: #DBDEFF;
+}
+
+.progresstext {
+  width: 300px;
+  height: 49px;
+  color: #394085;
+  position: absolute;
+  left: 2%;
+  right: 23%
+}
+
+.progresstextdesc {
+  top: 55%;
+  position: absolute;
+  width: 162px;
+  height: 11px;
+  left: 2%;
+}
+
+.alerttext {
+  width: 136px;
+  height: 16px;
+  top: 10px;
+}
+
+.alertdesc {
+  width: auto;
+  height: 32px;
+  top: 27px;
+  left: 17px;
+}
+
+.alerttext1 {
+  width: 52px;
+  height: 16px;
+  top: 60px;
+  left: 17px;
+}
+
+.alerttext2 {
+  width: 52px;
+  height: 16px;
+  top: 123px;
+  left: 17px;
+}
+
+.medicalcommondesc {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.15px;
+  color: #000000;
+}
+
+.alertdesc1 {
+  position: absolute;
+  width: auto;
+  height: 16px;
+  top: 91px;
+}
+
+.alertdesc2 {
+  position: absolute;
+  width: auto;
+  height: 16px;
+  top: 151px;
+}
+
+.exportdesc {
+  position: absolute;
+  width: 300px;
+  height: 20px;
+  top: 61px;
+  color: #1C1B1B;
+}
+
+.exportWidth {
+  width: auto !important;
+  height: 334px;
+  top: 90px;
+  position: absolute;
+  background: #FAFAFA;
+  border: 1px solid #979797;
+  box-sizing: border-box;
+  border-radius: 0px;
+}
+
+.exportAtitle {
+  position: absolute;
+  width: 350px;
+  height: 16px;
+  top: 5px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.15px;
+}
+
+.hrline {
+  width: 340px;
+  height: 0px;
+  bottom: 20px;
+  position: absolute;
+  top: 37px;
+  border: 0.5px solid #ABAAB0;
+  left: 14px;
+}
+
+.fullscreen-btne {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.fbtn {
+  box-shadow: inset 0px 0px 4px rgb(0 0 0 / 25%);
+  height: 49px;
+  width: 40px;
+  position: absolute;
+}
+
+.expandclass {
+  position: absolute;
+  top: 11px;
+  left: 14px;
+}
+
+.addform {
+  margin: 14px 0px -20px 0px;
+}
+
+.Aformtitle {
+  display: flex;
+  align-items: center;
+  color: #1C1B1B;
+}
+
+.caser {
+  width: 59px;
+  height: 10px;
+  top: 3px;
+}
+
+.mat-select-value-text {
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 19px !important;
+}
+
+.Adatepicker {
+  height: 54px;
+  background: #FFFFFF;
+  border: 1px solid #DADADA;
+  border-radius: 4px;
+  margin-bottom: 27px;
+}
+
+::ng-deep .k-datepicker .k-select {
+  border-color: rgb(0 0 0 / 0%) !important;
+  color: #656565 !important;
+  background-color: #f6f6f600 !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#f1f1f1)) !important;
+  background-image: linear-gradient(#f6f6f600, #f1f1f100) !important;
+}
+
+::ng-deep .k-dateinput .k-dateinput-wrap {
+  align-items: center;
+}
+
+::ng-deep form .k-dropdown .k-dropdown-wrap {
+  background: #f6f6f6;
+  padding: 0px 0;
+  border-radius: 0px;
+}
+
+::ng-deep form .k-dropdown {
+  margin-bottom: 0em;
+}
+
+::ng-deep .k-button {
+  background-color: #f6f6f600;
+  border-width: 0px;
+  background-image: linear-gradient(#f6f6f600, #f1f1f100);
+}
+
+::ng-deep #templatename-field .mat-form-field-outline {
+  height: 54px;
+}
+
+.addItemb {
+  height: 52px;
+  position: absolute;
+  border-radius: 4px;
+  box-shadow: 0px 0px 0px #b195db !important;
+  margin-top: 18px;
+}
+
+.arrowIcon {
+  float: right;
+  top: 10px;
+}
+
+.k-card-additem {
+  width: 420px;
+  height: 300px;
+  z-index: 999999;
+  position: absolute;
+  top: 34%;
+  left: 54%;
+  overflow-y: scroll;
+  background: #FAFAFA;
+  border: 1px solid #DBDBDB;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 25%);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.additemimg {
+  width: 19px;
+  height: 19px;
+  top: 16px;
+  position: absolute;
+  left: 10px;
+}
+
+.additemmodulehw {
+  height: 18px;
+  width: 18px;
+  margin-left: 9px;
+}
+
+.texteditareaicon {
+  height: 18px;
+  width: 18px;
+  left: 40px;
+}
+
+.textareaupicon {
+  left: 62px;
+}
+
+.textareadownicon {
+  left: 88px;
+}
+
+.textareadeleteicon {
+  left: 113px;
+}
+
+.kendoDialogpo {
+  background: #FAFAFA;
+}
+
+.editItemmodal {
+  width: 760px;
+  height: 54px;
+  top: 44px;
+  left: 0px;
+}
+
+.checkboxh {
+  width: 435px;
+  top: 70px;
+  height: 22px;
+}
+
+.checktext {
+  margin-left: 20px;
+}
+
+.aformheading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dateinput {
+  margin-top: -6px;
+}
+
+.dateicons {
+  height: 18px;
+  margin-top: -8px;
+  margin-right: -36px;
+}
+
+::ng-deep .timeInput {
+  margin-top: -7px !important;
+}
+
+@media (min-width: 1364px) {
+  .col-xl-9 {
+      max-width: 68%;
+  }
+  .col-xl-10 {
+      max-width: 76.333333%;
+  }
+  .servicetext {
+      margin-left: -21px;
+  }
+}
+
+@media (min-width: 1545px) {
+  .bold_20px_font {
+      font-size: 20px;
+  }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  width: auto;
+  height: 54px;
+  display: flex;
+  justify-content: end;
+}
+
+
+/* Scrool Design */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.droupdownlist {
+  border: 1px solid #DADADA;
+  padding: 9px;
+  background: #FFFFFF;
+  border-radius: 4px;
+}
+
+input[type=radio],
+input[type=checkbox] {
+  height: 29px;
+  width: 29px;
+}
+
+.droupdowntext {
+  margin-top: -29px;
+  display: flex;
+  margin-left: 42px;
+}
+
+.addnewitemdr {
+  border: 1px solid rgba(171, 170, 176, 0.5);
+  width: 46px;
+  background: #FFFFFF;
+  border-radius: 3px;
+  padding: 8px;
+}
+
+.dash-wrapper {
+  height: 29px;
+  width: 29px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.template-wrapper {
+  margin-top: 20px;
+}
+
+
+/* hardik */
+
+.mt-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.filtericon {
+  margin-right: 15px;
+  box-sizing: border-box;
+  background: #F9F9F9;
+  width: 44px;
+  height: 26px;
+  border-radius: 4px;
+  border: 1px solid #DBDBDB;
+}
+
+.k-case-filter {
+  width: 140px;
+  height: 114px;
+  right: 28px;
+  top: 44px;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #1C1B1B;
+  font-size: 18px;
+  line-height: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+  padding: 20px 15px 10px 15px;
+}
+
+.md-title {
+  padding-left: 15px;
+}
+
+.pn-wrapper {
+  display: flex;
+}
+
+.pn-filter {
+  margin-right: 25px;
+  margin-left: -15px;
+  margin-top: 2px;
+}
+
+.pn-filter-icon {
+  box-sizing: border-box;
+  background: #F9F9F9;
+  width: 44px;
+  height: 26px;
+  border-radius: 4px;
+  border: 1px solid #DBDBDB;
+}
+
+.pn-wrapper img {
+  padding: 6px;
+}
+
+.k-card-filterprogress {
+  right: 25px;
+  width: 140px;
+  height: 116px;
+  overflow-y: scroll;
+}
+
+.medicalaret {
+  height: 186px;
+  top: 10px;
+  background: #FFDBDB;
+}
+
+.medicalcommontext {
+  position: absolute;
+  letter-spacing: 0.15px;
+  color: #394085;
+}
+
+.ac-status {
+  margin-top: -21px;
+}
+
+.progress-header {
+  height: 72px;
+}
+
+.pn-btn {
+  margin-right: 15px;
+}
+
+.pn-ac-button {
+  width: 132px;
+  box-shadow: 0px 2px 0px #b195db !important;
+}
+
+.pn-ac-button:hover {
+  background-color: #394085 !important;
+}
+
+.pn-acase {
+  border: 1px solid #B195DB;
+  background: #B195DB;
+  border-radius: 4px 4px 0px 0px;
+}
+
+.pn-margin {
+  margin-left: 10px;
+}
+
+.pn-adesc {
+  border: 1px solid #DBDEFF;
+  background: #DBDEFF;
+  box-shadow: 0px 4px 17px #65656587;
+}
+
+.acase-img img {
+  padding: 7px;
+}
+
+.pn-height {
+  height: 763px;
+  overflow-y: scroll;
+}
+
+.draft-box {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 25%);
+  margin-left: 16px;
+  padding: 11px 0px 66px 14px;
+}
+
+.export-box {
+  border: 1px solid #979797;
+  background: #fafafa;
+  height: 334px;
+  margin-top: 40px;
+}
+
+.periviewdesc {
+  text-align: end;
+  width: 200px;
+  height: 45px;
+}
+
+.previewpatient {
+  border: 1px solid #ABAAB0;
+  border-radius: 4px;
+}
+
+.preiviewfooter {
+  padding: 3px 0px 5px 20px !important;
+}
+
+.spacep {
+  padding: 7px 0px 5px 21px;
+}
+
+.filtercasew {
+  border: 1px solid #979797;
+  background: #FAFAFA;
+  height: 317px;
+  overflow-y: scroll;
+}
+
+.k-card-editoption {
+  top: 196px;
+  right: 168px;
+  width: 350px;
+}
+
+.patientIDs {
+  margin-right: 40px;
+}
+
+.changepatient {
+  line-height: 31px;
+  height: 46%;
+}
+
+.pn-notes {
+  border: 1px solid #92FF96;
+  background: #92FF96;
+  border-radius: 4px;
+}
+
+::ng-deep .customtiomew .mat-form-field {
+  display: block !important;
+}
+
+::ng-deep input.mat-input-element {
+  margin-top: -0.457em;
+}
+
+::ng-deep .mat-ink-bar {
+  height: 5px !important;
+}
+
+@media screen and (max-width:1199px) {
+  .standardtemplate {
+      width: 100%;
+  }
+}
+
+@media screen and (max-width:1280px) {
+  .bold_20px_font {
+      font-size: 13px !important;
+  }
+}
+
+::ng-deep .k-checkbox:checked {
+  border-color: #A18BD6 !important;
+  color: #FAFAFA !important;
+  background-color: #A18BD6 !important;
+}
+
+.calendericon {
+  height: 18px;
+  width: 18px;
+  margin-top: -7px;
+  margin-right: -19px;
+}
+
+.dialogbutton {
+  margin-bottom: -14px;
+}
+
+.left-cnt {
+  width: 65%;
+}
+
+.right-btn {
+  width: 35%;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+@media screen and (max-width:1280px) {
+  .left-cnt {
+      width: 50% !important;
+  }
+  .right-btn {
+      width: 50% !important;
+  }
+}
+
+.box-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.box-top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.pn-filters {
+  margin-right: 25px;
+  margin-top: 2px;
+}
+
+::ng-deep ._mat-animation-noopable .mat-radio-outer-circle {
+  height: 29px !important;
+  width: 29px !important;
+}
+
+::ng-deep .mat-checkbox-inner-container {
+  height: 18px !important;
+  width: 18px !important;
+}
+
+::ng-deep .mat-radio-inner-circle {
+  height: 29px !important;
+  width: 29px !important;
+}
+
+::ng-deep .mat-radio-label-content {
+  margin-top: 7px !important;
+  padding-left: 20px !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #B195DB;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #B195DB;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #B195DB !important;
+}
+
+input[type=radio]:checked,
+input[type=checkbox]:checked {
+  background-color: #B195DB !important;
+}
+
+.checkboxtextd {
+  background: #FFFFFF;
+  border: 1px solid #DADADA;
+  border-radius: 4px;
+  margin-left: 13px;
+}
+
+::ng-deep .mat-slider-horizontal .mat-slider-track-wrapper,
+::ng-deep .mat-slider-horizontal .mat-slider-track-background,
+::ng-deep .mat-slider-horizontal .mat-slider-track-fill,
+::ng-deep .mat-slider:hover .mat-slider-track-background {
+  height: 12px !important;
+  border: 0.5px solid #D6D6D6 !important;
+  border-radius: 6px !important;
+  background: #DBDBDB;
+}
+
+::ng-deep .mat-slider-horizontal .mat-slider-ticks-container,
+::ng-deep .mat-slider-horizontal .mat-slider-wrapper::after {
+  height: 0px !important;
+}
+
+::ng-deep .mat-slider-thumb {
+  width: 19px;
+  height: 19px;
+  top: -4px;
+}
+
+::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb,
+::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing):hover .mat-slider-thumb {
+  border-color: #a18bd6;
+  border-color: rgba(0, 0, 0, 0.38);
+  background-color: #a18bd6;
+}
+
+::ng-deep .k-dialog-wrapper .k-dialog {
+  overflow-y: scroll !important;
+}
+
+.selectboxwidth {
+  width: 25%;
+}
+
+table th,
+td {
+  color: #ABAAB0;
+  border: 1px solid #DADADA;
+  width: 1%;
+}
+
+.texttable {
+  border: 1px solid #D3D3D3;
+  border-radius: 4px;
+}
+
+table th,
+.tdclass {
+  height: 43px;
+}
+
+.radioselectiond .mat-radio-label {
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 1600px) and (min-width: 1441px) {
+  .templateName {
+      padding: 5px !important;
+      font-size: 17px !important;
+  }
+}

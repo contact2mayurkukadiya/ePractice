@@ -1,0 +1,36 @@
+<div class="col-xl-12">
+    <span class="QUI_BOLD_24_32">
+        PREVIEW
+    </span>
+    <div class="modalClosebtn">
+        <button (click)="close()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<mat-divider class="mt-3 patientmodaldivider"></mat-divider>
+
+<div class="imagepreveiw">
+    <div>
+        <p>{{docuName}}</p>
+    </div>
+    <div class="image-wrapper">
+        <img src="{{imagepreview}}" class="previeImages">
+        <span class="docicon k-icon k-i-download" kendoTooltip style="text-align: center;" (click)="download()"
+            title="Download"></span>
+        <img src="../../../assets/Fullscreen.png" class="dociconfull" kendoTooltip title="Full Screen"
+            (click)="showLightbox(0)" />
+    </div>
+
+</div>
+<ng-image-fullscreen-view [images]="imageObject" [show]="showFlag" (close)="closeEventHandler()">
+</ng-image-fullscreen-view>
+<mat-dialog-content>
+    <div class="text-right control-row">
+        <mat-divider class=""></mat-divider>
+        <div class="pt-3">
+            <button mat-raised-button color="accent" class="mr-3" (click)="close();"
+                style="padding: 0 30px">Close</button>
+        </div>
+    </div>
+</mat-dialog-content>

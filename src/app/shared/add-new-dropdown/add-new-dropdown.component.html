@@ -1,0 +1,24 @@
+<kendo-dropdownlist
+  [data]="appFilterData"
+  [valuePrimitive]="true"
+  [textField]="'categoryName'"
+  [valueField]="'id'"
+  [filterable]="true"
+  [value]="selectedId"
+  class="kendo-dropdown-size"
+  (filterChange)="handleFilter($event)"
+  (valueChange)="handleChange($event)"
+>
+  <ng-template kendoDropDownListNoDataTemplate>
+    <div>
+      No data found.
+      <ng-container *ngIf="filter"
+        >Do you want to add new item - '{{ filter }}' ?
+      </ng-container>
+      <br />
+      <button *ngIf="filter" class="k-button" (click)="addNew()">
+        Add new item
+      </button>
+    </div>
+  </ng-template>
+</kendo-dropdownlist>

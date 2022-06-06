@@ -1,0 +1,336 @@
+<block-ui message="Loading..."> </block-ui>
+
+<div class="pl-5 pr-5">
+  <h3 class="mb-3 mt-3" id="heading">
+    Offerings
+  </h3>
+  <mat-tab-group color="warn" [(selectedIndex)]="appState.selectedTab" (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="Service">
+      <div class="row mt-3">
+        <div class="col-xl-12 text-left">
+          <div class="d-flex align-items-center justify-content-end">
+            <div *ngIf="detailViewServiceShow || listViewServiceShow">
+              <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                (change)="serviceActiveChanged($event)">
+                <mat-button-toggle value="active">Active</mat-button-toggle>
+                <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+              </mat-button-toggle-group>
+              <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                (change)="serviceViewChanged($event)">
+                <mat-button-toggle value="active">
+                  <mat-icon>list</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="inactive">
+                  <mat-icon>location_on</mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <button mat-raised-button color="accent" class="wide" [routerLink]="['/offerings/service/add']">
+              Add Service
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="detailViewServiceShow" class="mt-3">
+        <kendo-grid [kendoGridBinding]="service" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+          [columnMenu]="true" [reorderable]="true" [filterable]="true" [sortable]="true" [groupable]="true"
+          (pageChange)="pageChange($event)" [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }" [sort]="sort" (sortChange)="sortChange($event)">
+          <kendo-grid-column width="60" field="serviceCode">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+              Service Code
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <h6>
+                <svg width="20" height="20">
+                  <rect width="20" height="20" [style.fill]="dataItem.colour" />
+                </svg>
+                <strong>
+                  <a [routerLink]="['/offerings/service/edit', dataItem.id]">
+                    {{ dataItem.serviceCode }}
+                  </a></strong>
+              </h6>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="serviceName" title="Service Name" width="50"></kendo-grid-column>
+          <kendo-grid-column field="c_Name" title="Category" width="50"></kendo-grid-column>
+          <kendo-grid-column field="l_Name" title="Location" width="50"></kendo-grid-column>
+          <kendo-grid-column field="duration" title="Duration" width="40"></kendo-grid-column>
+          <kendo-grid-column width="60">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+              Price
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                {{ dataItem.standardPrice | currency: "$" }}
+                {{ dataItem.priceWithTaxOption }}
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+
+      <div *ngIf="listViewServiceShow" class="mt-3">
+        <kendo-grid [kendoGridBinding]="service" [pageSize]="pageSize" [skip]="skip" [pageable]="true" [sortable]="true"
+          [hideHeader]="true">
+          <kendo-grid-column width="340" field="serviceCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <img [src]="dataItem.serviceLogo || ''" width="300px" height="180px" />
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="serviceCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                <h6>
+                  <svg width="20" height="20">
+                    <rect width="20" height="20" [style.fill]="dataItem.colour" />
+                  </svg>
+                  <strong><a [routerLink]="['/offerings/service/edit', dataItem.id]">
+                      {{ dataItem.serviceCode }}
+                    </a></strong>
+                </h6>
+                <p>{{ dataItem.serviceCode }}</p>
+                <p>
+                  <strong>Category:</strong> {{ dataItem.c_Name }} <br />
+                  <strong>duration:</strong> {{ dataItem.duration }} <br />
+                  <strong>Location:</strong> {{ dataItem.l_Name }}
+                </p>
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column width="300" field="productCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                {{ dataItem.standardPrice | currency: "$" }}
+                {{ dataItem.priceWithTaxOption }}
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+      <app-grid-no-data [title]="serviceTitle" [routeLink]="serviceRouteLink" [routeName]="serviceRouteName"
+        [description]="serviceDescription" id="serviceNoData"> </app-grid-no-data>
+    </mat-tab>
+    <mat-tab label="Classes">
+      <div class="row mt-3">
+        <div class="col-xl-12 text-left">
+          <div class="d-flex align-items-center justify-content-end">
+            <div *ngIf="detailViewClassShow || listViewClassShow">
+              <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                (change)="classActiveChanged($event)">
+                <mat-button-toggle value="active">Active</mat-button-toggle>
+                <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+              </mat-button-toggle-group>
+              <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                (change)="classViewChanged($event)">
+                <mat-button-toggle value="active">
+                  <mat-icon>list</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="inactive">
+                  <mat-icon>location_on</mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <button mat-raised-button color="accent" class="wide" [routerLink]="['/offerings/classes/add']">
+              Add Classes
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="detailViewClassShow" class="mt-3">
+        <kendo-grid [kendoGridBinding]="classes" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+          [reorderable]="true" [columnMenu]="true" [filterable]="true" [sortable]="true" [groupable]="true"
+          (pageChange)="pageChange($event)" [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }" [sort]="sort" (sortChange)="sortChange($event)">
+          <kendo-grid-column width="40" field="classCode">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+              Class Code
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <h6>
+                <svg class="svg-margin">
+                  <rect width="20" height="20" [style.fill]="dataItem.colour" />
+                </svg>
+
+                <a [routerLink]="['/offerings/classes/edit', dataItem.id]">
+                  <strong>{{ dataItem.classCode }}</strong>
+                </a>
+              </h6>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="className" title="Class Name" width="50"></kendo-grid-column>
+          <kendo-grid-column field="c_Name" title="Category" width="50"></kendo-grid-column>
+          <kendo-grid-column field="l_Name" title="Location" width="50"></kendo-grid-column>
+          <kendo-grid-column field="maximumParticipants" title="Max Participants" width="50"></kendo-grid-column>
+          <kendo-grid-column field="duration" title="Duration" width="40"></kendo-grid-column>
+          <kendo-grid-column width="60">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+              Price
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                {{ dataItem.standardPrice | currency: "$" }}
+                {{ dataItem.priceWithTaxOption }}
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+
+      <div *ngIf="listViewClassShow" class="mt-3">
+        <kendo-grid [kendoGridBinding]="classes" [pageSize]="pageSize" [skip]="skip" [pageable]="true" [sortable]="true"
+          [hideHeader]="true">
+          <kendo-grid-column width="340" field="classCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <img [src]="dataItem.classLogo || ''" width="300px" height="180px" />
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="classCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                <h6>
+                  <svg width="20" height="20">
+                    <rect width="20" height="20" [style.fill]="dataItem.colour" />
+                  </svg>
+                  <a [routerLink]="['/offerings/classes/edit', dataItem.id]">
+                    <strong> {{ dataItem.className }}</strong>
+                  </a>
+                </h6>
+                <p>{{ dataItem.classCode }}</p>
+                <p>
+                  <strong>Category:</strong> {{ dataItem.c_Name }} <br />
+                  <strong>duration:</strong> {{ dataItem.duration }} <br />
+                  <strong>Location:</strong> {{ dataItem.l_Name }}
+                </p>
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column width="300" field="productCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                {{ dataItem.standardPrice | currency: "$" }}
+                {{ dataItem.priceWithTaxOption }}
+                <p>
+                  <strong>Max Participants:</strong>
+                  {{ dataItem.maximumParticipants }}<br /><br /><br /><br />
+                </p>
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+      <app-grid-no-data [title]="classTitle" [routeLink]="classRouteLink" [routeName]="classRouteName"
+        [description]="classDescription" id="classNoData"> </app-grid-no-data>
+    </mat-tab>
+    <mat-tab label="Products">
+      <div class="row mt-3">
+        <div class="col-xl-12 text-left">
+          <div class="d-flex align-items-center justify-content-end">
+            <div *ngIf="detailViewProductShow || listViewProductShow">
+              <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                (change)="productActiveChanged($event)">
+                <mat-button-toggle value="active">Active</mat-button-toggle>
+                <mat-button-toggle value="inactive">Inacitve</mat-button-toggle>
+              </mat-button-toggle-group>
+              <mat-button-toggle-group appearance="legacy" name="Locations" class="mr-3" value="active"
+                (change)="productViewChanged($event)">
+                <mat-button-toggle value="active">
+                  <mat-icon>list</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="inactive">
+                  <mat-icon>location_on</mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <button mat-raised-button color="accent" class="wide" [routerLink]="['/offerings/products/add']">
+              Add Product
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="detailViewProductShow" class="mt-3">
+        <kendo-grid [kendoGridBinding]="products" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+          [columnMenu]="true" [groupable]="true" [reorderable]="true" [filterable]="true" [sortable]="true"
+          (pageChange)="pageChange($event)" [sortable]="{
+              allowUnsort: allowUnsort,
+              mode: multiple ? 'multiple' : 'single'
+            }" [sort]="sort" (sortChange)="sortChange($event)">
+          <kendo-grid-column width="60" field="productCode">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+              Product Code
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <h6>
+                <a [routerLink]="['/offerings/products/edit', dataItem.id]">
+                  <strong> {{ dataItem.productCode }}</strong>
+                </a>
+              </h6>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column field="productName" title="Product Name" width="50"></kendo-grid-column>
+          <kendo-grid-column field="l_Name" title="Location" width="50"></kendo-grid-column>
+          <kendo-grid-column field="s_Name" title="Supplier Name" width="50"></kendo-grid-column>
+          <kendo-grid-column field="currentStock" title="Current Stock" width="50"></kendo-grid-column>
+          <kendo-grid-column width="60">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+              Price
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                {{ dataItem.salePrice | currency: "$" }}
+                {{ dataItem.priceWithTaxOption }}
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+
+      <div *ngIf="listViewProductShow" class="mt-3">
+        <kendo-grid [kendoGridBinding]="products" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+          [sortable]="true" [hideHeader]="true">
+          <kendo-grid-column width="340" field="productCode">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <img [src]="dataItem.productLogo || ''" width="300px" height="180px" />
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column>
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                <h6>
+                  <strong>
+                    <a [routerLink]="['/offerings/products/edit', dataItem.id]">
+                      {{ dataItem.productName }}
+                    </a></strong>
+                </h6>
+                <p>{{ dataItem.productCode }}</p>
+                <p>
+                  <strong>Supplier:</strong> {{ dataItem.s_Name }} <br />
+                  <strong>Location:</strong> {{ dataItem.l_Name }}
+                </p>
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column width="270">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+              <section>
+                {{ dataItem.salePrice | currency: "$" }}
+                {{ dataItem.priceWithTaxOption }}
+
+                <p>
+                  <strong> Current Stock :</strong>
+                  {{ dataItem.currentStock }}<br /><br /><br /><br />
+                </p>
+              </section>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+      <app-grid-no-data [title]="productTitle" [routeLink]="productRouteLink" [routeName]="productRouteName"
+        [description]="productDescription" id="productNoData"> </app-grid-no-data>
+    </mat-tab>
+  </mat-tab-group>
+</div>

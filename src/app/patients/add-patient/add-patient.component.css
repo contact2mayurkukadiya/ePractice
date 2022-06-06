@@ -1,0 +1,24 @@
+h3 {
+    color: #191e57;
+  }
+  
+  :host {
+    position: relative;
+    /* bottom: 60px; */
+  }
+  
+  :host ::ng-deep .mat-tab-body-content {
+    overflow-y: auto !important;
+    padding-top: 2rem;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  :host ::ng-deep .mat-tab-body-content::-webkit-scrollbar {
+    display: none;
+  }
+  
+  :host ::ng-deep .mat-tab-label-active {
+    color: #191e57;
+  }
+  

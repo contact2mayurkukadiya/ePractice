@@ -1,0 +1,204 @@
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #317C1C;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #ffffff;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 4px;
+  border: 2px solid #317C1C;
+  height: 29px !important;
+  margin-top: 7px;
+}
+
+::ng-deep .mat-toolbar {
+  font-weight: 600;
+  margin-top: -23px;
+  letter-spacing: 1px;
+  font-size: 25px;
+  border-bottom: 2px solid #F3F2F4;
+  background: #f5f5f517 !important;
+  justify-content: space-between;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-dialog-container {
+  width: 56%;
+  margin: 0 auto;
+}
+
+:host {
+  position: relative;
+  /* bottom: 60px; */
+}
+
+:host ::ng-deep .mat-tab-body-content {
+  overflow-y: auto !important;
+  padding-top: 2rem;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+:host ::ng-deep .mat-tab-body-content::-webkit-scrollbar {
+  display: none;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  color: #191e57;
+}
+
+.radio {
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .mat-tab-label.mat-tab-disabled {
+  font-size: 1.1rem;
+  color: black;
+}
+
+:host ::ng-deep .k-switch-on:hover .k-switch-container,
+.k-switch-on.k-state-hover .k-switch-container {
+  background-color: #a18bd6;
+}
+
+:host ::ng-deep .k-multiselect-wrap {
+  padding: 15px 0;
+}
+
+:host ::ng-deep .k-multiselect {
+  padding-bottom: 1.34375em;
+  font-size: 1em;
+}
+
+:host ::ng-deep .k-multiselect.ng-invalid.ng-touched .k-multiselect-wrap {
+  border-color: #a18bd6;
+  border-width: 2px;
+}
+
+:host ::ng-deep .k-multiselect .k-multiselect-wrap .k-button {
+  font-size: 1em;
+}
+
+.dark-blue-color {
+  color: #191e57;
+}
+
+.error-message {
+  color: #a18bd6;
+  font-size: 75%;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 30px;
+  font-size: 1rem;
+}
+
+.row {
+  display: flex;
+  /* equal height of the children */
+}
+
+.panel-height {
+  min-height: 1150px;
+}
+
+::ng-deep .mat-toolbar button:focus {
+  outline: none;
+}
+
+::ng-deep .mat-icon {
+  margin-right: 0rem;
+}
+.form-heading-wrapper {
+  padding: 15px 0 0 0;
+}
+.form-heading-wrapper span{
+  padding-left: 0 !important;
+  color: #abaab0;
+}
+.modal-wrapper {
+  display: flex;
+}
+.close-btn-wrapper button:focus{
+  outline: 0 !important;
+}
+.close-btn-wrapper button{
+  width: auto;
+    height: 0;
+    line-height: 0;
+}
+
+.close-btn {
+  color: #00AEEF;
+    font-size: 42px;
+    height: 44px !important;
+    width: 34px !important;
+}
+.progressbar-title{
+  color: #575757;
+  text-align: center;
+  font-size: 14px;
+  padding: 12px;
+}
+::ng-deep .k-progressbar{
+  width: 100% !important;
+  height: 27px !important;
+}
+::ng-deep .k-progress-status{
+  font-size: 17px !important;
+}
+::ng-deep .k-progressbar .k-state-selected{
+  background-color: #317C1C !important;
+  border-radius: 8px;
+}
+.k-progress-status-wrap{
+  margin-top: 0px;
+}
+.text-required{
+  font-size: 14px;
+  color: #abaab0;
+}
+.form-wrapper{
+  padding-right: 20px;
+  padding-left: 10px;
+}
+button:focus {
+  outline: 0 !important;
+}
+
+
+/* Start */
+::ng-deep .mat-input-element {
+  margin-left: 12px;
+  font-family: Helvetica Neue,Helvetica; 
+  font-size: 16px;
+  line-height: 14px;
+  letter-spacing: 0.15px;
+}
+
+/* End */
+#event-form-dialog {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: #C83427;
+}
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #394085 !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline
+{
+  color:#1C1B1B;
+}
+
+.myInput {
+  height: 50px !important;
+  padding: 10px !important;
+} 

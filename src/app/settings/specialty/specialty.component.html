@@ -1,0 +1,47 @@
+<kendo-grid [data]="gridView" 
+    [pageSize]="pageSize"
+    [skip]="skip"
+    [pageable]="true"
+    [columnMenu]="true"
+    (pageChange)="pageChange($event)"
+    [sortable]="{
+    allowUnsort: allowUnsort,
+    mode: multiple ? 'multiple' : 'single'
+    }"
+    [sort]="sort"
+    (sortChange)="sortChange($event)"
+    [filterable]="true"
+    [filter]="state.filter"
+    (dataStateChange)="dataStateChange($event)"
+    [groupable]="true"
+    [group]="groups"
+    [reorderable]="reorder"
+    (groupChange)="groupChange($event)"
+    *ngIf="hasItems"
+    >
+    <kendo-grid-column field="specialtyName" title="Specialty Name" width="60">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <a [routerLink]="['/tools/specialty/edit', dataItem.id]" *ngIf="permission && permission.indexOf('E') >= 0">
+                {{ dataItem.specialtyName }}
+            </a>
+            <span *ngIf="permission && (permission.indexOf('E') < 0 && permission.indexOf('V') >= 0)">
+                {{ dataItem.specialtyName }}
+            </span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="locationName" title="Location Name" width="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="isStatus" title="Status"  width="50" filter="boolean" [filterable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            {{ dataItem.isStatus ? "Active" : "Inactive" }}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="isEnableOnlineBooking" title="Online Booking" width="80" filter="boolean">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            {{ dataItem.isEnableOnlineBooking ? "Yes" : "No" }}
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>
+
+<app-grid-no-data *ngIf="!hasItems" [title]="'You haven\'t added a specialty'" [routeLink]="'/tools/specialty/add'" [routeName]="'Add Specialty'" [description]="''">
+</app-grid-no-data>

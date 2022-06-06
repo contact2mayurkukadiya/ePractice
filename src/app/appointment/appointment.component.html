@@ -1,0 +1,177 @@
+<div class="pl-5 pr-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mb-3 mt-3 bold" id="heading">
+            Appointments
+        </h3>
+        <div class="mb-3 mt-3" class="text-right">
+            <button mat-stroked-button color="primary" class="mr-2 no-underline matchBorderColor" (click)="router.navigate(['appointment/create-practitioner'])">
+            Create Practitioner
+        </button>
+            <button mat-stroked-button color="primary" class="mr-2 no-underline matchBorderColor">
+            Create Appt
+        </button>
+            <button mat-stroked-button color="primary" class="mr-2 no-underline matchBorderColor">
+            Practitioner Today
+        </button>
+            <button mat-stroked-button color="primary" class="mr-2 no-underline matchBorderColor">
+            Schedule
+        </button>
+            <button mat-stroked-button color="primary" class="mr-2 no-underline matchBorderColor">
+            Wait List
+        </button>
+            <button mat-stroked-button color="primary" class="mr-2 no-underline matchBorderColor">
+            Rooms
+        </button>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="sidebar" [ngClass]="{'opened': sidebarExpand, 'closed': !sidebarExpand}">
+            <div class="sidebar-title" [ngClass]="{'justify-content-center': !sidebarExpand}">
+                <span [ngClass]="{'hidden': !sidebarExpand}">Practitioner List</span>
+                <mat-icon *ngIf="sidebarExpand" (click)="togglePanel();" class="m-0 cursor-pointer">menu</mat-icon>
+                <mat-icon *ngIf="!sidebarExpand" (click)="togglePanel();" class="m-0 cursor-pointer">menu_open</mat-icon>
+            </div>
+            <div class="sidebar-tab" [ngClass]="{'hidden': !sidebarExpand}">
+                <mat-tab-group class="position-relative sidebar-tab">
+                    <mat-tab label="All">
+                        <mat-list>
+                            <mat-list-item *ngFor="let practitioner of originalPractitionerList;trackBy:trackByFn" class="cursor-pointer user-select-none practitioner-item" [ngClass]="{'selected': practitioner.selected}" (click)="selectPractitioner(practitioner)">
+                                <div class="practitioner-list-content">
+                                    <img src="./assets/user.jpg" class="practitioner-avatar" />
+                                    <div class="practitioner-list">
+                                        <p class="pratitioner-name"> {{practitioner.name}} </p>
+                                        <span class="pratitioner-role"> {{practitioner.speciality}} </span>
+                                    </div>
+                                    <button mat-raised-button class="sidebar-filter-button" (click)="stopPropogation($event)" [ngbPopover]="practitionerTemplate" popoverClass="custom-context-menu-class" [placement]="['left-center', 'left-top']">
+                                    <mat-icon class="sidebar-filter-button-icon">more_vert</mat-icon>
+                                </button>
+                                    <ng-template #practitionerTemplate>
+                                        <ul class="practitioner-context-menu">
+                                            <li (click)="giveSchedulerAccess(practitioner)">
+                                                <mat-icon class="m-0">add</mat-icon>
+                                                <span>Add To Scheduler</span>
+                                            </li>
+                                            <li>
+                                                <mat-icon class="m-0">person</mat-icon>
+                                                <span>View Profile</span>
+                                            </li>
+                                        </ul>
+                                    </ng-template>
+                                </div>
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-tab>
+                    <mat-tab label="Speciality">
+                        <mat-accordion>
+                            <mat-expansion-panel class="custom-panel" *ngFor="let special of originalSpecialize">
+                                <mat-expansion-panel-header class="custom-expansion-header">
+                                    <mat-panel-title class="w-100">
+                                        <span style="font-size: 15px;">{{special.speciality}}</span>
+                                        <!-- <span *ngIf="special.practitioners.length > 1">s</span> -->
+                                        <!-- <span style="font-size: 12px; color: #a0a0a0; font-weight: normal;">{{special?.practitioners?.length}} Practitioner</span> -->
+                                    </mat-panel-title>
+                                    <mat-icon class="m-0">remove</mat-icon>
+                                </mat-expansion-panel-header>
+                                <mat-list>
+                                    <mat-list-item *ngFor="let practitioner of special.practitioners;trackBy:trackByFn" class="cursor-pointer user-select-none practitioner-item">
+                                        <div class="practitioner-list-content">
+                                            <img src="./assets/user.jpg" class="practitioner-avatar" />
+                                            <div class="practitioner-list">
+                                                <p class="pratitioner-name"> {{practitioner.name}} </p>
+                                                <span class="pratitioner-role"> {{special.speciality}} </span>
+                                            </div>
+                                            <button mat-raised-button class="sidebar-filter-button" [ngbPopover]="practitionerSpecialTemplate" popoverClass="custom-context-menu-class" [placement]="['left-center', 'left-top']">
+                                            <mat-icon class="sidebar-filter-button-icon">more_vert</mat-icon>
+                                        </button>
+                                            <ng-template #practitionerSpecialTemplate>
+                                                <ul class="practitioner-context-menu">
+                                                    <li>
+                                                        <mat-icon class="m-0">remove</mat-icon>
+                                                        <span>Remove from Scheduler</span>
+                                                    </li>
+                                                    <li>
+                                                        <mat-icon class="m-0">person</mat-icon>
+                                                        <span>View Profile</span>
+                                                    </li>
+                                                </ul>
+                                            </ng-template>
+                                        </div>
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <div class="sidebar-filter mt-3" [ngClass]="{'hidden': !sidebarExpand}">
+                <input type="text" class="sidebar-filter-input" placeholder="Search Practitioner">
+                <button mat-raised-button class="sidebar-filter-button" [ngbPopover]="practitionerFilterTemplate" popoverClass="custom-context-menu-class" [placement]="['left-center', 'left-top']">
+                <mat-icon class="sidebar-filter-button-icon">filter_alt</mat-icon>
+            </button>
+            </div>
+        </div>
+        <div class="body">
+            <div *ngIf="(isSingleSelect == false && AllPractitionerList?.length > 0) || (isSingleSelect == true && singleSelectedPractitioner.schedulerAccess == true)">
+                <dx-scheduler class="customize-scheduler" timeZone="America/Los_Angeles" [groupByDate]="'true'" [dataSource]="appointmentsData" [(currentDate)]="currentDate" [startDayHour]="9" [endDayHour]="16" [groups]="['speciality', 'name']" [height]="800" [crossScrollingEnabled]="true"
+                    [(currentView)]="currentView" adaptivityEnabled="true" [views]="views" [showAllDayPanel]="false" resourceCellTemplate="practitionerTemplate" (onAppointmentFormOpening)="onAppointmentFormOpening($event)" (onAppointmentAdding)="onAppointmentAdding($event)">
+                    <dxi-resource [dataSource]="specializeHeader" fieldExpr="speciality" label="speciality" displayExpr="speciality" valueExpr="speciality" [allowMultiple]="false"></dxi-resource>
+                    <dxi-resource [dataSource]="practitionerHeader" fieldExpr="name" label="name" displayExpr="name" valueExpr="name" [allowMultiple]="false"></dxi-resource>
+
+                    <div *dxTemplate="let data of 'practitionerTemplate'">
+                        <button *ngIf="data.data.type == 1" (click)="showSingleSpeciality(data.data)" class="practitioner-resource-template">
+                            <span class="practitioner-resource-name">{{data.data.speciality}}</span>
+                        </button>
+                        <button *ngIf="data.data.type == 2" (click)="showSinglePractitioner(data.data)" class="practitioner-resource-template">
+                            <img [src]="data.data.avatar" onerror="this.src = './assets/user.jpg'" class="avatar" />
+                            <span class="practitioner-resource-name">{{data.data.name}}</span>
+                        </button>
+                    </div>
+                    <div *dxTemplate="let data of 'dateCellTemplate'" class="group-by-date-header">
+                        <span class="name">{{['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][data.date.getDay()]}} </span>
+                        <span class="number">{{data.date.getDate()}},</span>
+                        <span class="number">{{data.date.getFullYear()}}</span>
+                    </div>
+                </dx-scheduler>
+            </div>
+            <div class="no-practitioner-screen" *ngIf="originalPractitionerList.length <= 0">
+                <div class="no-practitioner-content">
+                    <img src="./assets/Empty State.png" class="empty-image" />
+                    <h1 class="empty-screen-title">You haven't added a Practitioner.</h1>
+                    <p class="empty-screen-description">Please click on "Add Practitioner" to add a new Practitioner to this Location.</p>
+                    <a routerLink="/appointment/create-practitioner" class="add-practitioner-link">Add Pratitioner</a>
+                </div>
+            </div>
+            <div class="no-practitioner-screen" *ngIf="isSingleSelect == true && this.singleSelectedPractitioner.schedulerAccess == false">
+                <div class="no-practitioner-content">
+                    <img src="./assets/Empty State.png" class="empty-image" />
+                    <h1 class="empty-screen-title">you haven't added a Schedule for this day</h1>
+                    <p class="empty-screen-description m-auto" style="max-width: 50%;">First, select a practitioner from the practitioner List, click on ellipsis and then select "Add to scheduler" to add this practitioner into the scheduler. Then click on Schedule button and select a timeslot in Scheduler to create Schedule
+                        for this practitioner.</p>
+                </div>
+            </div>
+            <div class="no-practitioner-screen" *ngIf="isSingleSelect == false && AllPractitionerList?.length <= 0 && originalPractitionerList.length > 0">
+                <div class="no-practitioner-content">
+                    <img src="./assets/Empty State.png" class="empty-image" />
+                    <h1 class="empty-screen-title">No any practitioner Has scheduler access</h1>
+                    <p class="empty-screen-description m-auto" style="max-width: 50%;">First, select a practitioner from the practitioner List, click on ellipsis and then select "Add to scheduler" to add this practitioner into the scheduler. Then click on Schedule button and select a timeslot in Scheduler to create Schedule
+                        for this practitioner.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #practitionerFilterTemplate>
+        <ul class="practitioner-context-menu">
+            <li class="active-on-hover">
+                <span>All Practitioner</span>
+            </li>
+            <li class="active-on-hover">
+                <span>Active Practitioner</span>
+            </li>
+            <li class="active-on-hover">
+                <span>Inactive Practitioner</span>
+            </li>
+        </ul>
+    </ng-template>
+</div>
